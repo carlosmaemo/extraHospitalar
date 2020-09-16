@@ -1,84 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.pxm.dao;
 
-import com.pxm.essencial.Extenso;
 import com.pxm.exception.ErroSistema;
 import com.pxm.model.Medicamento;
-import com.pxm.model.Paciente;
-import com.pxm.model.Prescricao;
-import com.pxm.model.Relatorio;
 import com.pxm.util.Conecxao;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Carlos Maemo
+ * @author cmaemo
  */
-public class MedicamentoDAO implements Serializable {
+public class MedicamentoDAO {
 
-    public void salvar(Prescricao prescricao, ArrayList<Medicamento> medicamentos) throws ErroSistema {
+    public boolean verificar(Medicamento medicamento) throws ErroSistema {
         try {
             Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("Select * from medicamento where codigoMedicamento='" + medicamento.getCodigoMedicamento() + "'");
 
-            String comma = "";
-            StringBuilder todosMedicamentos = new StringBuilder();
-            for (Medicamento m : medicamentos) {
-                todosMedicamentos.append(comma);
-                todosMedicamentos.append(m);
-                comma = ", ";
+            ResultSet rs = ps.executeQuery();
+
+            Medicamento p = new Medicamento();
+
+            while (rs.next()) {
+                p.setCodigoMedicamento(rs.getString("codigoMedicamento"));
             }
 
-            int generatedkey = 0;
+            if (p.getCodigoMedicamento() != null) {
 
-            PreparedStatement ps1 = conexao.prepareStatement("INSERT INTO `prescricao`(`idPaciente`, `data`, `dataInt`, `dataPresc`, `clinico`, `clinicoMorada`, `clinicoContacto`, `pac`, `nome`, `apelido`, `sexo`, `idade`, `gestante`, `morada`, `contacto`, `peso`, `nrDoc`, `tipoDoc`, `estado`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement ps2 = conexao.prepareStatement("INSERT INTO `medicamento`(`idPrescricao`, `medicamento`, `posologia`, `quantidade`, `presc`) VALUES (?, ?, ?, ?, ?)");
-
-            ps1.setInt(1, prescricao.getIdPaciente());
-            ps1.setString(2, prescricao.getData());
-            ps1.setString(3, prescricao.getDataInt());
-            ps1.setString(4, prescricao.getData());
-            ps1.setString(5, prescricao.getClinico());
-            ps1.setString(6, prescricao.getClinicoMorada());
-            ps1.setString(7, prescricao.getClinicoContacto());
-            ps1.setString(8, prescricao.getPac());
-            ps1.setString(9, prescricao.getNome());
-            ps1.setString(10, prescricao.getApelido());
-            ps1.setString(11, prescricao.getSexo());
-            ps1.setString(12, prescricao.getIdade());
-            ps1.setString(13, prescricao.getGestante());
-            ps1.setString(14, prescricao.getMorada());
-            ps1.setString(15, prescricao.getContacto());
-            ps1.setString(16, prescricao.getPeso());
-            ps1.setString(17, prescricao.getNrDoc());
-            ps1.setString(18, prescricao.getTipoDoc());
-            ps1.setString(19, "falso");
-            ps1.execute();
-
-            ResultSet rs = ps1.getGeneratedKeys();
-            if (rs.next()) {
-                generatedkey = rs.getInt(1);
+                if (p.getCodigoMedicamento().equals(medicamento.getCodigoMedicamento())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
             }
 
-            for (Medicamento m : medicamentos) {
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao verificar o medicamento!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
-                ps2.setInt(1, generatedkey);
-                ps2.setString(2, m.getMedicament());
-                ps2.setString(3, m.getPosologia());
-                ps2.setString(4, m.getQuantidadeX() + " (" + new Extenso(Integer.parseInt(m.getQuantidadeX())).toString() + ")");
-                ps2.setString(5, m.getPresc());
+        return false;
+    }
 
-                ps2.execute();
-            }
+    public void actualizar(Medicamento medicamento) throws ErroSistema {
+
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps;
+
+            ps = conexao.prepareStatement("update medicamento set categoriaMedicamento=?, tituloMedicamento=?, valorMedicamento=?, composicaoMedicamento=?, posologiaMedicamento=? where codigoMedicamento=?");
+
+            ps.setString(1, medicamento.getCategoriaMedicamento());
+            ps.setString(2, medicamento.getTituloMedicamento());
+            ps.setString(3, medicamento.getValorMedicamento());
+            ps.setString(4, medicamento.getComposicaoMedicamento());
+            ps.setString(5, medicamento.getPosologiaMedicamento());
+
+            ps.setString(6, medicamento.getCodigoMedicamento());
+
+            ps.execute();
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao actualizar o medicamento!", ex);
+        }
+
+    }
+
+    public void salvar(Medicamento medicamento) throws ErroSistema {
+
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps;
+
+            ps = conexao.prepareStatement("INSERT INTO `medicamento`(`codigoMedicamento`, `categoriaMedicamento`, `tituloMedicamento`, `valorMedicamento`, `composicaoMedicamento`, `posologiaMedicamento`) VALUES (?, ?, ?, ?, ?, ?)");
+
+            ps.setString(1, medicamento.getCodigoMedicamento());
+            ps.setString(2, medicamento.getCategoriaMedicamento());
+            ps.setString(3, medicamento.getTituloMedicamento());
+            ps.setString(4, medicamento.getValorMedicamento());
+            ps.setString(5, medicamento.getComposicaoMedicamento());
+            ps.setString(6, medicamento.getPosologiaMedicamento());
+
+            ps.execute();
 
             Conecxao.fecharConexao();
 
         } catch (SQLException ex) {
-            throw new ErroSistema("Erro ao cadastrar prescricao!", ex);
+            throw new ErroSistema("Erro ao registrar o medicamento!", ex);
         }
     }
 
@@ -99,38 +118,79 @@ public class MedicamentoDAO implements Serializable {
         }
     }
 
-    public List<Medicamento> buscar(int idPrescricao) throws ErroSistema {
+    public List<Medicamento> buscar() throws ErroSistema {
 
         try {
             Connection conexao = Conecxao.getConexao();
 
-            PreparedStatement ps = conexao.prepareStatement("Select * from medicamento where idPrescricao = '"+ idPrescricao +"'");
-            
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement pst = conexao.prepareStatement("Select * from medicamento");
+
+            ResultSet rs = pst.executeQuery();
 
             List<Medicamento> medicamentos = new ArrayList();
 
             while (rs.next()) {
 
-                Medicamento medicamento = new Medicamento(null, null, null, null);
+                Medicamento ps = new Medicamento();
 
-                medicamento.setIdMedicamento(rs.getInt("idMedicamento"));
-                medicamento.setIdPrescricao(rs.getInt("idPrescricao"));
-                medicamento.setMedicament(rs.getString("medicamento"));
-                medicamento.setPosologia(rs.getString("posologia"));
-                medicamento.setQuantidade(rs.getString("quantidade"));
-                medicamento.setQuantAviado(rs.getString("aviado"));
-                medicamento.setPresc(rs.getString("presc"));
+                ps.setIdMedicamento(rs.getInt("idMedicamento"));
+                ps.setCodigoMedicamento(rs.getString("codigoMedicamento"));
+                ps.setCategoriaMedicamento(rs.getString("categoriaMedicamento"));
+                ps.setTituloMedicamento(rs.getString("tituloMedicamento"));
+                ps.setValorMedicamento(rs.getString("valorMedicamento"));
+                ps.setComposicaoMedicamento(rs.getString("composicaoMedicamento"));
+                ps.setPosologiaMedicamento(rs.getString("posologiaMedicamento"));
 
-                medicamentos.add(medicamento);
+                medicamentos.add(ps);
 
             }
 
             return medicamentos;
 
         } catch (SQLException ex) {
-            throw new ErroSistema("Erro ao pesquisar relatório!", ex);
+            throw new ErroSistema("Erro ao pesquisar o medicamento!", ex);
         }
-
     }
+    
+    public List<Medicamento> buscarFiltro(String valor, String tipo) throws ErroSistema {
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps1 = null;
+
+            if ("positivo".equals(tipo)) {
+
+                ps1 = conexao.prepareStatement("Select * from medicamento where tituloMedicamento LIKE '" + valor + "%'");
+
+            } else if ("negativo".equals(tipo)) {
+
+                List<Medicamento> relatorios = new ArrayList();
+                return relatorios;
+            }
+
+            ResultSet rs = ps1.executeQuery();
+            List<Medicamento> relatorios = new ArrayList();
+
+            while (rs.next()) {
+
+                Medicamento ps = new Medicamento();
+
+                ps.setIdMedicamento(rs.getInt("idMedicamento"));
+                ps.setCodigoMedicamento(rs.getString("codigoMedicamento"));
+                ps.setCategoriaMedicamento(rs.getString("categoriaMedicamento"));
+                ps.setTituloMedicamento(rs.getString("tituloMedicamento"));
+                ps.setValorMedicamento(rs.getString("valorMedicamento"));
+                ps.setComposicaoMedicamento(rs.getString("composicaoMedicamento"));
+                ps.setPosologiaMedicamento(rs.getString("posologiaMedicamento"));
+
+                relatorios.add(ps);
+            }
+
+            return relatorios;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao pesquisar o medicamento!", ex);
+        }
+    }
+
 }

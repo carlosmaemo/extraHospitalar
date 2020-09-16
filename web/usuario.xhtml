@@ -10,6 +10,8 @@
 
         <div style="padding: 5px; background: #ddd; border: 1px solid #aaa;border-radius: 3px">
 
+            <p:growl id="messages" showDetail="true" sticky="false"/>
+
             <!--CADASTRO DE USUARIOS-->
             <p:fieldset legend="Cadastro de Usuário" style="background: #eee">
 
@@ -70,8 +72,6 @@
                     </p:toolbarGroup>
                 </p:toolbar>
                 <br/>
-
-                <p:growl id="messages" showDetail="true" sticky="true"/>
 
                 <p:dataTable value="#{usuarioBean.usuarios}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{usuario.idUsuario}" rows="5" paginator="true" widgetVar="personTable" var="usuario">
                     <p:column style="text-align: center" headerText="Operação" width="100">

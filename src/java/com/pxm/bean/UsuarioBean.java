@@ -22,7 +22,8 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 @SessionScoped
 public class UsuarioBean implements Serializable {
-private int countReload = 0;
+
+    private int countReload = 0;
     public Usuario usuario = new Usuario();
 
     private final DefinicaoDAO definicaoDao = new DefinicaoDAO();
@@ -60,7 +61,7 @@ private int countReload = 0;
             usuario.setConfSexo(usuarioDao.verificarSexo(usuario));
             usuario.setConfContacto(usuarioDao.verificarContacto(usuario));
             usuario.setConfMorada(usuarioDao.verificarMorada(usuario));
-            
+
             usuario.setConfAcesso(usuarioDao.verificarNivelAcesso(usuario));
             usuario.setConfIdUsuario(usuarioDao.verificarIdUsuario(usuario));
 
@@ -119,8 +120,8 @@ private int countReload = 0;
         if (usuario != null) {
 
             if (!"".equals(usuario.getNome()) || !"M".equals(usuario.getSexo()) || !"".equals(usuario.getContacto())
-                    || !"".equals(usuario.getUsername()) || !"".equals(usuario.getPassword()) ||
-                    !"Usuário".equals(usuario.getAcesso()) || !"".equals(usuario.getMorada())) {
+                    || !"".equals(usuario.getUsername()) || !"".equals(usuario.getPassword())
+                    || !"Usuário".equals(usuario.getAcesso()) || !"".equals(usuario.getMorada())) {
                 addMensagem("Cancelado!", "Operação cancelada com sucesso.", FacesMessage.SEVERITY_INFO);
 
                 usuario.setIdUsuario(null);
@@ -149,7 +150,7 @@ private int countReload = 0;
             }
         }
     }
-    
+
     public void addDefinicoesUsuario(Integer idUsuario) throws ClassNotFoundException, SQLException {
         if (usuario.getConfNome().isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Nome do Usuário' é obrigatório.", FacesMessage.SEVERITY_WARN);
@@ -177,8 +178,7 @@ private int countReload = 0;
 
             addMensagem("Campo vazio!", "O campo 'Email Receptor' é obrigatório!", FacesMessage.SEVERITY_WARN);
 
-        }
-        else if (usuario.getConfEmailEmissor().isEmpty()) {
+        } else if (usuario.getConfEmailEmissor().isEmpty()) {
 
             usuario.setConfEmailEmissor(usuario.getConfEmailEmissorWenIsDelete());
 
@@ -192,9 +192,9 @@ private int countReload = 0;
 
         } else {
 
-        definicaoDao.salvar(usuario);
+            definicaoDao.salvar(usuario);
 
-        addMensagem("Salvado!", "Definições gerais salvas com sucesso.", FacesMessage.SEVERITY_INFO);
+            addMensagem("Salvado!", "Definições gerais salvas com sucesso.", FacesMessage.SEVERITY_INFO);
 
         }
     }
@@ -227,18 +227,18 @@ private int countReload = 0;
         sessao.invalidate();
         return "index.jsf?faces-redirect=true";
     }
-    
+
     public void reload() {
-        
+
         try {
             countReload++;
-            
-                HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-                HttpSession session = request.getSession(false);
-                session.invalidate();
-                FacesContext temp = FacesContext.getCurrentInstance();
-                temp.getExternalContext().redirect("index.jsf");
-            
+
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            HttpSession session = request.getSession(false);
+            session.invalidate();
+            FacesContext temp = FacesContext.getCurrentInstance();
+            temp.getExternalContext().redirect("index.jsf");
+
         } catch (IOException ex) {
         }
     }
