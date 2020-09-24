@@ -74,6 +74,7 @@ public class ConsultaBean {
             consulta.setCategoriaConsulta("");
             consulta.setTituloConsulta("");
             consulta.setDescricaoConsulta("");
+            consulta.setValorConsulta("");
 
             listar();
             addMensagem("Actualizado!", "Dados da consulta actualizado com sucesso.", FacesMessage.SEVERITY_INFO);
@@ -88,6 +89,7 @@ public class ConsultaBean {
                 consulta.setCategoriaConsulta("");
                 consulta.setTituloConsulta("");
                 consulta.setDescricaoConsulta("");
+            consulta.setValorConsulta("");
 
                 listar();
 
@@ -114,6 +116,7 @@ public class ConsultaBean {
                 consulta.setCategoriaConsulta("");
                 consulta.setTituloConsulta("");
                 consulta.setDescricaoConsulta("");
+            consulta.setValorConsulta("");
 
                 listar();
 
@@ -127,6 +130,7 @@ public class ConsultaBean {
                 consulta.setCategoriaConsulta("");
                 consulta.setTituloConsulta("");
                 consulta.setDescricaoConsulta("");
+            consulta.setValorConsulta("");
 
                 listar();
             }

@@ -8,152 +8,521 @@
              xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form>
+
         <div style="padding: 5px; background: #ddd; border: 1px solid #aaa;border-radius: 3px">
+
+            <!--PAINEL DE NOTIFICACAO-->
 
             <p:growl id="messages" showDetail="true" sticky="false"/>
 
+            <!--DADOS DO PACIENTE-->
+
+            <p:fieldset legend="Dados do Paciente" style="background: #eee">
+
+                <p:panelGrid class="panelForm" styleClass="panelColumns">
+                    <p:row>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="nidPaciente" value="NID:"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="nomePaciente" value="Nome:"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="apelidoPaciente" value="Apelido:"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="contactoPaciente" value="Contacto:"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="sexoPaciente" value="Sexo:"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="empresaPaciente" value="Empresa:"/>
+                        </p:column>
+                    </p:row>
+                    <p:row class="panelLinha" style="background: #ddd">
+                        <p:column style="background: #eee; border: none">
+                            <p:selectOneMenu style="width: 185px" filter="true" filterMatchMode="startsWith" id="nidPaciente" value="#{facturaBean.factura.nidPaciente}">
+                                <f:selectItems value="#{facturaBean.nids}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="nomePaciente" style="width: 185px" maxlength="25" disabled="true" value="#{facturaBean.factura.nomePaciente}"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="25" disabled="true"  value="#{facturaBean.factura.apelidoPaciente}"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="contactoPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.contactoPaciente}"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="sexoPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.sexoPaciente}"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="empresaPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.nomeEmpresa}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+                <br/>
+                <p:toolbar>
+                    <p:toolbarGroup align="left">
+                        <p:commandButton icon="fa fa-check" value="&nbsp;Confirmar" actionListener="#{facturaBean.confirmar(facturaBean.factura.nidPaciente, usuarioBean.usuario.confIdUsuario)}" ajax="true" update="@form"></p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </p:fieldset>
+
+            <hr style=""/>
+
             <!--PAINEL DE ACORDEOES / CONTAINER EMPILHADOS-->
 
-            <p:fieldset legend="Identificação do Paciente" style="background: #eee">
+            <p:accordionPanel multiple="true">
 
-                <!-- <p:poll  interval="8" update="{usuarioBean.listar()}"/> -->
+                <!--FACTURA CONSULTA-->
 
-                <p:panelGrid class="panelForm" styleClass="panelColumns" style="margin: 0 auto;">
-                    <p:row>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="pac" value="PAC:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="nome" value="Nome:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="apelido" value="Apelido:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="sexo" value="Sexo:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="contacto" value="Contacto:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="morada" value="Morada:"/>
-                        </p:column>
-                    </p:row>
-                    <p:row class="panelLinha" style="background: #ddd">
-                        <p:column style="background: #eee; border: none">
-                            <p:selectOneMenu style="width: 185px" filter="true" filterMatchMode="startsWith" id="pac" value="#{prescricaoBean.prescricao.pac}">
-                                <f:selectItems value="#{prescricaoBean.pacs}" />
-                            </p:selectOneMenu>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="nome" style="width: 185px" maxlength="25" disabled="true" value="#{prescricaoBean.prescricao.nome}"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="apelido" style="width: 185px" maxlength="25" disabled="true"  value="#{prescricaoBean.prescricao.apelido}"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="sexo" style="width: 185px" maxlength="30" disabled="true"  value="#{prescricaoBean.prescricao.sexo}"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="contacto" style="width: 185px" maxlength="30" disabled="true"  value="#{prescricaoBean.prescricao.contacto}"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="morada" style="width: 185px" maxlength="30" disabled="true"  value="#{prescricaoBean.prescricao.morada}"/>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
+                <p:tab title="Consulta / Procedimento Médico">
+                    <p:panelGrid class="panelForm" styleClass="panelColumns">
+                        <p:row>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consultaNome" value="Consulta/Procedimento:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consultaData" value="Data:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consultaHora" value="Hora:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consultaMedico" value="Médico:"/>
+                            </p:column>
+                        </p:row>
+                        <p:row class="panelLinha" style="background: #ddd">
+                            <p:column style="border: none">
+                                <p:selectOneMenu id="consultaNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.consulta}">
+                                    <f:selectItems value="#{facturaBean.consultas}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="consultaData" style="width: 185px" value="#{facturaBean.consultaData}"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="consultaHora" style="width: 185px" value="#{facturaBean.consultaHora}"/>
+                            </p:column>
+                            <p:column id="consultaMedico" style="border: none">
+                                <p:selectOneMenu filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.consultaMedico}">
+                                    <f:selectItems value="#{facturaBean.medicos}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <br/>
 
-                <br/>
-                <p:toolbar>
-                    <p:toolbarGroup align="left">
-                        <p:commandButton icon="fa fa-check" value="&nbsp;Confirmar" actionListener="#{prescricaoBean.confirmar(prescricaoBean.prescricao.pac, usuarioBean.usuario.confIdUsuario)}" ajax="true" update="@form"></p:commandButton>
-                    </p:toolbarGroup>
-                </p:toolbar>
-                <br/>
-            </p:fieldset>
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+                            <p:commandButton icon="pi pi-file" value="&nbsp;Adicionar" actionListener="#{facturaBean.adicionarConsulta()}" ajax="true" update="@form"></p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
 
-            <br/>
-            <p:fieldset legend="Prescrição" style="background: #eee">
-                <p:panelGrid class="panelForm" styleClass="panelColumns" style="margin: 0 auto;">
-                    <p:row>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="prescricao" value="Prescrição:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="posologia" value="Posologia:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="quantidade" value="Quantidade:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="data" value="Data:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="clinico" value="O Clínico:"/>
-                        </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <h:outputLabel for="contClinico" value="Contacto (Clínico):"/>
-                        </p:column>
-                    </p:row>
-                    <p:row class="panelLinha" style="background: #ddd">
+                    <br/>
 
-                        <p:column style="background: #eee; border: none">
-                            <p:selectOneMenu filter="true" style="width: 185px" filterMatchMode="startsWith" id="prescricao" value="#{prescricaoBean.medicament}">
-                                <f:selectItems value="#{prescricaoBean.presc}" />
-                            </p:selectOneMenu>
+                    <p:dataTable value="#{facturaBean.consultasTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consulta.ordem}"  rows="5" paginator="true" widgetVar="tblConsultas" var="consulta">
+                        <p:column style="text-align: center" headerText="Operação" width="100">
+                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.removerConsulta(consulta)}" update="@form"/>
                         </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:selectOneMenu filter="true" style="width: 185px" filterMatchMode="startsWith" id="posologia" value="#{prescricaoBean.posologia}">
-                                <f:selectItems value="#{prescricaoBean.pos}" />
-                            </p:selectOneMenu>
+                        <p:column headerText="Consulta/Procedimento">
+                            <h:outputText value="#{consulta.consulta}"></h:outputText>
                         </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="quantidade" style="width: 185px" value="#{prescricaoBean.quantidade}"/>
+                        <p:column headerText="Data/Hora">
+                            <h:outputText value="#{consulta.consultaData}"></h:outputText>
                         </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="data" style="width: 185px" maxlength="30" disabled="true"  value="#{prescricaoBean.prescricao.data}"/>
+                        <p:column headerText="Médico">
+                            <h:outputText value="#{consulta.consultaMedico}"></h:outputText>
                         </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="clinico" style="width: 185px" maxlength="30" disabled="true"  value="#{usuarioBean.usuario.confNome}"/>
+                        <p:column headerText="Valor (MT)">
+                            <h:outputText value="#{consulta.consultaValor}"></h:outputText>
                         </p:column>
-                        <p:column style="background: #eee; border: none">
-                            <p:inputText id="contClinico" style="width: 185px" maxlength="30" disabled="true"  value="#{usuarioBean.usuario.confContacto}"/>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
-                <br/>
+                    </p:dataTable>
 
-                <p:toolbar>
-                    <p:toolbarGroup align="left">
-                        <p:commandButton icon="pi pi-file" value="&nbsp;Adicionar" actionListener="#{prescricaoBean.adicionarMedicamento()}" ajax="true" update="@form"></p:commandButton>
-                    </p:toolbarGroup>
-                </p:toolbar>
+                </p:tab>
 
-                <br/>
+                <!--FACTURA EXAME-->
 
-                <p:dataTable value="#{prescricaoBean.medicamentos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{medicamento.ordem}"  rows="5" paginator="true" widgetVar="personTable" var="medicamento">
-                    <p:column style="text-align: center" headerText="Operação" width="100">
-                        <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{prescricaoBean.removerMedicamento(medicamento)}" update="@form"/>
-                    </p:column>
-                    <p:column headerText="Prescrição">
-                        <h:outputText value="#{medicamento.medicament}"></h:outputText>
-                    </p:column>
-                    <p:column headerText="Posologia">
-                        <h:outputText value="#{medicamento.posologia}"></h:outputText>
-                    </p:column>
-                    <p:column headerText="Quantidade">
-                        <h:outputText value="#{medicamento.quantidade}"></h:outputText>
-                    </p:column>
-                </p:dataTable>
-            </p:fieldset>
-            <hr style="border: 0.5px solid #aaa"/>
+                <p:tab title="Exames médicos">
+                    <p:panelGrid class="panelForm" styleClass="panelColumns">
+                        <p:row>
+                            <p:column style="border: none">
+                                <h:outputLabel for="exameNome" value="Exame:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="exameData" value="Data:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="exameHora" value="Hora:"/>
+                            </p:column>
+                        </p:row>
+                        <p:row class="panelLinha" style="background: #ddd">
+                            <p:column style="border: none">
+                                <p:selectOneMenu id="exameNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.exame}">
+                                    <f:selectItems value="#{facturaBean.exames}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="exameData" style="width: 185px" value="#{facturaBean.exameData}"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="exameHora" style="width: 185px" value="#{facturaBean.exameHora}"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <br/>
+
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+                            <p:commandButton icon="pi pi-file" value="&nbsp;Adicionar" actionListener="#{facturaBean.adicionarExame()}" ajax="true" update="@form"></p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <br/>
+
+                    <p:dataTable value="#{facturaBean.examesTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{exame.ordem}"  rows="5" paginator="true" widgetVar="tblExames" var="exame">
+                        <p:column style="text-align: center" headerText="Operação" width="100">
+                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.removerExame(exame)}" update="@form"/>
+                        </p:column>
+                        <p:column headerText="Exame">
+                            <h:outputText value="#{exame.exame}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Data/Hora">
+                            <h:outputText value="#{exame.exameData}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Categoria">
+                            <h:outputText value="#{exame.exameCategoria}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor (MT)">
+                            <h:outputText value="#{exame.exameValor}"></h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:tab>
+
+                <!--FACTURA INTERNAMENTO-->
+
+                <p:tab title="Internamentos">
+                    <p:panelGrid class="panelForm" styleClass="panelColumns">
+                        <p:row>
+                            <p:column style="border: none">
+                                <h:outputLabel for="internamentoNome" value="Internamento:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="internamentoData" value="Data:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="internamentoHora" value="Hora:"/>
+                            </p:column>
+                        </p:row>
+                        <p:row class="panelLinha" style="background: #ddd">
+                            <p:column style="border: none">
+                                <p:selectOneMenu id="internamentoNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.internamento}">
+                                    <f:selectItems value="#{facturaBean.internamentos}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="internamentoData" style="width: 185px" value="#{facturaBean.internamentoData}"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="internamentoHora" style="width: 185px" value="#{facturaBean.internamentoHora}"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <br/>
+
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+                            <p:commandButton icon="pi pi-file" value="&nbsp;Adicionar" actionListener="#{facturaBean.adicionarInternamento()}" ajax="true" update="@form"></p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <br/>
+
+                    <p:dataTable value="#{facturaBean.internamentosTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{internamento.ordem}"  rows="5" paginator="true" widgetVar="tblInternamentos" var="internamento">
+                        <p:column style="text-align: center" headerText="Operação" width="100">
+                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.removerInternamento(internamento)}" update="@form"/>
+                        </p:column>
+                        <p:column headerText="Internamento">
+                            <h:outputText value="#{internamento.internamento}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Data/Hora">
+                            <h:outputText value="#{internamento.internamentoData}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Tempo">
+                            <h:outputText value="#{internamento.internamentoTempo}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor (MT)">
+                            <h:outputText value="#{internamento.internamentoValor}"></h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:tab>
+
+                <!--FACTURA VISITA-->
+
+                <p:tab title="Visitas">
+                    <p:panelGrid class="panelForm" styleClass="panelColumns">
+                        <p:row>
+                            <p:column style="border: none">
+                                <h:outputLabel for="visitaNome" value="Visita"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="visitaData" value="Data:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="visitaHora" value="Hora:"/>
+                            </p:column>
+                        </p:row>
+                        <p:row class="panelLinha" style="background: #ddd">
+                            <p:column style="border: none">
+                                <p:selectOneMenu id="visitaNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.visita}">
+                                    <f:selectItems value="#{facturaBean.visitas}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="visitaData" style="width: 185px" value="#{facturaBean.visitaData}"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="visitaHora" style="width: 185px" value="#{facturaBean.visitaHora}"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <br/>
+
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+                            <p:commandButton icon="pi pi-file" value="&nbsp;Adicionar" actionListener="#{facturaBean.adicionarVisita()}" ajax="true" update="@form"></p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <br/>
+
+                    <p:dataTable value="#{facturaBean.visitasTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{visita.ordem}"  rows="5" paginator="true" widgetVar="tblVisitas" var="visita">
+                        <p:column style="text-align: center" headerText="Operação" width="100">
+                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.removerVisita(visita)}" update="@form"/>
+                        </p:column>
+                        <p:column headerText="Visita">
+                            <h:outputText value="#{visita.visita}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Data">
+                            <h:outputText value="#{visita.visitaData}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Tempo">
+                            <h:outputText value="#{visita.visitaTempo}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor (MT)">
+                            <h:outputText value="#{visita.visitaValor}"></h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:tab>
+
+                <!--FACTURA MEDICAMENTO-->
+
+                <p:tab title="Medicamentos">
+                    <p:panelGrid class="panelForm" styleClass="panelColumns">
+                        <p:row>
+                            <p:column style="border: none">
+                                <h:outputLabel for="medicamentoNome" value="Medicamento:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="medicamentoData" value="Data:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="medicamentoHora" value="Hora:"/>
+                            </p:column>
+                        </p:row>
+                        <p:row class="panelLinha" style="background: #ddd">
+                            <p:column style="border: none">
+                                <p:selectOneMenu id="medicamentoNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.medicamento}">
+                                    <f:selectItems value="#{facturaBean.medicamentos}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="medicamentoData" style="width: 185px" value="#{facturaBean.medicamentoData}"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="medicamentoHora" style="width: 185px" value="#{facturaBean.medicamentoHora}"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <br/>
+
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+                            <p:commandButton icon="pi pi-file" value="&nbsp;Adicionar" actionListener="#{facturaBean.adicionarMedicamento()}" ajax="true" update="@form"></p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <br/>
+
+                    <p:dataTable value="#{facturaBean.medicamentosTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{medicamento.ordem}"  rows="5" paginator="true" widgetVar="tblMedicamentos" var="medicamento">
+                        <p:column style="text-align: center" headerText="Operação" width="100">
+                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.removerMedicamento(medicamento)}" update="@form"/>
+                        </p:column>
+                        <p:column headerText="Medicamento">
+                            <h:outputText value="#{medicamento.medicamento}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Data/Hora">
+                            <h:outputText value="#{medicamento.medicamentoData}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Categoria">
+                            <h:outputText value="#{medicamento.medicamentoCategoria}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor (MT)">
+                            <h:outputText value="#{medicamento.medicamentoValor}"></h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:tab>
+
+                <!--FACTURA CONSUMIVEIS-->
+
+                <p:tab title="Consumíveis">
+                    <p:panelGrid class="panelForm" styleClass="panelColumns">
+                        <p:row>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consumivelNome" value="Consumivel"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consumivelData" value="Data:"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consumivelHora" value="Hora:"/>
+                            </p:column>
+                        </p:row>
+                        <p:row class="panelLinha" style="background: #ddd">
+                            <p:column style="border: none">
+                                <p:selectOneMenu id="consumivelNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.consumivel}">
+                                    <f:selectItems value="#{facturaBean.consumiveis}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="consumivelData" style="width: 185px" value="#{facturaBean.consumivelData}"/>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="consumivelHora" style="width: 185px" value="#{facturaBean.consumivelHora}"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <br/>
+
+                    <p:toolbar>
+                        <p:toolbarGroup align="left">
+                            <p:commandButton icon="pi pi-file" value="&nbsp;Adicionar" actionListener="#{facturaBean.adicionarConsumivel()}" ajax="true" update="@form"></p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <br/>
+
+                    <p:dataTable value="#{facturaBean.consumiveisTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consumivel.ordem}"  rows="5" paginator="true" widgetVar="tblConsumiveis" var="consumivel">
+                        <p:column style="text-align: center" headerText="Operação" width="100">
+                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.removerConsumivel(consumivel)}" update="@form"/>
+                        </p:column>
+                        <p:column headerText="Consumivel">
+                            <h:outputText value="#{consumivel.consumivel}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Data">
+                            <h:outputText value="#{consumivel.consumivelData}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Categoria">
+                            <h:outputText value="#{consumivel.consumivelCategoria}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor (MT)">
+                            <h:outputText value="#{consumivel.consumivelValor}"></h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:tab>
+
+            </p:accordionPanel>
+
+            <hr style=""/>
+
+            <!--SALVAR FACTURA-->
+
             <p:toolbar>
                 <p:toolbarGroup align="right">
-                    <p:commandButton icon="fa fa-save" value="&nbsp;Gravar" actionListener="#{prescricaoBean.salvar(prescricaoBean.prescricao)}" ajax="true" update="@form"></p:commandButton>
-                    <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" actionListener="#{prescricaoBean.cancelar(prescricaoBean.prescricao)}"  ajax="true" update="@form"></p:commandButton>
+                    <p:commandButton icon="fa fa-save" value="&nbsp;Gravar" actionListener="#{facturaBean.salvar(facturaBean.factura, usuarioBean.usuario.confIdUsuario)}" ajax="true" update="@form"></p:commandButton>
+                    <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" actionListener="#{prescricaoBean.cancelar(facturaBean.factura)}"  ajax="true" update="@form"></p:commandButton>
                 </p:toolbarGroup>
             </p:toolbar>
 
+            <br/>
+
+            <p:fieldset legend="Registros de factura" style="background: #eee">
+
+                <p:panelGrid class="panelForm" styleClass="panelColumns">
+                    <p:row>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="nidFiltro" value="NID:"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="dataInicial" value="A partir de:"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <h:outputLabel for="dataFinal" value="Até:"/>
+                        </p:column>
+                    </p:row>
+                    <p:row class="panelLinha" style="background: #ddd">
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="nidFiltro" style="width: 185px" maxlength="30" value="#{facturaBean.factura.nidFiltro}"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="dataInicial" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicial}"/>
+                        </p:column>
+                        <p:column style="background: #eee; border: none">
+                            <p:inputText id="dataFinal" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinal}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <br/>
+                <p:toolbar>
+                    <p:toolbarGroup align="left">
+                        <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{facturaBean.pesquisarFiltro()}" ajax="true" update="@form"></p:commandButton>
+                        <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{facturaBean.cancelarFiltro()}" ajax="true" update="@form"></p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <br/>
+
+                <p:dataTable value="#{facturaBean.facturas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturas" var="factura">
+                    <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:commandButton style="font-size: 17px" icon="fa fa-print" actionListener="#{facturaBean.print(factura, usuarioBean.usuario.confIdUsuario)}" ajax="false" onclick="this.form.target = '_blank'" update="@form"/>
+                        <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.deletar(factura)}" ajax="true" update="@form">
+                            <p:confirm header="Confirmação" message="Deseja mesmo remover a factura?" icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="&nbsp;Sim" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                            <p:commandButton value="&nbsp;Não" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
+                        </p:confirmDialog>
+                    </p:column>
+                    <p:column headerText="Data" sortBy="#{factura.data}">
+                        <h:outputText value="#{factura.data}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="NID" sortBy="#{factura.nidPaciente}">
+                        <h:outputText value="#{factura.nidPaciente}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="Nome" sortBy="#{factura.nomePaciente}">
+                        <h:outputText value="#{factura.nomePaciente}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="Apelido" sortBy="#{factura.apelidoPaciente}">
+                        <h:outputText value="#{factura.apelidoPaciente}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="O Clínico" sortBy="#{factura.nomeMedico}">
+                        <h:outputText value="#{factura.nomeMedico}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="O Administrativo" sortBy="#{factura.nomeUsuario}">
+                        <h:outputText value="#{factura.nomeUsuario}"></h:outputText>
+                    </p:column>
+                </p:dataTable>
+                <br/>
+            </p:fieldset>
         </div>
 
         <br/>
@@ -161,6 +530,7 @@
         <br/>
 
         <!--METODO DE TIMEOUT (RECARREGAMENTO DA PÁGINA PARA LOGIN-->
+
         <p:idleMonitor timeout="1200000">
             <p:ajax event="idle" listener="#{usuarioBean.reload()}" update="messages"/> 
         </p:idleMonitor>

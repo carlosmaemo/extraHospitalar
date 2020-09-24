@@ -20,6 +20,114 @@
 
                 <p:accordionPanel multiple="true">
 
+                    <!--CADASTRO DE PACIENTES-->
+
+                    <p:tab title="Gestão e Pacientes">
+                        <p:panelGrid class="panelForm" styleClass="panelColumns">
+                            <p:row>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="nomePaciente" value="Nome:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="apelidoPaciente" value="Apelido:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="contactoPaciente" value="Contacto:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="enderecoPaciente" value="Endereço:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="nidPaciente" value="NID:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="sexoPaciente" value="Sexo:"/>
+                                </p:column>
+                            </p:row>
+                            <p:row class="panelLinha" style="background: #ddd">
+                                <p:column style="border: none">
+                                    <p:inputText id="nomePaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.nomePaciente}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.apelidoPaciente}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="contactoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.contactoPaciente}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="enderecoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.enderecoPaciente}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="nidPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.nidPaciente}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="sexoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.sexoPaciente}"/>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="codigoEmpresaPaciente" value="Associar (Empresa):"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column style="border: none" colspan="2">
+                                    <p:selectOneMenu id="codigoEmpresaPaciente" style="width: 100%" filter="true" filterMatchMode="startsWith" value="#{pacienteBean.paciente.codigoEmpresa}">
+                                        <f:selectItems value="#{pacienteBean.codigoEmpresas}" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="left">
+                                <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{pacienteBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
+                                <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{pacienteBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <br/>
+
+                        <p:dataTable value="#{pacienteBean.pacientes}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{paciente.idPaciente}" rows="5" paginator="true" widgetVar="tblPaciente" var="paciente">
+                            <p:column style="text-align: center" headerText="Operação" width="100">
+                                <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{pacienteBean.deletar(paciente)}" update="@form">
+                                    <p:confirm header="Confirmação" message="Deseja mesmo remover o médico?" icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandButton>
+
+                                <p:commandButton style="font-size: 17px" icon="fa fa-pencil" action="#{pacienteBean.editar(paciente)}" update="@form"></p:commandButton>
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="&nbsp;Sim" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                                    <p:commandButton value="&nbsp;Não" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-close" />
+                                </p:confirmDialog>
+
+                            </p:column>
+                            <p:column headerText="Nome" sortBy="#{paciente.nomePaciente}">
+                                <h:outputText value="#{paciente.nomePaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Sexo" sortBy="#{paciente.sexoPaciente}">
+                                <h:outputText value="#{paciente.sexoPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="NID" sortBy="#{paciente.nidPaciente}">
+                                <h:outputText value="#{paciente.nidPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Empresa" sortBy="#{paciente.nomeEmpresa}">
+                                <h:outputText value="#{paciente.nomeEmpresa}"></h:outputText>
+                            </p:column>
+
+                        </p:dataTable>
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="left">
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{pacienteBean.valor_pesquisa}"/>&nbsp;
+                                <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{pacienteBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
+                                <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{pacienteBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                    </p:tab>
+
                     <!--CADASTRO DE EMPRESA-->
 
                     <p:tab title="Gestão e Cadastro de Empresas">
@@ -318,6 +426,9 @@
                                 <p:column style="border: none">
                                     <h:outputLabel for="descricaoConsulta" value="Descrição:"/>
                                 </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="valorConsulta" value="Valor (MT):"/>
+                                </p:column>
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
@@ -331,6 +442,9 @@
                                 </p:column>
                                 <p:column style="border: none">
                                     <p:inputText id="descricaoConsulta" style="width: 185px" maxlength="30" value="#{consultaBean.consulta.descricaoConsulta}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="valorConsulta" style="width: 185px" maxlength="30" value="#{consultaBean.consulta.valorConsulta}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -368,8 +482,8 @@
                             <p:column headerText="Título" sortBy="#{consulta.tituloConsulta}">
                                 <h:outputText value="#{consulta.tituloConsulta}"></h:outputText>
                             </p:column>
-                            <p:column headerText="Descrição" sortBy="#{consulta.descricaoConsulta}">
-                                <h:outputText value="#{consulta.descricaoConsulta}"></h:outputText>
+                            <p:column headerText="Valor (MT)" sortBy="#{consulta.valorConsulta}">
+                                <h:outputText value="#{consulta.valorConsulta}"></h:outputText>
                             </p:column>
 
                         </p:dataTable>

@@ -51,13 +51,14 @@ public class ConsultaDAO {
             Connection conexao = Conecxao.getConexao();
             PreparedStatement ps;
 
-            ps = conexao.prepareStatement("update consulta set categoriaConsulta=?, tituloConsulta=?, descricaoConsulta=? where codigoConsulta=?");
+            ps = conexao.prepareStatement("update consulta set categoriaConsulta=?, tituloConsulta=?, descricaoConsulta=?, valorConsulta=? where codigoConsulta=?");
 
             ps.setString(1, consulta.getCategoriaConsulta());
             ps.setString(2, consulta.getTituloConsulta());
             ps.setString(3, consulta.getDescricaoConsulta());
+            ps.setString(4, consulta.getValorConsulta());
 
-            ps.setString(4, consulta.getCodigoConsulta());
+            ps.setString(5, consulta.getCodigoConsulta());
 
             ps.execute();
 
@@ -73,12 +74,13 @@ public class ConsultaDAO {
             Connection conexao = Conecxao.getConexao();
             PreparedStatement ps;
 
-            ps = conexao.prepareStatement("INSERT INTO `consulta`(`codigoConsulta`, `categoriaConsulta`, `tituloConsulta`, `descricaoConsulta`) VALUES (?, ?, ?, ?)");
+            ps = conexao.prepareStatement("INSERT INTO `consulta`(`codigoConsulta`, `categoriaConsulta`, `tituloConsulta`, `descricaoConsulta`, `valorConsulta`) VALUES (?, ?, ?, ?, ?)");
 
             ps.setString(1, consulta.getCodigoConsulta());
             ps.setString(2, consulta.getCategoriaConsulta());
             ps.setString(3, consulta.getTituloConsulta());
             ps.setString(4, consulta.getDescricaoConsulta());
+            ps.setString(5, consulta.getValorConsulta());
 
             ps.execute();
 
@@ -127,6 +129,7 @@ public class ConsultaDAO {
                 ps.setCategoriaConsulta(rs.getString("categoriaConsulta"));
                 ps.setTituloConsulta(rs.getString("tituloConsulta"));
                 ps.setDescricaoConsulta(rs.getString("descricaoConsulta"));
+                ps.setValorConsulta(rs.getString("valorConsulta"));
 
                 consultas.add(ps);
 
@@ -167,6 +170,7 @@ public class ConsultaDAO {
                 ps.setCategoriaConsulta(rs.getString("categoriaConsulta"));
                 ps.setTituloConsulta(rs.getString("tituloConsulta"));
                 ps.setDescricaoConsulta(rs.getString("descricaoConsulta"));
+                ps.setValorConsulta(rs.getString("valorConsulta"));
 
                 relatorios.add(ps);
             }

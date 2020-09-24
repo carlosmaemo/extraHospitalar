@@ -11,6 +11,7 @@ public class Consulta {
     private String categoriaConsulta;
     private String tituloConsulta;
     private String descricaoConsulta;
+    private String valorConsulta;
 
     public Integer getIdConsulta() {
         return idConsulta;
@@ -50,6 +51,14 @@ public class Consulta {
 
     public void setDescricaoConsulta(String descricaoConsulta) {
         this.descricaoConsulta = descricaoConsulta;
+    }
+
+    public String getValorConsulta() {
+        return valorConsulta;
+    }
+
+    public void setValorConsulta(String valorConsulta) {
+        this.valorConsulta = valorConsulta;
     }
     
     @Override
