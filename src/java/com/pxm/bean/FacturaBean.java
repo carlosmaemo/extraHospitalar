@@ -49,12 +49,13 @@ public class FacturaBean {
     private ArrayList<MedicamentoTemp> medicamentosTemp = new ArrayList<MedicamentoTemp>();
     private ArrayList<VisitaTemp> visitasTemp = new ArrayList<VisitaTemp>();
 
-    private String consulta, consultaData, consultaHora, consultaMedico, consultaValor, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
-    private String exame, exameData, exameHora, exameCategoria, exameValor, exameCodigo, exameTitulo, exameDescricao;
-    private String consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelValor, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia;
-    private String internamento, internamentoData, internamentoHora, internamentoTempo, internamentoValor, internamentoCodigo, internamentoTipo;
-    private String medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoValor, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia;
-    private String visita, visitaData, visitaHora, visitaTempo, visitaValor, visitaCodigo, visitaTipo;
+    private double consultaValor, exameValor, consumivelValor, internamentoValor, medicamentoValor, visitaValor;
+    private String consulta, consultaData, consultaHora, consultaMedico, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
+    private String exame, exameData, exameHora, exameCategoria, exameCodigo, exameTitulo, exameDescricao;
+    private String consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia;
+    private String internamento, internamentoData, internamentoHora, internamentoTempo, internamentoCodigo, internamentoTipo;
+    private String medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia;
+    private String visita, visitaData, visitaHora, visitaTempo, visitaCodigo, visitaTipo;
 
     @PostConstruct
     public void init() {
@@ -340,11 +341,11 @@ public class FacturaBean {
         this.exameCategoria = exameCategoria;
     }
 
-    public String getExameValor() {
+    public double getExameValor() {
         return exameValor;
     }
 
-    public void setExameValor(String exameValor) {
+    public void setExameValor(double exameValor) {
         this.exameValor = exameValor;
     }
 
@@ -356,11 +357,11 @@ public class FacturaBean {
         this.consulta = consulta;
     }
 
-    public String getConsultaValor() {
+    public double getConsultaValor() {
         return consultaValor;
     }
 
-    public void setConsultaValor(String consultaValor) {
+    public void setConsultaValor(double consultaValor) {
         this.consultaValor = consultaValor;
     }
 
@@ -460,11 +461,11 @@ public class FacturaBean {
         this.consumivelCategoria = consumivelCategoria;
     }
 
-    public String getConsumivelValor() {
+    public double getConsumivelValor() {
         return consumivelValor;
     }
 
-    public void setConsumivelValor(String consumivelValor) {
+    public void setConsumivelValor(double consumivelValor) {
         this.consumivelValor = consumivelValor;
     }
 
@@ -500,11 +501,11 @@ public class FacturaBean {
         this.internamentoTempo = internamentoTempo;
     }
 
-    public String getInternamentoValor() {
+    public double getInternamentoValor() {
         return internamentoValor;
     }
 
-    public void setInternamentoValor(String internamentoValor) {
+    public void setInternamentoValor(double internamentoValor) {
         this.internamentoValor = internamentoValor;
     }
 
@@ -540,11 +541,11 @@ public class FacturaBean {
         this.medicamentoCategoria = medicamentoCategoria;
     }
 
-    public String getMedicamentoValor() {
+    public double getMedicamentoValor() {
         return medicamentoValor;
     }
 
-    public void setMedicamentoValor(String medicamentoValor) {
+    public void setMedicamentoValor(double medicamentoValor) {
         this.medicamentoValor = medicamentoValor;
     }
 
@@ -580,11 +581,11 @@ public class FacturaBean {
         this.visitaTempo = visitaTempo;
     }
 
-    public String getVisitaValor() {
+    public double getVisitaValor() {
         return visitaValor;
     }
 
-    public void setVisitaValor(String visitaValor) {
+    public void setVisitaValor(double visitaValor) {
         this.visitaValor = visitaValor;
     }
 

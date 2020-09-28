@@ -178,6 +178,23 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados da consulta!", ex);
         }
     }
+    
+    public double verificarDadosValorConsulta(String codigo) throws ErroSistema {
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("Select valorConsulta from consulta where codigoConsulta=?");
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double a = rs.getDouble("valorConsulta");
+                return a;
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao verificar o valor da consulta!", ex);
+        }
+    }
 
     // VERIFICAR DADOS CONSUMIVEL
     public String verificarDadosConsumivel(String codigo, String campo) throws ErroSistema {
@@ -196,7 +213,23 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados do consumivel!", ex);
         }
     }
-
+    public double verificarDadosValorConsumivel(String codigo) throws ErroSistema {
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("Select valorConsumivel from consumivel where codigoConsumivel=?");
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double a = rs.getDouble("valorConsumivel");
+                return a;
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao verificar o valor do consumivel!", ex);
+        }
+    }
+    
     // VERIFICAR DADOS INTERNAMENTO
     public String verificarDadosInternamento(String codigo, String campo) throws ErroSistema {
         try {
@@ -212,6 +245,22 @@ public class FacturaDAO {
             }
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao verificar os dados do internamento!", ex);
+        }
+    }
+    public double verificarDadosValorInternamento(String codigo) throws ErroSistema {
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("Select valorInternamento from internamento where codigoInternamento=?");
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double a = rs.getDouble("valorInternamento");
+                return a;
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao verificar o valor do internamento!", ex);
         }
     }
 
@@ -232,6 +281,22 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados do medicamento!", ex);
         }
     }
+    public double verificarDadosValorMedicamento(String codigo) throws ErroSistema {
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("Select valorMedicamento from medicamento where codigoMedicamento=?");
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double a = rs.getDouble("valorMedicamento");
+                return a;
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao verificar o valor do medicamento!", ex);
+        }
+    }
 
     // VERIFICAR DADOS VISITA
     public String verificarDadosVisita(String codigo, String campo) throws ErroSistema {
@@ -250,6 +315,22 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados da visita!", ex);
         }
     }
+    public double verificarDadosValorVisita(String codigo) throws ErroSistema {
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("Select valorVisita from visita where codigoVisita=?");
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double a = rs.getDouble("valorVisita");
+                return a;
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao verificar o valor do medicamento!", ex);
+        }
+    }
 
     // VERIFICAR DADOS EXAME
     public String verificarDadosExame(String codigo, String campo) throws ErroSistema {
@@ -266,6 +347,22 @@ public class FacturaDAO {
             }
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao verificar os dados do exame!", ex);
+        }
+    }
+    public double verificarDadosValorExame(String codigo) throws ErroSistema {
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps = conexao.prepareStatement("Select valorExame from exame where codigoExame=?");
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double a = rs.getDouble("valorExame");
+                return a;
+            } else {
+                return 0;
+            }
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao verificar o valor do exame!", ex);
         }
     }
 
@@ -439,7 +536,7 @@ public class FacturaDAO {
                 ps1.setString(3, m.getConsultaCategoria());
                 ps1.setString(4, m.getConsultaTitulo());
                 ps1.setString(5, m.getConsultaDescricao());
-                ps1.setString(6, m.getConsultaValor());
+                ps1.setDouble(6, m.getConsultaValor());
                 ps1.execute();
             }
 
@@ -448,7 +545,7 @@ public class FacturaDAO {
                 ps2.setString(2, m.getConsumivelCodigo());
                 ps2.setString(3, m.getConsumivelCategoria());
                 ps2.setString(4, m.getConsumivelTitulo());
-                ps2.setString(5, m.getConsumivelValor());
+                ps2.setDouble(5, m.getConsumivelValor());
                 ps2.setString(6, m.getConsumivelComposicao());
                 ps2.setString(7, m.getConsumivelPosologia());
                 ps2.execute();
@@ -459,7 +556,7 @@ public class FacturaDAO {
                 ps3.setString(2, m.getExameCodigo());
                 ps3.setString(3, m.getExameCategoria());
                 ps3.setString(4, m.getExameTitulo());
-                ps3.setString(5, m.getExameValor());
+                ps3.setDouble(5, m.getExameValor());
                 ps3.setString(6, m.getExameDescricao());
                 ps3.execute();
             }
@@ -469,7 +566,7 @@ public class FacturaDAO {
                 ps4.setString(2, m.getInternamentoCodigo());
                 ps4.setString(3, m.getInternamentoTipo());
                 ps4.setString(4, m.getInternamentoTempo());
-                ps4.setString(5, m.getInternamentoValor());
+                ps4.setDouble(5, m.getInternamentoValor());
                 ps4.execute();
             }
 
@@ -478,7 +575,7 @@ public class FacturaDAO {
                 ps5.setString(2, m.getMedicamentoCodigo());
                 ps5.setString(3, m.getMedicamentoCategoria());
                 ps5.setString(4, m.getMedicamentoTitulo());
-                ps5.setString(5, m.getMedicamentoValor());
+                ps5.setDouble(5, m.getMedicamentoValor());
                 ps5.setString(6, m.getMedicamentoComposicao());
                 ps5.setString(7, m.getMedicamentoPosologia());
                 ps5.execute();
@@ -489,7 +586,7 @@ public class FacturaDAO {
                 ps6.setString(2, m.getVisitaCodigo());
                 ps6.setString(3, m.getVisitaTipo());
                 ps6.setString(4, m.getVisitaTempo());
-                ps6.setString(5, m.getVisitaValor());
+                ps6.setDouble(5, m.getVisitaValor());
                 ps6.execute();
             }
 
@@ -732,42 +829,40 @@ public class FacturaDAO {
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao pesquisar facturas!", ex);
         }
-
     }
 
     public void printFactura(Factura factura, Integer idUsuario) throws ErroSistema, IOException {
 
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("idPrescricao", factura.());
-//        params.put("idUsuario", idUsuario);
-//
-//        try {
-//
-//            Connection conexao = Conecxao.getConexao();
-//
-//            FacesContext context = FacesContext.getCurrentInstance();
-//            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-//            ServletOutputStream responseStream = response.getOutputStream();
-//
-//            InputStream caminho = getClass().getResourceAsStream("../report/prescricao.jrxml");
-//            response.setContentType("application/pdf");
-//            response.setHeader("Content-Disposition", "attachment; filename=\"" + relat.getNome() + " " + relat.getApelido() + " - " + relat.getData() + ".pdf\"");
-//
-//            JasperReport pathReport = JasperCompileManager.compileReport(caminho);
-//            JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
-//            JasperExportManager.exportReportToPdfStream(preencher, responseStream);
-//
-//            responseStream.flush();
-//            responseStream.close();
-//            context.renderResponse();
-//            context.responseComplete();
-//            
-//            Conecxao.fecharConexao();
-//            
-//        } catch (JRException ex) {
-//            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
+        Map<String, Object> params = new HashMap<>();
+        params.put("nidPaciente", factura.getNidPaciente());
+        params.put("idFactura", factura.getIdFactura());
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            ServletOutputStream responseStream = response.getOutputStream();
+            InputStream caminho = getClass().getResourceAsStream("../report/factura.jrxml");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + factura.getNomePaciente()+ " " + factura.getApelidoPaciente()+ " - " + factura.getData() + ".pdf\"");
+
+            JasperReport pathReport = JasperCompileManager.compileReport(caminho);
+            JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
+            JasperExportManager.exportReportToPdfStream(preencher, responseStream);
+
+            responseStream.flush();
+            responseStream.close();
+            context.renderResponse();
+            context.responseComplete();
+
+            Conecxao.fecharConexao();
+
+        } catch (JRException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
+
 }

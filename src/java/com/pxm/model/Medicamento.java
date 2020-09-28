@@ -10,7 +10,7 @@ public class Medicamento {
     private String codigoMedicamento;    
     private String categoriaMedicamento;
     private String tituloMedicamento;
-    private String valorMedicamento;
+    private double valorMedicamento;
     private String composicaoMedicamento;
     private String posologiaMedicamento;
 
@@ -46,11 +46,11 @@ public class Medicamento {
         this.tituloMedicamento = tituloMedicamento;
     }
 
-    public String getValorMedicamento() {
+    public double getValorMedicamento() {
         return valorMedicamento;
     }
 
-    public void setValorMedicamento(String valorMedicamento) {
+    public void setValorMedicamento(double valorMedicamento) {
         this.valorMedicamento = valorMedicamento;
     }
 

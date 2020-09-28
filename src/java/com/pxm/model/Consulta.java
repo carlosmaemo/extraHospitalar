@@ -4,6 +4,7 @@ package com.pxm.model;
  *
  * @author cmaemo
  */
+
 public class Consulta {
 
     private Integer idConsulta;
@@ -11,7 +12,7 @@ public class Consulta {
     private String categoriaConsulta;
     private String tituloConsulta;
     private String descricaoConsulta;
-    private String valorConsulta;
+    private double valorConsulta;
 
     public Integer getIdConsulta() {
         return idConsulta;
@@ -53,11 +54,11 @@ public class Consulta {
         this.descricaoConsulta = descricaoConsulta;
     }
 
-    public String getValorConsulta() {
+    public double getValorConsulta() {
         return valorConsulta;
     }
 
-    public void setValorConsulta(String valorConsulta) {
+    public void setValorConsulta(double valorConsulta) {
         this.valorConsulta = valorConsulta;
     }
     

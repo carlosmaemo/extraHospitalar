@@ -63,7 +63,7 @@ public class ExameDAO {
 
             ps.setString(1, exame.getCategoriaExame());
             ps.setString(2, exame.getTituloExame());
-            ps.setString(3, exame.getValorExame());
+            ps.setDouble(3, exame.getValorExame());
             ps.setString(4, exame.getDescricaoExame());
 
             ps.setString(5, exame.getCodigoExame());
@@ -87,7 +87,7 @@ public class ExameDAO {
             ps.setString(1, exame.getCodigoExame());
             ps.setString(2, exame.getCategoriaExame());
             ps.setString(3, exame.getTituloExame());
-            ps.setString(4, exame.getValorExame());
+            ps.setDouble(4, exame.getValorExame());
             ps.setString(5, exame.getDescricaoExame());
 
             ps.execute();
@@ -136,7 +136,7 @@ public class ExameDAO {
                 ps.setCodigoExame(rs.getString("codigoExame"));
                 ps.setCategoriaExame(rs.getString("categoriaExame"));
                 ps.setTituloExame(rs.getString("tituloExame"));
-                ps.setValorExame(rs.getString("valorExame"));
+                ps.setValorExame(rs.getDouble("valorExame"));
                 ps.setDescricaoExame(rs.getString("descricaoExame"));
 
                 exames.add(ps);
@@ -178,7 +178,7 @@ public class ExameDAO {
                 ps.setCodigoExame(rs.getString("codigoExame"));
                 ps.setCategoriaExame(rs.getString("categoriaExame"));
                 ps.setTituloExame(rs.getString("tituloExame"));
-                ps.setValorExame(rs.getString("valorExame"));
+                ps.setValorExame(rs.getDouble("valorExame"));
                 ps.setDescricaoExame(rs.getString("descricaoExame"));
 
                 relatorios.add(ps);

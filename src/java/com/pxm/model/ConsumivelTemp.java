@@ -13,12 +13,13 @@ public class ConsumivelTemp {
 
     private Integer idConsumivel, idFactura;
 
-    private String consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelValor, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia;
+    private String consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia;
+    private double consumivelValor;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public ConsumivelTemp(String consumivel, String consumivelData, String consumivelHora, String consumivelCategoria, String consumivelValor, String consumivelCodigo, String consumivelTitulo, String consumivelComposicao, String consumivelPosologia) {
+    public ConsumivelTemp(String consumivel, String consumivelData, String consumivelHora, String consumivelCategoria, double consumivelValor, String consumivelCodigo, String consumivelTitulo, String consumivelComposicao, String consumivelPosologia) {
         this.consumivel = consumivel;
         this.consumivelData = consumivelData;
         this.consumivelHora = consumivelHora;
@@ -150,15 +151,15 @@ public class ConsumivelTemp {
         this.canEdit = canEdit;
     }
 
-    public String getConsumivelValor() throws ErroSistema {
+    public double getConsumivelValor() throws ErroSistema {
 
         String[] parte = consumivel.split("_/");
-        consumivelValor = facturaDao.verificarDadosConsumivel(parte[1], "valorConsumivel");
+        consumivelValor = facturaDao.verificarDadosValorConsumivel(parte[1]);
         
         return consumivelValor;
     }
 
-    public void setConsumivelValor(String consumivelValor) {
+    public void setConsumivelValor(double consumivelValor) {
         
         this.consumivelValor = consumivelValor;
     }

@@ -13,12 +13,13 @@ public class ExameTemp {
 
     private Integer idExame, idFactura;
 
-    private String exame, exameData, exameHora, exameCategoria, exameValor, exameCodigo, exameTitulo, exameDescricao;
+    private String exame, exameData, exameHora, exameCategoria, exameCodigo, exameTitulo, exameDescricao;
+    private double exameValor;
     private boolean canEdit;
 
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public ExameTemp(String exame, String exameData, String exameHora, String exameCategoria, String exameValor, String exameCodigo, String exameTitulo, String exameDescricao) {
+    public ExameTemp(String exame, String exameData, String exameHora, String exameCategoria, double exameValor, String exameCodigo, String exameTitulo, String exameDescricao) {
         this.exame = exame;
         this.exameData = exameData;
         this.exameHora = exameHora;
@@ -131,15 +132,15 @@ public class ExameTemp {
         this.canEdit = canEdit;
     }
 
-    public String getExameValor() throws ErroSistema {
+    public double getExameValor() throws ErroSistema {
 
         String[] parte = exame.split("_/");
-        exameValor = facturaDao.verificarDadosExame(parte[1], "valorExame");
+        exameValor = facturaDao.verificarDadosValorExame(parte[1]);
 
         return exameValor;
     }
 
-    public void setExameValor(String exameValor) {
+    public void setExameValor(double exameValor) {
 
         this.exameValor = exameValor;
     }

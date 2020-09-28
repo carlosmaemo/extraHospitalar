@@ -15,7 +15,7 @@ public class Visita {
     private String codigoVisita;   
     private String tipoVisita;
     private String tempoVisita;
-    private String valorVisita;
+    private double valorVisita;
 
     public Integer getIdVisita() {
         return idVisita;
@@ -49,11 +49,11 @@ public class Visita {
         this.tempoVisita = tempoVisita;
     }
 
-    public String getValorVisita() {
+    public double getValorVisita() {
         return valorVisita;
     }
 
-    public void setValorVisita(String valorVisita) {
+    public void setValorVisita(double valorVisita) {
         this.valorVisita = valorVisita;
     }
  

@@ -13,12 +13,13 @@ public class InternamentoTemp {
 
     private Integer idInternamento, idFactura;
 
-    private String internamento, internamentoData, internamentoHora, internamentoTempo, internamentoValor, internamentoCodigo, internamentoTipo;
+    private String internamento, internamentoData, internamentoHora, internamentoTempo, internamentoCodigo, internamentoTipo;
+    private double internamentoValor;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public InternamentoTemp(String internamento, String internamentoData, String internamentoHora, String internamentoTempo, String internamentoValor, String internamentoCodigo, String internamentoTipo) {
+    public InternamentoTemp(String internamento, String internamentoData, String internamentoHora, String internamentoTempo, double internamentoValor, String internamentoCodigo, String internamentoTipo) {
         this.internamento = internamento;
         this.internamentoData = internamentoData;
         this.internamentoHora = internamentoHora;
@@ -122,15 +123,15 @@ public class InternamentoTemp {
         this.canEdit = canEdit;
     }
 
-    public String getInternamentoValor() throws ErroSistema {
+    public double getInternamentoValor() throws ErroSistema {
 
         String[] parte = internamento.split("_/");
-        internamentoValor = facturaDao.verificarDadosInternamento(parte[1], "valorInternamento");
+        internamentoValor = facturaDao.verificarDadosValorInternamento(parte[1]);
         
         return internamentoValor;
     }
 
-    public void setInternamentoValor(String internamentoValor) {
+    public void setInternamentoValor(double internamentoValor) {
         
         this.internamentoValor = internamentoValor;
     }

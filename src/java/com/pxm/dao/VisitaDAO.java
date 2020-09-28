@@ -64,7 +64,7 @@ public class VisitaDAO {
 
             ps.setString(1, visita.getTipoVisita());
             ps.setString(2, visita.getTempoVisita());
-            ps.setString(3, visita.getValorVisita());
+            ps.setDouble(3, visita.getValorVisita());
             ps.setString(4, visita.getCodigoVisita());
 
             ps.execute();
@@ -86,7 +86,7 @@ public class VisitaDAO {
             ps.setString(1, visita.getCodigoVisita());
             ps.setString(2, visita.getTipoVisita());
             ps.setString(3, visita.getTempoVisita());
-            ps.setString(4, visita.getValorVisita());
+            ps.setDouble(4, visita.getValorVisita());
             
             ps.execute();
 
@@ -134,7 +134,7 @@ public class VisitaDAO {
                 ps.setCodigoVisita(rs.getString("codigoVisita"));
                 ps.setTipoVisita(rs.getString("tipoVisita"));
                 ps.setTempoVisita(rs.getString("tempoVisita"));
-                ps.setValorVisita(rs.getString("valorVisita"));
+                ps.setValorVisita(rs.getDouble("valorVisita"));
 
                 visitas.add(ps);
 
@@ -175,7 +175,7 @@ public class VisitaDAO {
                 ps.setCodigoVisita(rs.getString("codigoVisita"));
                 ps.setTipoVisita(rs.getString("tipoVisita"));
                 ps.setTempoVisita(rs.getString("tempoVisita"));
-                ps.setValorVisita(rs.getString("valorVisita"));
+                ps.setValorVisita(rs.getDouble("valorVisita"));
 
                 relatorios.add(ps);
             }

@@ -59,7 +59,7 @@ public class MedicamentoBean {
             addMensagem("Campo vazio!", "O campo 'Categoria' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (medicamento.getTituloMedicamento().isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Título' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (medicamento.getValorMedicamento().isEmpty()) {
+        } else if (medicamento.getValorMedicamento() == 0) {
             addMensagem("Campo vazio!", "O campo 'Valor (MT)' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (medicamentoDao.verificar(medicamento) == true && editar == false) {
             addMensagem("Medicamento existente!", "O medicamento já encontra-se registrado.", FacesMessage.SEVERITY_WARN);
@@ -77,7 +77,7 @@ public class MedicamentoBean {
             medicamento.setCodigoMedicamento("");
             medicamento.setCategoriaMedicamento("");
             medicamento.setTituloMedicamento("");
-            medicamento.setValorMedicamento("");
+            medicamento.setValorMedicamento(0);
             medicamento.setComposicaoMedicamento("");
             medicamento.setPosologiaMedicamento("");
 
@@ -93,7 +93,7 @@ public class MedicamentoBean {
                 medicamento.setCodigoMedicamento("");
                 medicamento.setCategoriaMedicamento("");
                 medicamento.setTituloMedicamento("");
-                medicamento.setValorMedicamento("");
+                medicamento.setValorMedicamento(0);
                 medicamento.setComposicaoMedicamento("");
                 medicamento.setPosologiaMedicamento("");
 
@@ -121,7 +121,7 @@ public class MedicamentoBean {
                 medicamento.setCodigoMedicamento("");
                 medicamento.setCategoriaMedicamento("");
                 medicamento.setTituloMedicamento("");
-                medicamento.setValorMedicamento("");
+                medicamento.setValorMedicamento(0);
                 medicamento.setComposicaoMedicamento("");
                 medicamento.setPosologiaMedicamento("");
 
@@ -136,7 +136,7 @@ public class MedicamentoBean {
                 medicamento.setCodigoMedicamento("");
                 medicamento.setCategoriaMedicamento("");
                 medicamento.setTituloMedicamento("");
-                medicamento.setValorMedicamento("");
+                medicamento.setValorMedicamento(0);
                 medicamento.setComposicaoMedicamento("");
                 medicamento.setPosologiaMedicamento("");
 

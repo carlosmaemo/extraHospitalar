@@ -63,7 +63,7 @@ public class InternamentoDAO {
 
             ps.setString(1, internamento.getTipoInternamento());
             ps.setString(2, internamento.getTempoInternamento());
-            ps.setString(3, internamento.getValorInternamento());
+            ps.setDouble(3, internamento.getValorInternamento());
             ps.setString(4, internamento.getCodigoInternamento());
 
             ps.execute();
@@ -85,7 +85,7 @@ public class InternamentoDAO {
             ps.setString(1, internamento.getCodigoInternamento());
             ps.setString(2, internamento.getTipoInternamento());
             ps.setString(3, internamento.getTempoInternamento());
-            ps.setString(4, internamento.getValorInternamento());
+            ps.setDouble(4, internamento.getValorInternamento());
 
             ps.execute();
 
@@ -133,7 +133,7 @@ public class InternamentoDAO {
                 ps.setCodigoInternamento(rs.getString("codigoInternamento"));
                 ps.setTipoInternamento(rs.getString("tipoInternamento"));
                 ps.setTempoInternamento(rs.getString("tempoInternamento"));
-                ps.setValorInternamento(rs.getString("valorInternamento"));
+                ps.setValorInternamento(rs.getDouble("valorInternamento"));
 
                 internamentos.add(ps);
 
@@ -173,7 +173,7 @@ public class InternamentoDAO {
                 ps.setCodigoInternamento(rs.getString("codigoInternamento"));
                 ps.setTipoInternamento(rs.getString("tipoInternamento"));
                 ps.setTempoInternamento(rs.getString("tempoInternamento"));
-                ps.setValorInternamento(rs.getString("valorInternamento"));
+                ps.setValorInternamento(rs.getDouble("valorInternamento"));
 
                 relatorios.add(ps);
             }

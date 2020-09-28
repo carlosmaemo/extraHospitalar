@@ -63,7 +63,7 @@ public class ConsumivelDAO {
 
             ps.setString(1, consumivel.getCategoriaConsumivel());
             ps.setString(2, consumivel.getTituloConsumivel());
-            ps.setString(3, consumivel.getValorConsumivel());
+            ps.setDouble(3, consumivel.getValorConsumivel());
             ps.setString(4, consumivel.getComposicaoConsumivel());
             ps.setString(5, consumivel.getPosologiaConsumivel());
 
@@ -88,7 +88,7 @@ public class ConsumivelDAO {
             ps.setString(1, consumivel.getCodigoConsumivel());
             ps.setString(2, consumivel.getCategoriaConsumivel());
             ps.setString(3, consumivel.getTituloConsumivel());
-            ps.setString(4, consumivel.getValorConsumivel());
+            ps.setDouble(4, consumivel.getValorConsumivel());
             ps.setString(5, consumivel.getComposicaoConsumivel());
             ps.setString(6, consumivel.getPosologiaConsumivel());
 
@@ -138,7 +138,7 @@ public class ConsumivelDAO {
                 ps.setCodigoConsumivel(rs.getString("codigoConsumivel"));
                 ps.setCategoriaConsumivel(rs.getString("categoriaConsumivel"));
                 ps.setTituloConsumivel(rs.getString("tituloConsumivel"));
-                ps.setValorConsumivel(rs.getString("valorConsumivel"));
+                ps.setValorConsumivel(rs.getDouble("valorConsumivel"));
                 ps.setComposicaoConsumivel(rs.getString("composicaoConsumivel"));
                 ps.setPosologiaConsumivel(rs.getString("posologiaConsumivel"));
 
@@ -181,7 +181,7 @@ public class ConsumivelDAO {
                 ps.setCodigoConsumivel(rs.getString("codigoConsumivel"));
                 ps.setCategoriaConsumivel(rs.getString("categoriaConsumivel"));
                 ps.setTituloConsumivel(rs.getString("tituloConsumivel"));
-                ps.setValorConsumivel(rs.getString("valorConsumivel"));
+                ps.setValorConsumivel(rs.getDouble("valorConsumivel"));
                 ps.setComposicaoConsumivel(rs.getString("composicaoConsumivel"));
                 ps.setPosologiaConsumivel(rs.getString("posologiaConsumivel"));
 

@@ -23,20 +23,24 @@
                     <f:param name="i" value="0" />   
                 </p:menuitem>
 
-                <p:menuitem style="border: 1px solid #ccc;" icon="fa fa-address-card-o" value="Gestão Clínica" url="gestao.jsf" ajax="true" update="@form">
+                <p:menuitem style="border: 1px solid #ccc;" icon="fa fa-archive" value="&nbsp;Registos" url="registo.jsf" ajax="true" update="@form">
                     <f:param name="i" value="1" />   
+                </p:menuitem>
+                
+                <p:menuitem style="border: 1px solid #ccc;" icon="fa fa-address-card-o" value="&nbsp;Gestão Clínica" url="gestao.jsf" ajax="true" update="@form">
+                    <f:param name="i" value="2" />   
                 </p:menuitem>
 
                 <p:menuitem style="border: 1px solid #ccc" icon="fa fa-user" disabled="#{usuarioBean.usuario.confAcesso == 'Usuário'}" ajax="true" value="Gestão de Usuários" url="usuario.jsf" update="@form">
-                    <f:param name="i" value="2" />
-                </p:menuitem>
-
-                <p:menuitem style="border: 1px solid #ccc" icon="fa fa-cog" ajax="true" value="Definições" url="definicao.jsf" update="@form">
                     <f:param name="i" value="3" />
                 </p:menuitem>
 
-                <p:menuitem style="border: 1px solid #ccc" value="Sair (#{usuarioBean.usuario.confNome})" icon="fa fa-sign-out" action="#{usuarioBean.logOff}" ajax="true" update="@form">
+                <p:menuitem style="border: 1px solid #ccc" icon="fa fa-cog" ajax="true" value="Definições" url="definicao.jsf" update="@form">
                     <f:param name="i" value="4" />
+                </p:menuitem>
+
+                <p:menuitem style="border: 1px solid #ccc" value="Sair (#{usuarioBean.usuario.confNome})" icon="fa fa-sign-out" action="#{usuarioBean.logOff}" ajax="true" update="@form">
+                    <f:param name="i" value="5" />
                 </p:menuitem>
 
             </p:tabMenu>

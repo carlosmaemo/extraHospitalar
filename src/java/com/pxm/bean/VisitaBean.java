@@ -59,7 +59,7 @@ public class VisitaBean {
             addMensagem("Campo vazio!", "O campo 'Tipo' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (visita.getTempoVisita().isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Tempo' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (visita.getValorVisita().isEmpty()) {
+        } else if (visita.getValorVisita() == 0) {
             addMensagem("Campo vazio!", "O campo 'Valor (MT)' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (visitaDao.verificar(visita) == true && editar == false) {
             addMensagem("Visita existente!", "A visita já encontra-se registrado.", FacesMessage.SEVERITY_WARN);
@@ -77,7 +77,7 @@ public class VisitaBean {
             visita.setCodigoVisita("");
             visita.setTipoVisita("");
             visita.setTempoVisita("");
-            visita.setValorVisita("");
+            visita.setValorVisita(0);
 
             listar();
             addMensagem("Actualizado!", "Dados da visita actualizado com sucesso.", FacesMessage.SEVERITY_INFO);
@@ -91,7 +91,7 @@ public class VisitaBean {
                 visita.setCodigoVisita("");
                 visita.setTipoVisita("");
                 visita.setTempoVisita("");
-                visita.setValorVisita("");
+                visita.setValorVisita(0);
 
                 listar();
 
@@ -117,7 +117,7 @@ public class VisitaBean {
                 visita.setCodigoVisita("");
                 visita.setTipoVisita("");
                 visita.setTempoVisita("");
-                visita.setValorVisita("");
+                visita.setValorVisita(0);
 
                 listar();
 
@@ -130,7 +130,7 @@ public class VisitaBean {
                 visita.setCodigoVisita("");
                 visita.setTipoVisita("");
                 visita.setTempoVisita("");
-                visita.setValorVisita("");
+                visita.setValorVisita(0);
 
                 listar();
             }

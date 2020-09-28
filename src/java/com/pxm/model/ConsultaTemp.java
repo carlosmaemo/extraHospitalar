@@ -13,12 +13,13 @@ public class ConsultaTemp {
 
     private Integer idConsulta, idFactura;
 
-    private String consulta, consultaData, consultaHora, consultaMedico, consultaValor, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
+    private String consulta, consultaData, consultaHora, consultaMedico, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
+    private double consultaValor;
     private boolean canEdit;
 
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public ConsultaTemp(String consulta, String consultaData, String consultaHora, String consultaMedico, String consultaValor, String consultaCodigo, String consultaCategoria, String consultaTitulo, String consultaDescricao) {
+    public ConsultaTemp(String consulta, String consultaData, String consultaHora, String consultaMedico, double consultaValor, String consultaCodigo, String consultaCategoria, String consultaTitulo, String consultaDescricao) {
         this.consulta = consulta;
         this.consultaData = consultaData;
         this.consultaHora = consultaHora;
@@ -149,15 +150,15 @@ public class ConsultaTemp {
         this.canEdit = canEdit;
     }
 
-    public String getConsultaValor() throws ErroSistema {
+    public double getConsultaValor() throws ErroSistema {
 
         String[] parte = consulta.split("_/");
-        consultaValor = facturaDao.verificarDadosConsulta(parte[1], "valorConsulta");
+        consultaValor = facturaDao.verificarDadosValorConsulta(parte[1]);
 
         return consultaValor;
     }
 
-    public void setConsultaValor(String consultaValor) {
+    public void setConsultaValor(double consultaValor) {
         this.consultaValor = consultaValor;
     }
 

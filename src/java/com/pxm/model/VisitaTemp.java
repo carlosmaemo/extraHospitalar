@@ -13,12 +13,13 @@ public class VisitaTemp {
 
     private Integer idVisita, idFactura;
 
-    private String visita, visitaData, visitaHora, visitaTempo, visitaValor, visitaCodigo, visitaTipo;
+    private String visita, visitaData, visitaHora, visitaTempo, visitaCodigo, visitaTipo;
+    private double visitaValor;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public VisitaTemp(String visita, String visitaData, String visitaHora, String visitaTempo, String visitaValor, String visitaCodigo, String visitaTipo) {
+    public VisitaTemp(String visita, String visitaData, String visitaHora, String visitaTempo, double visitaValor, String visitaCodigo, String visitaTipo) {
         this.visita = visita;
         this.visitaData = visitaData;
         this.visitaHora = visitaHora;
@@ -120,16 +121,15 @@ public class VisitaTemp {
         this.canEdit = canEdit;
     }
 
-    public String getVisitaValor() throws ErroSistema {
+    public double getVisitaValor() throws ErroSistema {
 
         String[] parte = visita.split("_/");
-        visitaValor = facturaDao.verificarDadosVisita(parte[1], "valorVisita");
+        visitaValor = facturaDao.verificarDadosValorVisita(parte[1]);
         
         return visitaValor;
     }
 
-    public void setVisitaValor(String visitaValor) {
-        
+    public void setVisitaValor(double visitaValor) {
         this.visitaValor = visitaValor;
     }
 

@@ -10,7 +10,7 @@ public class Consumivel {
     private String codigoConsumivel;
     private String categoriaConsumivel;
     private String tituloConsumivel;
-    private String valorConsumivel;
+    private double valorConsumivel;
     private String composicaoConsumivel;
     private String posologiaConsumivel;
 
@@ -46,11 +46,11 @@ public class Consumivel {
         this.tituloConsumivel = tituloConsumivel;
     }
 
-    public String getValorConsumivel() {
+    public double getValorConsumivel() {
         return valorConsumivel;
     }
 
-    public void setValorConsumivel(String valorConsumivel) {
+    public void setValorConsumivel(double valorConsumivel) {
         this.valorConsumivel = valorConsumivel;
     }
 

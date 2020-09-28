@@ -61,7 +61,7 @@ public class ConsumivelBean {
             addMensagem("Campo vazio!", "O campo 'Categoria' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (consumivel.getTituloConsumivel().isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Título' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (consumivel.getValorConsumivel().isEmpty()) {
+        } else if (consumivel.getValorConsumivel() == 0) {
             addMensagem("Campo vazio!", "O campo 'Valor (MT)' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (consumivelDao.verificar(consumivel) == true && editar == false) {
             addMensagem("Consumível existente!", "O consumível já encontra-se registrado.", FacesMessage.SEVERITY_WARN);
@@ -79,7 +79,7 @@ public class ConsumivelBean {
             consumivel.setCodigoConsumivel("");
             consumivel.setCategoriaConsumivel("");
             consumivel.setTituloConsumivel("");
-            consumivel.setValorConsumivel("");
+            consumivel.setValorConsumivel(0);
             consumivel.setComposicaoConsumivel("");
             consumivel.setPosologiaConsumivel("");
 
@@ -95,7 +95,7 @@ public class ConsumivelBean {
                 consumivel.setCodigoConsumivel("");
                 consumivel.setCategoriaConsumivel("");
                 consumivel.setTituloConsumivel("");
-                consumivel.setValorConsumivel("");
+                consumivel.setValorConsumivel(0);
                 consumivel.setComposicaoConsumivel("");
                 consumivel.setPosologiaConsumivel("");
 
@@ -123,7 +123,7 @@ public class ConsumivelBean {
                 consumivel.setCodigoConsumivel("");
                 consumivel.setCategoriaConsumivel("");
                 consumivel.setTituloConsumivel("");
-                consumivel.setValorConsumivel("");
+                consumivel.setValorConsumivel(0);
                 consumivel.setComposicaoConsumivel("");
                 consumivel.setPosologiaConsumivel("");
 
@@ -138,7 +138,7 @@ public class ConsumivelBean {
                 consumivel.setCodigoConsumivel("");
                 consumivel.setCategoriaConsumivel("");
                 consumivel.setTituloConsumivel("");
-                consumivel.setValorConsumivel("");
+                consumivel.setValorConsumivel(0);
                 consumivel.setComposicaoConsumivel("");
                 consumivel.setPosologiaConsumivel("");
 

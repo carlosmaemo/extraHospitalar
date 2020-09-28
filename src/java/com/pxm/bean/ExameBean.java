@@ -61,7 +61,7 @@ public class ExameBean {
             addMensagem("Campo vazio!", "O campo 'Categoria' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (exame.getTituloExame().isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Título' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (exame.getValorExame().isEmpty()) {
+        } else if (exame.getValorExame() == 0) {
             addMensagem("Campo vazio!", "O campo 'Valor (MT)' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (exameDao.verificar(exame) == true && editar == false) {
             addMensagem("Exame existente!", "O exame já encontra-se registrado.", FacesMessage.SEVERITY_WARN);
@@ -79,7 +79,7 @@ public class ExameBean {
             exame.setCodigoExame("");
             exame.setCategoriaExame("");
             exame.setTituloExame("");
-            exame.setValorExame("");
+            exame.setValorExame(0);
             exame.setDescricaoExame("");
 
             listar();
@@ -94,7 +94,7 @@ public class ExameBean {
                 exame.setCodigoExame("");
                 exame.setCategoriaExame("");
                 exame.setTituloExame("");
-                exame.setValorExame("");
+                exame.setValorExame(0);
                 exame.setDescricaoExame("");
 
                 listar();
@@ -121,7 +121,7 @@ public class ExameBean {
                 exame.setCodigoExame("");
                 exame.setCategoriaExame("");
                 exame.setTituloExame("");
-                exame.setValorExame("");
+                exame.setValorExame(0);
                 exame.setDescricaoExame("");
 
                 listar();
@@ -135,7 +135,7 @@ public class ExameBean {
                 exame.setCodigoExame("");
                 exame.setCategoriaExame("");
                 exame.setTituloExame("");
-                exame.setValorExame("");
+                exame.setValorExame(0);
                 exame.setDescricaoExame("");
 
                 listar();

@@ -10,7 +10,7 @@ public class Internamento {
     private String codigoInternamento;    
     private String tipoInternamento;
     private String tempoInternamento;
-    private String valorInternamento;
+    private double valorInternamento;
 
     public Integer getIdInternamento() {
         return idInternamento;
@@ -44,11 +44,11 @@ public class Internamento {
         this.tempoInternamento = tempoInternamento;
     }
 
-    public String getValorInternamento() {
+    public double getValorInternamento() {
         return valorInternamento;
     }
 
-    public void setValorInternamento(String valorInternamento) {
+    public void setValorInternamento(double valorInternamento) {
         this.valorInternamento = valorInternamento;
     }
     

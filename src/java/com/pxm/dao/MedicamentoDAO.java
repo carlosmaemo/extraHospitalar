@@ -63,7 +63,7 @@ public class MedicamentoDAO {
 
             ps.setString(1, medicamento.getCategoriaMedicamento());
             ps.setString(2, medicamento.getTituloMedicamento());
-            ps.setString(3, medicamento.getValorMedicamento());
+            ps.setDouble(3, medicamento.getValorMedicamento());
             ps.setString(4, medicamento.getComposicaoMedicamento());
             ps.setString(5, medicamento.getPosologiaMedicamento());
 
@@ -88,7 +88,7 @@ public class MedicamentoDAO {
             ps.setString(1, medicamento.getCodigoMedicamento());
             ps.setString(2, medicamento.getCategoriaMedicamento());
             ps.setString(3, medicamento.getTituloMedicamento());
-            ps.setString(4, medicamento.getValorMedicamento());
+            ps.setDouble(4, medicamento.getValorMedicamento());
             ps.setString(5, medicamento.getComposicaoMedicamento());
             ps.setString(6, medicamento.getPosologiaMedicamento());
 
@@ -137,7 +137,7 @@ public class MedicamentoDAO {
                 ps.setCodigoMedicamento(rs.getString("codigoMedicamento"));
                 ps.setCategoriaMedicamento(rs.getString("categoriaMedicamento"));
                 ps.setTituloMedicamento(rs.getString("tituloMedicamento"));
-                ps.setValorMedicamento(rs.getString("valorMedicamento"));
+                ps.setValorMedicamento(rs.getDouble("valorMedicamento"));
                 ps.setComposicaoMedicamento(rs.getString("composicaoMedicamento"));
                 ps.setPosologiaMedicamento(rs.getString("posologiaMedicamento"));
 
@@ -179,7 +179,7 @@ public class MedicamentoDAO {
                 ps.setCodigoMedicamento(rs.getString("codigoMedicamento"));
                 ps.setCategoriaMedicamento(rs.getString("categoriaMedicamento"));
                 ps.setTituloMedicamento(rs.getString("tituloMedicamento"));
-                ps.setValorMedicamento(rs.getString("valorMedicamento"));
+                ps.setValorMedicamento(rs.getDouble("valorMedicamento"));
                 ps.setComposicaoMedicamento(rs.getString("composicaoMedicamento"));
                 ps.setPosologiaMedicamento(rs.getString("posologiaMedicamento"));
 

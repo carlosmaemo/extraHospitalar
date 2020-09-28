@@ -60,7 +60,7 @@ public class InternamentoBean {
             addMensagem("Campo vazio!", "O campo 'Tipo' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (internamento.getTempoInternamento().isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Tempo' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (internamento.getValorInternamento().isEmpty()) {
+        } else if (internamento.getValorInternamento() == 0) {
             addMensagem("Campo vazio!", "O campo 'Valor (MT)' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (internamentoDao.verificar(internamento) == true && editar == false) {
             addMensagem("Internamento existente!", "O internamento já encontra-se registrado.", FacesMessage.SEVERITY_WARN);
@@ -78,7 +78,7 @@ public class InternamentoBean {
             internamento.setCodigoInternamento("");
             internamento.setTipoInternamento("");
             internamento.setTempoInternamento("");
-            internamento.setValorInternamento("");
+            internamento.setValorInternamento(0);
 
             listar();
             addMensagem("Actualizado!", "Dados do internamento actualizado com sucesso.", FacesMessage.SEVERITY_INFO);
@@ -92,7 +92,7 @@ public class InternamentoBean {
                 internamento.setCodigoInternamento("");
                 internamento.setTipoInternamento("");
                 internamento.setTempoInternamento("");
-                internamento.setValorInternamento("");
+                internamento.setValorInternamento(0);
 
                 listar();
 
@@ -118,7 +118,7 @@ public class InternamentoBean {
                 internamento.setCodigoInternamento("");
                 internamento.setTipoInternamento("");
                 internamento.setTempoInternamento("");
-                internamento.setValorInternamento("");
+                internamento.setValorInternamento(0);
 
                 listar();
 
@@ -131,7 +131,7 @@ public class InternamentoBean {
                 internamento.setCodigoInternamento("");
                 internamento.setTipoInternamento("");
                 internamento.setTempoInternamento("");
-                internamento.setValorInternamento("");
+                internamento.setValorInternamento(0);
 
                 listar();
             }

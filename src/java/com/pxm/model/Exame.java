@@ -9,7 +9,7 @@ public class Exame {
     private Integer idExame;
     private String codigoExame;
     private String categoriaExame;
-    private String valorExame;
+    private double valorExame;
     private String tituloExame;
 
     private String descricaoExame;
@@ -54,11 +54,11 @@ public class Exame {
         this.descricaoExame = descricaoExame;
     }
 
-    public String getValorExame() {
+    public double getValorExame() {
         return valorExame;
     }
 
-    public void setValorExame(String valorExame) {
+    public void setValorExame(double valorExame) {
         this.valorExame = valorExame;
     }
 

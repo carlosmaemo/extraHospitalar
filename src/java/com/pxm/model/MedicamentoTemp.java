@@ -13,12 +13,13 @@ public class MedicamentoTemp {
 
     private Integer idMedicamento, idFactura;
 
-    private String medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoValor, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia;
+    private String medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia;
+    private double medicamentoValor;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public MedicamentoTemp(String medicamento, String medicamentoData, String medicamentoHora, String medicamentoCategoria, String medicamentoValor, String medicamentoCodigo, String medicamentoTitulo, String medicamentoComposicao, String medicamentoPosologia) {
+    public MedicamentoTemp(String medicamento, String medicamentoData, String medicamentoHora, String medicamentoCategoria, double medicamentoValor, String medicamentoCodigo, String medicamentoTitulo, String medicamentoComposicao, String medicamentoPosologia) {
         this.medicamento = medicamento;
         this.medicamentoData = medicamentoData;
         this.medicamentoHora = medicamentoHora;
@@ -102,15 +103,15 @@ public class MedicamentoTemp {
         this.canEdit = canEdit;
     }
 
-    public String getMedicamentoValor() throws ErroSistema {
+    public double getMedicamentoValor() throws ErroSistema {
 
         String[] parte = medicamento.split("_/");
-        medicamentoValor = facturaDao.verificarDadosMedicamento(parte[1], "valorMedicamento");
+        medicamentoValor = facturaDao.verificarDadosValorMedicamento(parte[1]);
         
         return medicamentoValor;
     }
 
-    public void setMedicamentoValor(String medicamentoValor) {
+    public void setMedicamentoValor(double medicamentoValor) {
         this.medicamentoValor = medicamentoValor;
     }
 
