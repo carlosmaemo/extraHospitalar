@@ -18,7 +18,212 @@
 
                 <!--PAINEL DE ACORDEOES / CONTAINER EMPILHADOS-->
 
-               
+                <p:accordionPanel multiple="true">
+                    
+                    <!--RELATORIO POR DATA-->
+
+                    <p:tab title="Relatórios por Data">
+                        <p:panelGrid class="panelForm" styleClass="panelColumns">
+                            <p:row>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="dataInicialData" value="A partir de:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="dataFinalData" value="Até:"/>
+                                </p:column>
+                            </p:row>
+                            <p:row class="panelLinha" style="background: #ddd">
+                                <p:column style="border: none">
+                                    <p:inputText id="dataInicialEmpresaData" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicialData}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="dataFinalEmpresaData" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinalData}"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="left">
+                                <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{facturaBean.pesquisarFiltroRegistoData()}" ajax="true" update="@form"></p:commandButton>
+                                <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Limpar tudo" action="#{facturaBean.cancelarFiltroRegistoData()}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <br/>
+
+                        <p:dataTable value="#{facturaBean.facturasRegistosData}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturasData" var="factura">
+                            <p:column headerText="Data" sortBy="#{factura.data}">
+                                <h:outputText value="#{factura.data}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="NID" sortBy="#{factura.nidPaciente}">
+                                <h:outputText value="#{factura.nidPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Nome" sortBy="#{factura.nomePaciente}">
+                                <h:outputText value="#{factura.nomePaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Apelido" sortBy="#{factura.apelidoPaciente}">
+                                <h:outputText value="#{factura.apelidoPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="O Clínico" sortBy="#{factura.nomeMedico}">
+                                <h:outputText value="#{factura.nomeMedico}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="O Administrativo" sortBy="#{factura.nomeUsuario}">
+                                <h:outputText value="#{factura.nomeUsuario}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Valor Total (MT)" sortBy="#{factura.valorTotal}">
+                                <h:outputText value="#{factura.valorTotal}"></h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton icon="fa fa-print" value="&nbsp;Imprimir" actionListener="#{facturaBean.printRegisto()}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </p:tab>
+
+                    <!--RELATORIO POR MÉDICO-->
+
+                    <p:tab title="Relatórios por Médicos">
+                        <p:panelGrid class="panelForm" styleClass="panelColumns">
+                            <p:row>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="medico" value="Médico:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="dataInicial" value="A partir de:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="dataFinal" value="Até:"/>
+                                </p:column>
+                            </p:row>
+                            <p:row class="panelLinha" style="background: #ddd">
+                                <p:column style="border: none">
+                                    <p:selectOneMenu id="medico" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.factura.ormmConsulta}">
+                                        <f:selectItems value="#{facturaBean.medicos}" />
+                                    </p:selectOneMenu>
+                                </p:column>
+
+                                <p:column style="border: none">
+                                    <p:inputText id="dataInicial" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicial}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="dataFinal" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinal}"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="left">
+                                <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{facturaBean.pesquisarFiltroRegisto()}" ajax="true" update="@form"></p:commandButton>
+                                <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Limpar tudo" action="#{facturaBean.cancelarFiltroRegisto()}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <br/>
+
+                        <p:dataTable value="#{facturaBean.facturasRegistosMedicos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturas" var="factura">
+                            <p:column headerText="Data" sortBy="#{factura.data}">
+                                <h:outputText value="#{factura.data}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="NID" sortBy="#{factura.nidPaciente}">
+                                <h:outputText value="#{factura.nidPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Nome" sortBy="#{factura.nomePaciente}">
+                                <h:outputText value="#{factura.nomePaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Apelido" sortBy="#{factura.apelidoPaciente}">
+                                <h:outputText value="#{factura.apelidoPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="O Clínico" sortBy="#{factura.nomeMedico}">
+                                <h:outputText value="#{factura.nomeMedico}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="O Administrativo" sortBy="#{factura.nomeUsuario}">
+                                <h:outputText value="#{factura.nomeUsuario}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Valor Total (MT)" sortBy="#{factura.valorTotal}">
+                                <h:outputText value="#{factura.valorTotal}"></h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton icon="fa fa-print" value="&nbsp;Imprimir" actionListener="#{facturaBean.printRegisto()}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </p:tab>
+
+                    <!--RELATORIO POR EMPRESAS-->
+
+                    <p:tab title="Relatórios por Empresas">
+                        <p:panelGrid class="panelForm" styleClass="panelColumns">
+                            <p:row>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="empresa" value="Empresa:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="dataInicialEmpresa" value="A partir de:"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <h:outputLabel for="dataFinalEmpresa" value="Até:"/>
+                                </p:column>
+                            </p:row>
+                            <p:row class="panelLinha" style="background: #ddd">
+                                <p:column style="border: none">
+                                    <p:selectOneMenu id="empresa" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.factura.listaEmpresa}">
+                                        <f:selectItems value="#{facturaBean.empresas}" />
+                                    </p:selectOneMenu>
+                                </p:column>
+
+                                <p:column style="border: none">
+                                    <p:inputText id="dataInicialEmpresa" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicialEmpresa}"/>
+                                </p:column>
+                                <p:column style="border: none">
+                                    <p:inputText id="dataFinalEmpresa" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinalEmpresa}"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="left">
+                                <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{facturaBean.pesquisarFiltroRegistoEmpresa()}" ajax="true" update="@form"></p:commandButton>
+                                <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Limpar tudo" action="#{facturaBean.cancelarFiltroRegistoEmpresa()}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                        <br/>
+
+                        <p:dataTable value="#{facturaBean.facturasRegistosEmpresas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturasEmpresas" var="factura">
+                            <p:column headerText="Data" sortBy="#{factura.data}">
+                                <h:outputText value="#{factura.data}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="NID" sortBy="#{factura.nidPaciente}">
+                                <h:outputText value="#{factura.nidPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Nome" sortBy="#{factura.nomePaciente}">
+                                <h:outputText value="#{factura.nomePaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Apelido" sortBy="#{factura.apelidoPaciente}">
+                                <h:outputText value="#{factura.apelidoPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="O Clínico" sortBy="#{factura.nomeMedico}">
+                                <h:outputText value="#{factura.nomeMedico}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="O Administrativo" sortBy="#{factura.nomeUsuario}">
+                                <h:outputText value="#{factura.nomeUsuario}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Valor Total (MT)" sortBy="#{factura.valorTotal}">
+                                <h:outputText value="#{factura.valorTotal}"></h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                        <p:toolbar>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton icon="fa fa-print" value="&nbsp;Imprimir" actionListener="#{facturaBean.printRegisto()}" ajax="true" update="@form"></p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+                    </p:tab>
+
+
+                </p:accordionPanel>
+
             </div>
         </div>
 

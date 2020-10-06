@@ -3,10 +3,12 @@ package com.pxm.dao;
 import com.pxm.exception.ErroSistema;
 import com.pxm.model.ConsultaTemp;
 import com.pxm.model.ConsumivelTemp;
+import com.pxm.model.Empresa;
 import com.pxm.model.ExameTemp;
 import com.pxm.model.Factura;
 import com.pxm.model.InternamentoTemp;
 import com.pxm.model.MedicamentoTemp;
+import com.pxm.model.Medico;
 import com.pxm.model.VisitaTemp;
 import com.pxm.util.Conecxao;
 import java.io.IOException;
@@ -178,7 +180,7 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados da consulta!", ex);
         }
     }
-    
+
     public double verificarDadosValorConsulta(String codigo) throws ErroSistema {
         try {
             Connection conexao = Conecxao.getConexao();
@@ -213,6 +215,7 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados do consumivel!", ex);
         }
     }
+
     public double verificarDadosValorConsumivel(String codigo) throws ErroSistema {
         try {
             Connection conexao = Conecxao.getConexao();
@@ -229,7 +232,7 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar o valor do consumivel!", ex);
         }
     }
-    
+
     // VERIFICAR DADOS INTERNAMENTO
     public String verificarDadosInternamento(String codigo, String campo) throws ErroSistema {
         try {
@@ -247,6 +250,7 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados do internamento!", ex);
         }
     }
+
     public double verificarDadosValorInternamento(String codigo) throws ErroSistema {
         try {
             Connection conexao = Conecxao.getConexao();
@@ -281,6 +285,7 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados do medicamento!", ex);
         }
     }
+
     public double verificarDadosValorMedicamento(String codigo) throws ErroSistema {
         try {
             Connection conexao = Conecxao.getConexao();
@@ -315,6 +320,7 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados da visita!", ex);
         }
     }
+
     public double verificarDadosValorVisita(String codigo) throws ErroSistema {
         try {
             Connection conexao = Conecxao.getConexao();
@@ -349,6 +355,7 @@ public class FacturaDAO {
             throw new ErroSistema("Erro ao verificar os dados do exame!", ex);
         }
     }
+
     public double verificarDadosValorExame(String codigo) throws ErroSistema {
         try {
             Connection conexao = Conecxao.getConexao();
@@ -404,6 +411,30 @@ public class FacturaDAO {
 
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao pesquisar os médicos!", ex);
+
+        }
+    }
+
+    public List<String> buscarEmpresa() throws ErroSistema {
+
+        try {
+            Connection conexao = Conecxao.getConexao();
+
+            PreparedStatement ps = conexao.prepareStatement("SELECT nomeEmpresa, nuitEmpresa, contactoEmpresa, emailEmpresa, enderecoEmpresa, codigoEmpresa FROM empresa;");
+
+            ResultSet rs = ps.executeQuery();
+
+            List<String> empresas = new ArrayList<>();
+
+            while (rs.next()) {
+
+                empresas.add(rs.getString("nomeEmpresa") + "_/" + rs.getString("codigoEmpresa"));
+            }
+
+            return empresas;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao pesquisar as empresas!", ex);
 
         }
     }
@@ -510,7 +541,9 @@ public class FacturaDAO {
 
             int chaveGerada = 0;
 
-            PreparedStatement ps = conexao.prepareStatement("INSERT INTO `factura`(`data`, `idPaciente`, `idMedico`, `idUsuario`) VALUES (?, ?, ?, ?)");
+            PreparedStatement ps = conexao.prepareStatement("INSERT INTO `factura`(`data`, `idPaciente`, `idMedico`, `idUsuario`, `nomePaciente`,"
+                    + " `apelidoPaciente`, `contactoPaciente`, `enderecoPaciente`, `nidPaciente`, `sexoPaciente`, `codigoEmpresa`, `nomeEmpresa`,"
+                    + " `valorTotal`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             PreparedStatement ps1 = conexao.prepareStatement("INSERT INTO `factura_consulta`(`idFactura`, `codigoConsulta`, `categoriaConsulta`, `tituloConsulta`, `descricaoConsulta`, `valorConsulta`) VALUES (?, ?, ?, ?, ?, ?)");
             PreparedStatement ps2 = conexao.prepareStatement("INSERT INTO `factura_consumivel`(`idFactura`, `codigoConsumivel`, `categoriaConsumivel`, `tituloConsumivel`, `valorConsumivel`, `composicaoConsumivel`, `posologiaConsumivel`) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -519,10 +552,45 @@ public class FacturaDAO {
             PreparedStatement ps5 = conexao.prepareStatement("INSERT INTO `factura_medicamento`(`idFactura`, `codigoMedicamento`, `categoriaMedicamento`, `tituloMedicamento`, `valorMedicamento`, `composicaoMedicamento`, `posologiaMedicamento`) VALUES (?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement ps6 = conexao.prepareStatement("INSERT INTO `factura_visita`(`idFactura`, `codigoVisita`, `tipoVisita`, `tempoVisita`, `valorVisita`) VALUES (?, ?, ?, ?, ?)");
 
+            double valorTotal = 0;
+
+            for (ConsultaTemp m : consultas) {
+                valorTotal = valorTotal + m.getConsultaValor();
+            }
+
+            for (ConsumivelTemp m : consumiveis) {
+                valorTotal = valorTotal + m.getConsumivelValor();
+            }
+
+            for (ExameTemp m : exames) {
+                valorTotal = valorTotal + m.getExameValor();
+            }
+
+            for (InternamentoTemp m : internamentos) {
+                valorTotal = valorTotal + m.getInternamentoValor();
+            }
+
+            for (MedicamentoTemp m : medicamentos) {
+                valorTotal = valorTotal + m.getMedicamentoValor();
+            }
+
+            for (VisitaTemp m : visitas) {
+                valorTotal = valorTotal + m.getVisitaValor();
+            }
+
             ps.setString(1, factura.getDataRegistro());
             ps.setInt(2, factura.getIdPaciente());
             ps.setInt(3, factura.getIdMedico());
             ps.setInt(4, factura.getIdUsuario());
+            ps.setString(5, factura.getNomePaciente());
+            ps.setString(6, factura.getApelidoPaciente());
+            ps.setString(7, factura.getContactoPaciente());
+            ps.setString(8, factura.getEnderecoPaciente());
+            ps.setString(9, factura.getNidPaciente());
+            ps.setString(10, factura.getSexoPaciente());
+            ps.setString(11, factura.getCodigoEmpresa());
+            ps.setString(12, factura.getNomeEmpresa());
+            ps.setDouble(13, valorTotal);
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -656,6 +724,7 @@ public class FacturaDAO {
                 factura.setIdPaciente(rs1.getInt("idPaciente"));
                 factura.setIdMedico(rs1.getInt("idMedico"));
                 factura.setIdUsuario(rs1.getInt("idUsuario"));
+                factura.setValorTotal(rs1.getDouble("valorTotal"));
 
                 PreparedStatement pst2 = conexao.prepareStatement("Select * from paciente where idPaciente=?");
                 pst2.setInt(1, factura.getIdPaciente());
@@ -776,6 +845,7 @@ public class FacturaDAO {
                 facturaRelatorio.setIdPaciente(rs.getInt("idPaciente"));
                 facturaRelatorio.setIdMedico(rs.getInt("idMedico"));
                 facturaRelatorio.setIdUsuario(rs.getInt("idUsuario"));
+                facturaRelatorio.setValorTotal(rs.getDouble("valorTotal"));
 
                 if (idPaciente == false) {
                     PreparedStatement pst2 = conexao.prepareStatement("Select * from paciente where idPaciente=?");
@@ -831,6 +901,255 @@ public class FacturaDAO {
         }
     }
 
+    public List<Factura> buscarFiltroRegisto(Factura factura, String tipo, String ormm) throws ErroSistema {
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+            Medico medico = new Medico();
+
+            PreparedStatement psMedico = conexao.prepareStatement("Select * from medico where ormmMedico=?");
+            psMedico.setString(1, ormm);
+            ResultSet rsMedico = psMedico.executeQuery();
+
+            if (rsMedico.next()) {
+                medico.setIdMedico(rsMedico.getInt("idMedico"));
+                medico.setNomeMedico(rsMedico.getString("nomeMedico"));
+                medico.setApelidoMedico(rsMedico.getString("apelidoMedico"));
+                medico.setContactoMedico(rsMedico.getString("contactoMedico"));
+                medico.setEnderecoMedico(rsMedico.getString("enderecoMedico"));
+                medico.setEspecialidadeMedico(rsMedico.getString("especialidadeMedico"));
+                medico.setOrmmMedico(rsMedico.getString("ormmMedico"));
+            }
+
+            PreparedStatement ps = null;
+
+            if ("ormm".equals(tipo)) {
+
+                ps = conexao.prepareStatement("Select * from factura where idMedico = ?");
+                ps.setInt(1, medico.getIdMedico());
+
+            } else if ("data".equals(tipo)) {
+
+                ps = conexao.prepareStatement("Select * from factura where data >= ? and data <= ?");
+                ps.setString(1, factura.getDataInicial());
+                ps.setString(2, factura.getDataFinal());
+
+            } else if ("ormm_data".equals(tipo)) {
+
+                ps = conexao.prepareStatement("Select * from factura where (data >= ? and data <= ?) and idMedico = ?");
+                ps.setString(1, factura.getDataInicial());
+                ps.setString(2, factura.getDataFinal());
+                ps.setInt(3, medico.getIdMedico());
+
+            } else if ("vazio".equals(tipo)) {
+
+                List<Factura> facturas = new ArrayList();
+                return facturas;
+            }
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Factura> facturas = new ArrayList();
+
+            while (rs.next()) {
+
+                Factura facturaRelatorio = new Factura();
+
+                facturaRelatorio.setIdFactura(rs.getInt("idFactura"));
+                facturaRelatorio.setData(rs.getString("data"));
+                facturaRelatorio.setIdPaciente(rs.getInt("idPaciente"));
+                facturaRelatorio.setIdMedico(rs.getInt("idMedico"));
+                facturaRelatorio.setIdUsuario(rs.getInt("idUsuario"));
+                facturaRelatorio.setValorTotal(rs.getDouble("valorTotal"));
+                facturaRelatorio.setNomePaciente(rs.getString("nomePaciente"));
+                facturaRelatorio.setApelidoPaciente(rs.getString("apelidoPaciente"));
+                facturaRelatorio.setContactoPaciente(rs.getString("contactoPaciente"));
+                facturaRelatorio.setEnderecoPaciente(rs.getString("enderecoPaciente"));
+                facturaRelatorio.setNidPaciente(rs.getString("nidPaciente"));
+                facturaRelatorio.setSexoPaciente(rs.getString("sexoPaciente"));
+                facturaRelatorio.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                facturaRelatorio.setCodigoEmpresa(rs.getString("codigoEmpresa"));
+                facturaRelatorio.setNomeMedico(medico.getNomeMedico() + " " + medico.getApelidoMedico());
+
+                PreparedStatement pst4 = conexao.prepareStatement("Select * from usuario where idUsuario=?");
+                pst4.setInt(1, facturaRelatorio.getIdUsuario());
+                ResultSet rs4 = pst4.executeQuery();
+
+                if (rs4.next()) {
+                    facturaRelatorio.setNomeUsuario(rs4.getString("nomeUsuario"));
+                }
+
+                facturas.add(facturaRelatorio);
+            }
+
+            return facturas;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao pesquisar registos!", ex);
+
+        }
+    }
+
+    public List<Factura> buscarFiltroRegistoEmpresa(Factura factura, String tipo, String codigo) throws ErroSistema {
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+            Empresa empresa = new Empresa();
+
+            PreparedStatement psEmpresa = conexao.prepareStatement("Select * from empresa where codigoEmpresa=?");
+            psEmpresa.setString(1, codigo);
+            ResultSet rsEmpresa = psEmpresa.executeQuery();
+
+            if (rsEmpresa.next()) {
+                empresa.setIdEmpresa(rsEmpresa.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rsEmpresa.getString("nomeEmpresa"));
+                empresa.setNuitEmpresa(rsEmpresa.getString("nuitEmpresa"));
+                empresa.setContactoEmpresa(rsEmpresa.getString("contactoEmpresa"));
+                empresa.setEmailEmpresa(rsEmpresa.getString("emailEmpresa"));
+                empresa.setEnderecoEmpresa(rsEmpresa.getString("enderecoEmpresa"));
+                empresa.setCodigoEmpresa(rsEmpresa.getString("codigoEmpresa"));
+            }
+
+            PreparedStatement ps = null;
+
+            if ("codigo".equals(tipo)) {
+
+                ps = conexao.prepareStatement("Select * from factura where codigoEmpresa = ?");
+                ps.setString(1, empresa.getCodigoEmpresa());
+
+            } else if ("data".equals(tipo)) {
+
+                ps = conexao.prepareStatement("Select * from factura where data >= ? and data <= ?");
+                ps.setString(1, factura.getDataInicialEmpresa());
+                ps.setString(2, factura.getDataFinalEmpresa());
+
+            } else if ("codigo_data".equals(tipo)) {
+
+                ps = conexao.prepareStatement("Select * from factura where (data >= ? and data <= ?) and codigoEmpresa = ?");
+                ps.setString(1, factura.getDataInicialEmpresa());
+                ps.setString(2, factura.getDataFinalEmpresa());
+                ps.setString(3, empresa.getCodigoEmpresa());
+
+            } else if ("vazio".equals(tipo)) {
+
+                List<Factura> facturas = new ArrayList();
+                return facturas;
+            }
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Factura> facturas = new ArrayList();
+
+            while (rs.next()) {
+
+                Factura facturaRelatorio = new Factura();
+
+                facturaRelatorio.setIdFactura(rs.getInt("idFactura"));
+                facturaRelatorio.setData(rs.getString("data"));
+                facturaRelatorio.setIdPaciente(rs.getInt("idPaciente"));
+                facturaRelatorio.setIdMedico(rs.getInt("idMedico"));
+                facturaRelatorio.setIdUsuario(rs.getInt("idUsuario"));
+                facturaRelatorio.setValorTotal(rs.getDouble("valorTotal"));
+                facturaRelatorio.setNomePaciente(rs.getString("nomePaciente"));
+                facturaRelatorio.setApelidoPaciente(rs.getString("apelidoPaciente"));
+                facturaRelatorio.setContactoPaciente(rs.getString("contactoPaciente"));
+                facturaRelatorio.setEnderecoPaciente(rs.getString("enderecoPaciente"));
+                facturaRelatorio.setNidPaciente(rs.getString("nidPaciente"));
+                facturaRelatorio.setSexoPaciente(rs.getString("sexoPaciente"));
+                facturaRelatorio.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                facturaRelatorio.setCodigoEmpresa(rs.getString("codigoEmpresa"));
+
+                PreparedStatement pstMedico = conexao.prepareStatement("Select * from medico where idMedico=?");
+                pstMedico.setInt(1, facturaRelatorio.getIdMedico());
+                ResultSet rsMedico = pstMedico.executeQuery();
+
+                if (rsMedico.next()) {
+                    facturaRelatorio.setNomeMedico(rsMedico.getString("nomeMedico") + " " + rsMedico.getString("apelidoMedico"));
+                }
+
+                PreparedStatement pstUsuario = conexao.prepareStatement("Select * from usuario where idUsuario=?");
+                pstUsuario.setInt(1, facturaRelatorio.getIdUsuario());
+                ResultSet rsUsuario = pstUsuario.executeQuery();
+
+                if (rsUsuario.next()) {
+                    facturaRelatorio.setNomeUsuario(rsUsuario.getString("nomeUsuario"));
+                }
+
+                facturas.add(facturaRelatorio);
+            }
+
+            return facturas;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao pesquisar registos!", ex);
+
+        }
+    }
+
+    public List<Factura> buscarFiltroRegistoData(Factura factura) throws ErroSistema {
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+
+            PreparedStatement ps = null;
+
+            ps = conexao.prepareStatement("Select * from factura where data >= ? and data <= ?");
+            ps.setString(1, factura.getDataInicialData());
+            ps.setString(2, factura.getDataFinalData());
+
+            ResultSet rs = ps.executeQuery();
+
+            List<Factura> facturas = new ArrayList();
+
+            while (rs.next()) {
+
+                Factura facturaRelatorio = new Factura();
+
+                facturaRelatorio.setIdFactura(rs.getInt("idFactura"));
+                facturaRelatorio.setData(rs.getString("data"));
+                facturaRelatorio.setIdPaciente(rs.getInt("idPaciente"));
+                facturaRelatorio.setIdMedico(rs.getInt("idMedico"));
+                facturaRelatorio.setIdUsuario(rs.getInt("idUsuario"));
+                facturaRelatorio.setValorTotal(rs.getDouble("valorTotal"));
+                facturaRelatorio.setNomePaciente(rs.getString("nomePaciente"));
+                facturaRelatorio.setApelidoPaciente(rs.getString("apelidoPaciente"));
+                facturaRelatorio.setContactoPaciente(rs.getString("contactoPaciente"));
+                facturaRelatorio.setEnderecoPaciente(rs.getString("enderecoPaciente"));
+                facturaRelatorio.setNidPaciente(rs.getString("nidPaciente"));
+                facturaRelatorio.setSexoPaciente(rs.getString("sexoPaciente"));
+                facturaRelatorio.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                facturaRelatorio.setCodigoEmpresa(rs.getString("codigoEmpresa"));
+
+                PreparedStatement pstMedico = conexao.prepareStatement("Select * from medico where idMedico=?");
+                pstMedico.setInt(1, facturaRelatorio.getIdMedico());
+                ResultSet rsMedico = pstMedico.executeQuery();
+
+                if (rsMedico.next()) {
+                    facturaRelatorio.setNomeMedico(rsMedico.getString("nomeMedico") + " " + rsMedico.getString("apelidoMedico"));
+                }
+
+                PreparedStatement pstUsuario = conexao.prepareStatement("Select * from usuario where idUsuario=?");
+                pstUsuario.setInt(1, facturaRelatorio.getIdUsuario());
+                ResultSet rsUsuario = pstUsuario.executeQuery();
+
+                if (rsUsuario.next()) {
+                    facturaRelatorio.setNomeUsuario(rsUsuario.getString("nomeUsuario"));
+                }
+
+                facturas.add(facturaRelatorio);
+            }
+
+            return facturas;
+
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao pesquisar registos!", ex);
+
+        }
+    }
+
     public void printFactura(Factura factura, Integer idUsuario) throws ErroSistema, IOException {
 
         Map<String, Object> params = new HashMap<>();
@@ -846,7 +1165,41 @@ public class FacturaDAO {
             ServletOutputStream responseStream = response.getOutputStream();
             InputStream caminho = getClass().getResourceAsStream("../report/factura.jrxml");
             response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + factura.getNomePaciente()+ " " + factura.getApelidoPaciente()+ " - " + factura.getData() + ".pdf\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + factura.getNomePaciente() + " " + factura.getApelidoPaciente() + " - " + factura.getData() + ".pdf\"");
+
+            JasperReport pathReport = JasperCompileManager.compileReport(caminho);
+            JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
+            JasperExportManager.exportReportToPdfStream(preencher, responseStream);
+
+            responseStream.flush();
+            responseStream.close();
+            context.renderResponse();
+            context.responseComplete();
+
+            Conecxao.fecharConexao();
+
+        } catch (JRException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void printFacturaRegisto(List<Factura> facturas, String ormm) throws ErroSistema, IOException {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("ormmMedico", ormm);
+        params.put("listaFactura", facturas);
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            ServletOutputStream responseStream = response.getOutputStream();
+            InputStream caminho = getClass().getResourceAsStream("../report/registoMedico.jrxml");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"Teste.pdf\"");
 
             JasperReport pathReport = JasperCompileManager.compileReport(caminho);
             JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);

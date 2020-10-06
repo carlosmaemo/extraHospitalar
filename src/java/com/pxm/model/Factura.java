@@ -23,8 +23,14 @@ public class Factura {
     private String sexoPaciente;
     private String codigoEmpresa;
     private String nomeEmpresa;
+    private double valorTotal;
     
     private String nidFiltro, dataInicial, dataFinal;
+    private String ormm, ormmConsulta;
+    
+    private String lstEmpresa, listaEmpresa, dataInicialEmpresa, dataFinalEmpresa;
+    
+    private String dataInicialData, dataFinalData;
     
     private String nomeMedico, nomeUsuario;
 
@@ -187,6 +193,82 @@ public class Factura {
         this.nomeUsuario = nomeUsuario;
     }
 
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public String getOrmm() {
+        
+        String[] parte = ormmConsulta.split("_/");
+        return parte[1];
+    }
+
+    public void setOrmm(String ormm) {
+        this.ormm = ormm;
+    }
+
+    public String getOrmmConsulta() {
+        return ormmConsulta;
+    }
+
+    public void setOrmmConsulta(String ormmConsulta) {
+        this.ormmConsulta = ormmConsulta;
+    }
+
+    public String getLstEmpresa() {
+        
+        String[] parte = listaEmpresa.split("_/");
+        return parte[1];
+    }
+
+    public void setLstEmpresa(String lstEmpresa) {
+        this.lstEmpresa = lstEmpresa;
+    }
+
+    public String getListaEmpresa() {
+        return listaEmpresa;
+    }
+
+    public void setListaEmpresa(String listaEmpresa) {
+        this.listaEmpresa = listaEmpresa;
+    }
+
+    public String getDataInicialEmpresa() {
+        return dataInicialEmpresa;
+    }
+
+    public void setDataInicialEmpresa(String dataInicialEmpresa) {
+        this.dataInicialEmpresa = dataInicialEmpresa;
+    }
+
+    public String getDataFinalEmpresa() {
+        return dataFinalEmpresa;
+    }
+
+    public void setDataFinalEmpresa(String dataFinalEmpresa) {
+        this.dataFinalEmpresa = dataFinalEmpresa;
+    }
+
+    public String getDataInicialData() {
+        return dataInicialData;
+    }
+
+    public void setDataInicialData(String dataInicialData) {
+        this.dataInicialData = dataInicialData;
+    }
+
+    public String getDataFinalData() {
+        return dataFinalData;
+    }
+
+    public void setDataFinalData(String dataFinalData) {
+        this.dataFinalData = dataFinalData;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;

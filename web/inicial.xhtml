@@ -508,17 +508,17 @@
                     <p:column headerText="NID" sortBy="#{factura.nidPaciente}">
                         <h:outputText value="#{factura.nidPaciente}"></h:outputText>
                     </p:column>
-                    <p:column headerText="Nome" sortBy="#{factura.nomePaciente}">
+                    <p:column headerText="Nome Completo" sortBy="#{factura.nomePaciente}">
                         <h:outputText value="#{factura.nomePaciente}"></h:outputText>
-                    </p:column>
-                    <p:column headerText="Apelido" sortBy="#{factura.apelidoPaciente}">
-                        <h:outputText value="#{factura.apelidoPaciente}"></h:outputText>
                     </p:column>
                     <p:column headerText="O Clínico" sortBy="#{factura.nomeMedico}">
                         <h:outputText value="#{factura.nomeMedico}"></h:outputText>
                     </p:column>
                     <p:column headerText="O Administrativo" sortBy="#{factura.nomeUsuario}">
                         <h:outputText value="#{factura.nomeUsuario}"></h:outputText>
+                    </p:column>
+                    <p:column headerText="Valor Total (MT)" sortBy="#{factura.valorTotal}">
+                        <h:outputText value="#{factura.valorTotal}"></h:outputText>
                     </p:column>
                 </p:dataTable>
                 <br/>
