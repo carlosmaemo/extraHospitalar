@@ -731,7 +731,7 @@ public class FacturaBean {
     public void setFacturasRegistosData(List<Factura> facturasRegistosData) {
         this.facturasRegistosData = facturasRegistosData;
     }
-    
+
     // REGISTRO DE FACTURA
     public void salvar(Factura factura, int idUsuario) throws ErroSistema {
 
@@ -1110,16 +1110,22 @@ public class FacturaBean {
 
     public void cancelarFiltroRegisto() throws ClassNotFoundException, SQLException {
         facturasRegistosMedicos = new ArrayList();
+        factura.setDataInicial("");
+        factura.setDataFinal("");
         pesquisarMedicos();
     }
 
     public void cancelarFiltroRegistoEmpresa() throws ClassNotFoundException, SQLException {
         facturasRegistosEmpresas = new ArrayList();
+        factura.setDataInicialEmpresa("");
+        factura.setDataFinalEmpresa("");
         pesquisarEmpresas();
     }
-    
+
     public void cancelarFiltroRegistoData() throws ClassNotFoundException, SQLException {
         facturasRegistosData = new ArrayList();
+        factura.setDataInicialData("");
+        factura.setDataFinalData("");
     }
 
     public void print(Factura factura, int idUsuario) throws ClassNotFoundException, SQLException {
@@ -1132,14 +1138,150 @@ public class FacturaBean {
 
     }
 
-    public void printRegisto() throws ClassNotFoundException, SQLException {
-
+    public void printRegistoData() throws ClassNotFoundException, SQLException {
         try {
-            facturaDao.printFacturaRegisto(facturas, factura.getOrmm());
+            facturaDao.printFacturaRegistoData(factura);
         } catch (ErroSistema | IOException ex) {
             Logger.getLogger(FacturaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    public void printRegistoMedico() throws ClassNotFoundException, SQLException {
+        try {
+
+            if (factura.getOrmm().isEmpty() == false
+                    && factura.getDataInicial().isEmpty() == true
+                    && factura.getDataFinal().isEmpty() == true) {
+
+                if (facturasRegistosMedicos == null || facturasRegistosMedicos.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoMedico(factura);
+                }
+
+            } else if (factura.getOrmm().isEmpty() == false
+                    && factura.getDataInicial().isEmpty() == false
+                    && factura.getDataFinal().isEmpty() == true) {
+
+                if (facturasRegistosMedicos == null || facturasRegistosMedicos.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoMedico(factura);
+                }
+
+            } else if (factura.getOrmm().isEmpty() == false
+                    && factura.getDataInicial().isEmpty() == true
+                    && factura.getDataFinal().isEmpty() == false) {
+
+                if (facturasRegistosMedicos == null || facturasRegistosMedicos.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoMedico(factura);
+                }
+
+            } else if (factura.getOrmm().isEmpty() == true
+                    && factura.getDataInicial().isEmpty() == false
+                    && factura.getDataFinal().isEmpty() == false) {
+
+                if (facturasRegistosMedicos == null || facturasRegistosMedicos.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoMedicoFiltro(factura);
+                }
+
+            } else if (factura.getOrmm().isEmpty() == false
+                    && factura.getDataInicial().isEmpty() == false
+                    && factura.getDataFinal().isEmpty() == false) {
+
+                if (facturasRegistosMedicos == null || facturasRegistosMedicos.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoMedicoFiltro(factura);
+                }
+
+            } else if (factura.getOrmm().isEmpty() == true
+                    && factura.getDataInicial().isEmpty() == true
+                    && factura.getDataFinal().isEmpty() == true) {
+
+                addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+
+            } else {
+
+                addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+            }
+
+        } catch (ErroSistema | IOException ex) {
+            Logger.getLogger(FacturaBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void printRegistoEmpresa() throws ClassNotFoundException, SQLException {
+        try {
+
+            if (factura.getLstEmpresa().isEmpty() == false
+                    && factura.getDataInicialEmpresa().isEmpty() == true
+                    && factura.getDataFinalEmpresa().isEmpty() == true) {
+
+                if (facturasRegistosEmpresas == null || facturasRegistosEmpresas.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoEmpresa(factura);
+                }
+
+            } else if (factura.getLstEmpresa().isEmpty() == false
+                    && factura.getDataInicialEmpresa().isEmpty() == false
+                    && factura.getDataFinalEmpresa().isEmpty() == true) {
+
+                if (facturasRegistosEmpresas == null || facturasRegistosEmpresas.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoEmpresa(factura);
+                }
+
+            } else if (factura.getLstEmpresa().isEmpty() == false
+                    && factura.getDataInicialEmpresa().isEmpty() == true
+                    && factura.getDataFinalEmpresa().isEmpty() == false) {
+
+                if (facturasRegistosEmpresas == null || facturasRegistosEmpresas.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoEmpresa(factura);
+                }
+
+            } else if (factura.getLstEmpresa().isEmpty() == true
+                    && factura.getDataInicialEmpresa().isEmpty() == false
+                    && factura.getDataFinalEmpresa().isEmpty() == false) {
+
+                if (facturasRegistosEmpresas == null || facturasRegistosEmpresas.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoEmpresaFiltro(factura);
+                }
+
+            } else if (factura.getLstEmpresa().isEmpty() == false
+                    && factura.getDataInicialEmpresa().isEmpty() == false
+                    && factura.getDataFinalEmpresa().isEmpty() == false) {
+
+                if (facturasRegistosEmpresas == null || facturasRegistosEmpresas.isEmpty()) {
+                    addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+                } else {
+                    facturaDao.printFacturaRegistoEmpresaFiltro(factura);
+                }
+
+            } else if (factura.getLstEmpresa().isEmpty() == true
+                    && factura.getDataInicialEmpresa().isEmpty() == true
+                    && factura.getDataFinalEmpresa().isEmpty() == true) {
+
+                addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+
+            } else {
+
+                addMensagem("Nenhum registro encontrado!", "Não foi encontrado nehnum registro.", FacesMessage.SEVERITY_WARN);
+            }
+
+        } catch (ErroSistema | IOException ex) {
+            Logger.getLogger(FacturaBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

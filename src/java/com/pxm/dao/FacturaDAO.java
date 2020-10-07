@@ -17,7 +17,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1184,11 +1186,11 @@ public class FacturaDAO {
 
     }
 
-    public void printFacturaRegisto(List<Factura> facturas, String ormm) throws ErroSistema, IOException {
+    public void printFacturaRegistoData(Factura factura) throws ErroSistema, IOException {
 
         Map<String, Object> params = new HashMap<>();
-        params.put("ormmMedico", ormm);
-        params.put("listaFactura", facturas);
+        params.put("dataInicial", factura.getDataInicialData());
+        params.put("dataFinal", factura.getDataFinalData());
 
         try {
 
@@ -1197,9 +1199,211 @@ public class FacturaDAO {
             FacesContext context = FacesContext.getCurrentInstance();
             HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
             ServletOutputStream responseStream = response.getOutputStream();
-            InputStream caminho = getClass().getResourceAsStream("../report/registoMedico.jrxml");
+            InputStream caminho = getClass().getResourceAsStream("../report/facturaData.jrxml");
             response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename=\"Teste.pdf\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"Relatório por Data - " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(new Date()) + ".pdf\"");
+
+            JasperReport pathReport = JasperCompileManager.compileReport(caminho);
+            JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
+            JasperExportManager.exportReportToPdfStream(preencher, responseStream);
+
+            responseStream.flush();
+            responseStream.close();
+            context.renderResponse();
+            context.responseComplete();
+
+            Conecxao.fecharConexao();
+
+        } catch (JRException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void printFacturaRegistoMedico(Factura factura) throws ErroSistema, IOException, SQLException {
+
+        Medico medico = new Medico();
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+
+            PreparedStatement psMedico = conexao.prepareStatement("Select * from medico where ormmMedico=?");
+            psMedico.setString(1, factura.getOrmm());
+            ResultSet rsMedico = psMedico.executeQuery();
+
+            if (rsMedico.next()) {
+                medico.setIdMedico(rsMedico.getInt("idMedico"));
+                medico.setNomeMedico(rsMedico.getString("nomeMedico"));
+                medico.setApelidoMedico(rsMedico.getString("apelidoMedico"));
+                medico.setContactoMedico(rsMedico.getString("contactoMedico"));
+                medico.setEnderecoMedico(rsMedico.getString("enderecoMedico"));
+                medico.setEspecialidadeMedico(rsMedico.getString("especialidadeMedico"));
+                medico.setOrmmMedico(rsMedico.getString("ormmMedico"));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("ormmMedico", medico.getOrmmMedico());
+            params.put("idMedico", medico.getIdMedico());
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            ServletOutputStream responseStream = response.getOutputStream();
+            InputStream caminho = getClass().getResourceAsStream("../report/facturaMedico.jrxml");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + medico.getNomeMedico() + " " + medico.getApelidoMedico() + " - " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(new Date()) + ".pdf\"");
+
+            JasperReport pathReport = JasperCompileManager.compileReport(caminho);
+            JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
+            JasperExportManager.exportReportToPdfStream(preencher, responseStream);
+
+            responseStream.flush();
+            responseStream.close();
+            context.renderResponse();
+            context.responseComplete();
+
+            Conecxao.fecharConexao();
+
+        } catch (JRException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void printFacturaRegistoEmpresa(Factura factura) throws ErroSistema, IOException, SQLException {
+
+        Empresa empresa = new Empresa();
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+
+            PreparedStatement psEmpresa = conexao.prepareStatement("Select * from empresa where codigoEmpresa=?");
+            psEmpresa.setString(1, factura.getLstEmpresa());
+            ResultSet rsEmpresa = psEmpresa.executeQuery();
+
+            if (rsEmpresa.next()) {
+                empresa.setIdEmpresa(rsEmpresa.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rsEmpresa.getString("nomeEmpresa"));
+                empresa.setNuitEmpresa(rsEmpresa.getString("nuitEmpresa"));
+                empresa.setContactoEmpresa(rsEmpresa.getString("contactoEmpresa"));
+                empresa.setEmailEmpresa(rsEmpresa.getString("emailEmpresa"));
+                empresa.setEnderecoEmpresa(rsEmpresa.getString("enderecoEmpresa"));
+                empresa.setCodigoEmpresa(rsEmpresa.getString("codigoEmpresa"));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("codigoEmpresa", empresa.getCodigoEmpresa());
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            ServletOutputStream responseStream = response.getOutputStream();
+            InputStream caminho = getClass().getResourceAsStream("../report/facturaEmpresa.jrxml");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + empresa.getNomeEmpresa() + " - " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(new Date()) + ".pdf\"");
+
+            JasperReport pathReport = JasperCompileManager.compileReport(caminho);
+            JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
+            JasperExportManager.exportReportToPdfStream(preencher, responseStream);
+
+            responseStream.flush();
+            responseStream.close();
+            context.renderResponse();
+            context.responseComplete();
+
+            Conecxao.fecharConexao();
+
+        } catch (JRException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void printFacturaRegistoMedicoFiltro(Factura factura) throws ErroSistema, IOException, SQLException {
+
+        Medico medico = new Medico();
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+
+            PreparedStatement psMedico = conexao.prepareStatement("Select * from medico where ormmMedico=?");
+            psMedico.setString(1, factura.getOrmm());
+            ResultSet rsMedico = psMedico.executeQuery();
+
+            if (rsMedico.next()) {
+                medico.setIdMedico(rsMedico.getInt("idMedico"));
+                medico.setNomeMedico(rsMedico.getString("nomeMedico"));
+                medico.setApelidoMedico(rsMedico.getString("apelidoMedico"));
+                medico.setContactoMedico(rsMedico.getString("contactoMedico"));
+                medico.setEnderecoMedico(rsMedico.getString("enderecoMedico"));
+                medico.setEspecialidadeMedico(rsMedico.getString("especialidadeMedico"));
+                medico.setOrmmMedico(rsMedico.getString("ormmMedico"));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("ormmMedico", medico.getOrmmMedico());
+            params.put("idMedico", medico.getIdMedico());
+            params.put("dataInicial", factura.getDataInicial());
+            params.put("dataFinal", factura.getDataFinal());
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            ServletOutputStream responseStream = response.getOutputStream();
+            InputStream caminho = getClass().getResourceAsStream("../report/facturaMedicoFiltro.jrxml");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + medico.getNomeMedico() + " " + medico.getApelidoMedico() + " - " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(new Date()) + ".pdf\"");
+
+            JasperReport pathReport = JasperCompileManager.compileReport(caminho);
+            JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
+            JasperExportManager.exportReportToPdfStream(preencher, responseStream);
+
+            responseStream.flush();
+            responseStream.close();
+            context.renderResponse();
+            context.responseComplete();
+
+            Conecxao.fecharConexao();
+
+        } catch (JRException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void printFacturaRegistoEmpresaFiltro(Factura factura) throws ErroSistema, IOException, SQLException {
+
+        Empresa empresa = new Empresa();
+
+        try {
+
+            Connection conexao = Conecxao.getConexao();
+
+            PreparedStatement psEmpresa = conexao.prepareStatement("Select * from empresa where codigoEmpresa=?");
+            psEmpresa.setString(1, factura.getLstEmpresa());
+            ResultSet rsEmpresa = psEmpresa.executeQuery();
+
+            if (rsEmpresa.next()) {
+                empresa.setIdEmpresa(rsEmpresa.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rsEmpresa.getString("nomeEmpresa"));
+                empresa.setNuitEmpresa(rsEmpresa.getString("nuitEmpresa"));
+                empresa.setContactoEmpresa(rsEmpresa.getString("contactoEmpresa"));
+                empresa.setEmailEmpresa(rsEmpresa.getString("emailEmpresa"));
+                empresa.setEnderecoEmpresa(rsEmpresa.getString("enderecoEmpresa"));
+                empresa.setCodigoEmpresa(rsEmpresa.getString("codigoEmpresa"));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("codigoEmpresa", empresa.getCodigoEmpresa());
+            params.put("dataInicial", factura.getDataInicialEmpresa());
+            params.put("dataFinal", factura.getDataFinalEmpresa());
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            ServletOutputStream responseStream = response.getOutputStream();
+            InputStream caminho = getClass().getResourceAsStream("../report/facturaEmpresaFiltro.jrxml");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + empresa.getNomeEmpresa() + " - " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(new Date()) + ".pdf\"");
 
             JasperReport pathReport = JasperCompileManager.compileReport(caminho);
             JasperPrint preencher = JasperFillManager.fillReport(pathReport, params, conexao);
