@@ -11,7 +11,9 @@ import com.pxm.model.MedicamentoTemp;
 import com.pxm.model.VisitaTemp;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,12 +56,14 @@ public class FacturaBean {
     private ArrayList<VisitaTemp> visitasTemp = new ArrayList<VisitaTemp>();
 
     private double consultaValor, exameValor, consumivelValor, internamentoValor, medicamentoValor, visitaValor;
-    private String consulta, consultaData, consultaHora, consultaMedico, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
-    private String exame, exameData, exameHora, exameCategoria, exameCodigo, exameTitulo, exameDescricao;
-    private String consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia;
-    private String internamento, internamentoData, internamentoHora, internamentoTempo, internamentoCodigo, internamentoTipo;
-    private String medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia;
-    private String visita, visitaData, visitaHora, visitaTempo, visitaCodigo, visitaTipo;
+    private String consultaData, exameData, consumivelData, internamentoData, medicamentoData, visitaData;
+    private String consultaHora, exameHora, consumivelHora, internamentoHora, medicamentoHora, visitaHora;
+    private String consulta, consultaMedico, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
+    private String exame, exameCategoria, exameCodigo, exameTitulo, exameDescricao;
+    private String consumivel, consumivelCategoria, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia;
+    private String internamento, internamentoTempo, internamentoCodigo, internamentoTipo;
+    private String medicamento, medicamentoCategoria, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia;
+    private String visita, visitaTempo, visitaCodigo, visitaTipo;
 
     @PostConstruct
     public void init() {
@@ -89,12 +93,12 @@ public class FacturaBean {
     }
 
     public String adicionarConsulta() {
+        
+        consultaData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        consultaHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        
         if (consulta.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Consulta/Procedimento' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (consultaData.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Data' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (consultaHora.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Hora' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (consultaMedico.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Médico' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
@@ -105,12 +109,12 @@ public class FacturaBean {
     }
 
     public String adicionarConsumivel() {
+        
+        consumivelData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        consumivelHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        
         if (consumivel.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Consumível' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (consumivelData.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Data' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (consumivelHora.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Hora' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
             ConsumivelTemp consumivelTemp = new ConsumivelTemp(this.consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelValor, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia);
             consumiveisTemp.add(consumivelTemp);
@@ -119,12 +123,12 @@ public class FacturaBean {
     }
 
     public String adicionarInternamento() {
+        
+        internamentoData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        internamentoHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        
         if (internamento.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Internamento' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (internamentoData.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Data' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (internamentoHora.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Hora' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
             InternamentoTemp internamentoTemp = new InternamentoTemp(this.internamento, internamentoData, internamentoHora, internamentoTempo, internamentoValor, internamentoCodigo, internamentoTipo);
             internamentosTemp.add(internamentoTemp);
@@ -133,12 +137,12 @@ public class FacturaBean {
     }
 
     public String adicionarMedicamento() {
+        
+        medicamentoData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        medicamentoHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        
         if (medicamento.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Medicamento' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (medicamentoData.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Data' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (medicamentoHora.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Hora' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
             MedicamentoTemp medicamentoTemp = new MedicamentoTemp(this.medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoValor, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia);
             medicamentosTemp.add(medicamentoTemp);
@@ -147,12 +151,12 @@ public class FacturaBean {
     }
 
     public String adicionarVisita() {
+        
+        visitaData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        visitaHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        
         if (visita.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Visita' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (visitaData.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Data' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (visitaHora.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Hora' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
             VisitaTemp visitaTemp = new VisitaTemp(this.visita, visitaData, visitaHora, visitaTempo, visitaValor, visitaCodigo, visitaTipo);
             visitasTemp.add(visitaTemp);
@@ -161,12 +165,12 @@ public class FacturaBean {
     }
 
     public String adicionarExame() {
+        
+        exameData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        exameHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        
         if (exame.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Exame' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (exameData.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Data' é obrigatório.", FacesMessage.SEVERITY_WARN);
-        } else if (exameHora.isEmpty()) {
-            addMensagem("Campo vazio!", "O campo 'Hora' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
 
             ExameTemp exameTemp = new ExameTemp(this.exame, exameData, exameHora, exameCategoria, exameValor, exameCodigo, exameTitulo, exameDescricao);
@@ -234,7 +238,6 @@ public class FacturaBean {
     }
 
     public String getConsultaMedico() throws ErroSistema {
-
         return consultaMedico;
     }
 

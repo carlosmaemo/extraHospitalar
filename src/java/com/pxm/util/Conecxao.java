@@ -8,9 +8,10 @@ import java.sql.SQLException;
 public class Conecxao {
     
     private static Connection conexao;
-    private static final String URL_CONEXAO = "jdbc:sqlite:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/db/db_extra_hospitalar.db";
+    private static String URL_CONEXAO = "jdbc:sqlite:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/db/db_extra_hospitalar.db";
     private static final String USUARIO = "root";
     private static final String SENHA = "";
+    public String db = URL_CONEXAO;
     
     public static Connection getConexao() throws ErroSistema {
         if(conexao == null) {
@@ -36,6 +37,10 @@ public class Conecxao {
                 throw new ErroSistema("Erro ao fechar conexão com a base de dados!", ex);
             }
         }
+    }
+
+    public static String getURL_CONEXAO() {
+        return URL_CONEXAO;
     }
     
 }

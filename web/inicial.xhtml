@@ -5,6 +5,7 @@
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:p="http://primefaces.org/ui"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
+             xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form>
@@ -47,10 +48,10 @@
                             </p:selectOneMenu>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="nomePaciente" style="width: 185px" maxlength="25" disabled="true" value="#{facturaBean.factura.nomePaciente}"/>
+                            <p:inputText id="nomePaciente" style="width: 185px" maxlength="30" disabled="true" value="#{facturaBean.factura.nomePaciente}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="25" disabled="true"  value="#{facturaBean.factura.apelidoPaciente}"/>
+                            <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.apelidoPaciente}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
                             <p:inputText id="contactoPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.contactoPaciente}"/>
@@ -87,12 +88,6 @@
                                 <h:outputLabel for="consultaNome" value="Consulta/Procedimento:"/>
                             </p:column>
                             <p:column style="border: none">
-                                <h:outputLabel for="consultaData" value="Data:"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="consultaHora" value="Hora:"/>
-                            </p:column>
-                            <p:column style="border: none">
                                 <h:outputLabel for="consultaMedico" value="Médico:"/>
                             </p:column>
                         </p:row>
@@ -101,12 +96,6 @@
                                 <p:selectOneMenu id="consultaNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.consulta}">
                                     <f:selectItems value="#{facturaBean.consultas}" />
                                 </p:selectOneMenu>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="consultaData" style="width: 185px" value="#{facturaBean.consultaData}"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="consultaHora" style="width: 185px" value="#{facturaBean.consultaHora}"/>
                             </p:column>
                             <p:column id="consultaMedico" style="border: none">
                                 <p:selectOneMenu filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.consultaMedico}">
@@ -153,24 +142,12 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="exameNome" value="Exame:"/>
                             </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="exameData" value="Data:"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="exameHora" value="Hora:"/>
-                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="exameNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.exame}">
                                     <f:selectItems value="#{facturaBean.exames}" />
                                 </p:selectOneMenu>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="exameData" style="width: 185px" value="#{facturaBean.exameData}"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="exameHora" style="width: 185px" value="#{facturaBean.exameHora}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -212,24 +189,12 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="internamentoNome" value="Internamento:"/>
                             </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="internamentoData" value="Data:"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="internamentoHora" value="Hora:"/>
-                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="internamentoNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.internamento}">
                                     <f:selectItems value="#{facturaBean.internamentos}" />
                                 </p:selectOneMenu>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="internamentoData" style="width: 185px" value="#{facturaBean.internamentoData}"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="internamentoHora" style="width: 185px" value="#{facturaBean.internamentoHora}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -271,24 +236,12 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="visitaNome" value="Visita"/>
                             </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="visitaData" value="Data:"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="visitaHora" value="Hora:"/>
-                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="visitaNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.visita}">
                                     <f:selectItems value="#{facturaBean.visitas}" />
                                 </p:selectOneMenu>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="visitaData" style="width: 185px" value="#{facturaBean.visitaData}"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="visitaHora" style="width: 185px" value="#{facturaBean.visitaHora}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -330,24 +283,12 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="medicamentoNome" value="Medicamento:"/>
                             </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="medicamentoData" value="Data:"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="medicamentoHora" value="Hora:"/>
-                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="medicamentoNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.medicamento}">
                                     <f:selectItems value="#{facturaBean.medicamentos}" />
                                 </p:selectOneMenu>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="medicamentoData" style="width: 185px" value="#{facturaBean.medicamentoData}"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="medicamentoHora" style="width: 185px" value="#{facturaBean.medicamentoHora}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -389,24 +330,12 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="consumivelNome" value="Consumivel"/>
                             </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="consumivelData" value="Data:"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <h:outputLabel for="consumivelHora" value="Hora:"/>
-                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="consumivelNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.consumivel}">
                                     <f:selectItems value="#{facturaBean.consumiveis}" />
                                 </p:selectOneMenu>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="consumivelData" style="width: 185px" value="#{facturaBean.consumivelData}"/>
-                            </p:column>
-                            <p:column style="border: none">
-                                <p:inputText id="consumivelHora" style="width: 185px" value="#{facturaBean.consumivelHora}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -471,13 +400,13 @@
                     </p:row>
                     <p:row class="panelLinha" style="background: #ddd">
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="nidFiltro" style="width: 185px" maxlength="30" value="#{facturaBean.factura.nidFiltro}"/>
+                            <p:inputText a:placeholder="NID do paciente" id="nidFiltro" style="width: 185px" maxlength="30" value="#{facturaBean.factura.nidFiltro}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="dataInicial" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicial}"/>
+                            <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataInicial" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicial}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="dataFinal" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinal}"/>
+                            <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataFinal" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinal}"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>

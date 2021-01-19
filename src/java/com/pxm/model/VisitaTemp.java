@@ -2,6 +2,8 @@ package com.pxm.model;
 
 import com.pxm.dao.FacturaDAO;
 import com.pxm.exception.ErroSistema;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *

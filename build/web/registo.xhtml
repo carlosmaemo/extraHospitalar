@@ -4,6 +4,7 @@
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:p="http://primefaces.org/ui"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
+             xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form>
@@ -34,10 +35,10 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="dataInicialEmpresaData" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicialData}"/>
+                                    <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataInicialEmpresaData" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicialData}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="dataFinalEmpresaData" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinalData}"/>
+                                    <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataFinalEmpresaData" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinalData}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -104,10 +105,10 @@
                                 </p:column>
 
                                 <p:column style="border: none">
-                                    <p:inputText id="dataInicial" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicial}"/>
+                                    <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataInicial" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicial}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="dataFinal" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinal}"/>
+                                    <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataFinal" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinal}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -174,10 +175,10 @@
                                 </p:column>
 
                                 <p:column style="border: none">
-                                    <p:inputText id="dataInicialEmpresa" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicialEmpresa}"/>
+                                    <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataInicialEmpresa" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicialEmpresa}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="dataFinalEmpresa" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinalEmpresa}"/>
+                                    <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataFinalEmpresa" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinalEmpresa}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>

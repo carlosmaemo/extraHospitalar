@@ -25,6 +25,7 @@ public class Factura {
     private String nomeEmpresa;
     private double valorTotal;
     
+    private String dataHoje;
     private String nidFiltro, dataInicial, dataFinal;
     private String ormm, ormmConsulta;
     
@@ -267,6 +268,15 @@ public class Factura {
 
     public void setDataFinalData(String dataFinalData) {
         this.dataFinalData = dataFinalData;
+    }
+
+    public String getDataHoje() {
+        dataHoje = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        return dataHoje;
+    }
+
+    public void setDataHoje(String dataHoje) {
+        this.dataHoje = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
     }
     
     @Override
