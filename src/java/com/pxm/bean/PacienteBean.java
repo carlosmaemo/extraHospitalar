@@ -84,6 +84,7 @@ public class PacienteBean {
             paciente.setSexoPaciente("");
             paciente.setCodigoEmpresa("");
             paciente.setNomeEmpresa("");
+                paciente.setNrSeguroPaciente("");
 
             listar();
             addMensagem("Actualizado!", "Dados do paciente actualizado com sucesso.", FacesMessage.SEVERITY_INFO);
@@ -102,6 +103,7 @@ public class PacienteBean {
                 paciente.setSexoPaciente("");
                 paciente.setCodigoEmpresa("");
                 paciente.setNomeEmpresa("");
+                paciente.setNrSeguroPaciente("");
 
                 listar();
 
@@ -130,8 +132,9 @@ public class PacienteBean {
                 paciente.setEnderecoPaciente("");
                 paciente.setNidPaciente("");
                 paciente.setSexoPaciente("");
-            paciente.setCodigoEmpresa("");
-            paciente.setNomeEmpresa("");
+                paciente.setCodigoEmpresa("");
+                paciente.setNomeEmpresa("");
+                paciente.setNrSeguroPaciente("");
 
                 listar();
 
@@ -147,8 +150,9 @@ public class PacienteBean {
                 paciente.setEnderecoPaciente("");
                 paciente.setNidPaciente("");
                 paciente.setSexoPaciente("");
-            paciente.setCodigoEmpresa("");
-            paciente.setNomeEmpresa("");
+                paciente.setCodigoEmpresa("");
+                paciente.setNomeEmpresa("");
+                paciente.setNrSeguroPaciente("");
 
                 listar();
             }

@@ -67,10 +67,16 @@
 
                             <p:row>
                                 <p:column style="border: none">
+                                    <h:outputLabel for="nrSeguroPaciente" value="Nº de Seguro:"/>
+                                </p:column>
+                                <p:column style="border: none">
                                     <h:outputLabel for="codigoEmpresaPaciente" value="Associar (Empresa):"/>
                                 </p:column>
                             </p:row>
                             <p:row>
+                                <p:column style="border: none">
+                                    <p:inputText id="nrSeguroPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.nrSeguroPaciente}"/>
+                                </p:column>
                                 <p:column style="border: none" colspan="2">
                                     <p:selectOneMenu id="codigoEmpresaPaciente" style="width: 100%" filter="true" filterMatchMode="startsWith" value="#{pacienteBean.paciente.codigoEmpresa}">
                                         <f:selectItems value="#{pacienteBean.codigoEmpresas}" />
@@ -91,7 +97,7 @@
                         <p:dataTable value="#{pacienteBean.pacientes}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{paciente.idPaciente}" rows="5" paginator="true" widgetVar="tblPaciente" var="paciente">
                             <p:column style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{pacienteBean.deletar(paciente)}" update="@form">
-                                    <p:confirm header="Confirmação" message="Deseja mesmo remover o médico?" icon="ui-icon-alert">
+                                    <p:confirm header="Confirmação" message="Deseja mesmo remover o paciente?" icon="ui-icon-alert">
                                     </p:confirm>
                                 </p:commandButton>
 
@@ -111,6 +117,9 @@
                             </p:column>
                             <p:column headerText="NID" sortBy="#{paciente.nidPaciente}">
                                 <h:outputText value="#{paciente.nidPaciente}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Nº de Seguro" sortBy="#{paciente.nrSeguroPaciente}">
+                                <h:outputText value="#{paciente.nrSeguroPaciente}"></h:outputText>
                             </p:column>
                             <p:column headerText="Empresa" sortBy="#{paciente.nomeEmpresa}">
                                 <h:outputText value="#{paciente.nomeEmpresa}"></h:outputText>

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class Conecxao {
     
     private static Connection conexao;
-    private static String URL_CONEXAO = "jdbc:sqlite:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/db/db_extra_hospitalar.db";
+    private static String URL_CONEXAO = "jdbc:sqlite:E:\\db_extra_hospitalar.db";
     private static final String USUARIO = "root";
     private static final String SENHA = "";
     public String db = URL_CONEXAO;

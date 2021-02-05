@@ -61,26 +61,27 @@ public class PacienteDAO {
             Connection conexao = Conecxao.getConexao();
             PreparedStatement ps;
 
-            ps = conexao.prepareStatement("update paciente set nomePaciente=?, apelidoPaciente=?, contactoPaciente=?, enderecoPaciente=?, sexoPaciente=?, codigoEmpresa=?, nomeEmpresa=? where nidPaciente=?");
+            ps = conexao.prepareStatement("update paciente set nomePaciente=?, apelidoPaciente=?, contactoPaciente=?, enderecoPaciente=?, sexoPaciente=?, nrseguroPaciente=?, codigoEmpresa=?, nomeEmpresa=? where nidPaciente=?");
 
             ps.setString(1, paciente.getNomePaciente());
             ps.setString(2, paciente.getApelidoPaciente());
             ps.setString(3, paciente.getContactoPaciente());
             ps.setString(4, paciente.getEnderecoPaciente());
             ps.setString(5, paciente.getSexoPaciente());
+            ps.setString(6, paciente.getNrSeguroPaciente());
             
             
             String[] parte1 = paciente.getCodigoEmpresa().split("_/");
             String codigoEmpresa = parte1[1];
             
-            ps.setString(6, codigoEmpresa);
+            ps.setString(7, codigoEmpresa);
 
             String[] parte2 = paciente.getCodigoEmpresa().split("_/");
             String nomeEmpresa = parte2[0];
 
-            ps.setString(7, nomeEmpresa);
+            ps.setString(8, nomeEmpresa);
             
-            ps.setString(8, paciente.getNidPaciente());
+            ps.setString(9, paciente.getNidPaciente());
             
             ps.execute();
 
@@ -96,7 +97,7 @@ public class PacienteDAO {
             Connection conexao = Conecxao.getConexao();
             PreparedStatement ps;
 
-            ps = conexao.prepareStatement("INSERT INTO `paciente`(`nomePaciente`, `apelidoPaciente`, `contactoPaciente`, `enderecoPaciente`, `nidPaciente`, `sexoPaciente`, `codigoEmpresa`, `nomeEmpresa`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            ps = conexao.prepareStatement("INSERT INTO `paciente`(`nomePaciente`, `apelidoPaciente`, `contactoPaciente`, `enderecoPaciente`, `nidPaciente`, `sexoPaciente`, `nrseguroPaciente`, `codigoEmpresa`, `nomeEmpresa`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             ps.setString(1, paciente.getNomePaciente());
             ps.setString(2, paciente.getApelidoPaciente());
@@ -104,16 +105,17 @@ public class PacienteDAO {
             ps.setString(4, paciente.getEnderecoPaciente());
             ps.setString(5, paciente.getNidPaciente());
             ps.setString(6, paciente.getSexoPaciente());
+            ps.setString(7, paciente.getNrSeguroPaciente());
             
             String[] parte1 = paciente.getCodigoEmpresa().split("_/");
             String codigoEmpresa = parte1[1];
             
-            ps.setString(7, codigoEmpresa);
+            ps.setString(8, codigoEmpresa);
 
             String[] parte2 = paciente.getCodigoEmpresa().split("_/");
             String nomeEmpresa = parte2[0];
 
-            ps.setString(8, nomeEmpresa);
+            ps.setString(9, nomeEmpresa);
 
             ps.execute();
 
@@ -165,6 +167,7 @@ public class PacienteDAO {
                 ps.setEnderecoPaciente(rs.getString("enderecoPaciente"));
                 ps.setNidPaciente(rs.getString("nidPaciente"));
                 ps.setSexoPaciente(rs.getString("sexoPaciente"));
+                ps.setNrSeguroPaciente(rs.getString("nrseguroPaciente"));
                 ps.setNomeEmpresa(rs.getString("nomeEmpresa"));
 
                 pacientes.add(ps);
@@ -209,6 +212,7 @@ public class PacienteDAO {
                 ps.setEnderecoPaciente(rs.getString("enderecoPaciente"));
                 ps.setNidPaciente(rs.getString("nidPaciente"));
                 ps.setSexoPaciente(rs.getString("sexoPaciente"));
+                ps.setNrSeguroPaciente(rs.getString("nrseguroPaciente"));
                 ps.setNomeEmpresa(rs.getString("nomeEmpresa"));
 
                 relatorios.add(ps);

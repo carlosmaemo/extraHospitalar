@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e3d8600c-2dd3-4dfc-b2ed-e1b6cbae9ed4">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="extraHospitalar"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -115,7 +117,7 @@
 	<parameter name="ormmMedico" class="java.lang.String"/>
 	<parameter name="idMedico" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT * FROM medico, factura WHERE medico.ormmMedico = $P{ormmMedico} and factura.idMedico = $P{idMedico} ]]>
+		<![CDATA[SELECT * FROM medico, factura WHERE medico.ormmMedico = $P{ormmMedico} and factura.idMedico = $P{idMedico}]]>
 	</queryString>
 	<field name="idMedico" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="idMedico"/>
@@ -246,12 +248,6 @@
 				<text><![CDATA[HOSPITAL PROVINCIAL DE TETE
 SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 			</staticText>
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="230" y="0" width="100" height="69" uuid="694bcbb4-fca3-4866-bfbc-87a1fcf01111">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<imageExpression><![CDATA["/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/report/rpm.png"]]></imageExpression>
-			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>

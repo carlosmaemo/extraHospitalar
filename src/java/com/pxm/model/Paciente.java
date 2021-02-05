@@ -14,6 +14,7 @@ public class Paciente {
     private String contactoPaciente;
     private String enderecoPaciente;
     private String nidPaciente;
+    private String nrSeguroPaciente;
     private String sexoPaciente;
     private String codigoEmpresa;
     private String nomeEmpresa;
@@ -89,9 +90,16 @@ public class Paciente {
     public void setNomeEmpresa(String nomeEmpresa) {
         this.nomeEmpresa = nomeEmpresa;
     }
+
+    public String getNrSeguroPaciente() {
+        return nrSeguroPaciente;
+    }
+
+    public void setNrSeguroPaciente(String nrSeguroPaciente) {
+        this.nrSeguroPaciente = nrSeguroPaciente;
+    }
     
     @Override
-
     public int hashCode() {
         int hash = 5;
         hash = 17 * hash + this.idPaciente;
