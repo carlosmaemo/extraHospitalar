@@ -6,7 +6,7 @@
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:form>
+    <h:form enctype='multipart/form-data'>
 
         <div style="padding: 5px; background: #ddd; border: 1px solid #aaa;border-radius: 3px">
 
@@ -46,22 +46,22 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="nomePaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.nomePaciente}"/>
+                                    <p:inputText id="nomePaciente" style="width: 185px" maxlength="45" value="#{pacienteBean.paciente.nomePaciente}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.apelidoPaciente}"/>
+                                    <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="45" value="#{pacienteBean.paciente.apelidoPaciente}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="contactoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.contactoPaciente}"/>
+                                    <p:inputText id="contactoPaciente" style="width: 185px" maxlength="45" value="#{pacienteBean.paciente.contactoPaciente}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="enderecoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.enderecoPaciente}"/>
+                                    <p:inputText id="enderecoPaciente" style="width: 185px" maxlength="45" value="#{pacienteBean.paciente.enderecoPaciente}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="nidPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.nidPaciente}"/>
+                                    <p:inputText id="nidPaciente" style="width: 185px" maxlength="45" value="#{pacienteBean.paciente.nidPaciente}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="sexoPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.sexoPaciente}"/>
+                                    <p:inputText id="sexoPaciente" style="width: 185px" maxlength="45" value="#{pacienteBean.paciente.sexoPaciente}"/>
                                 </p:column>
                             </p:row>
 
@@ -75,7 +75,7 @@
                             </p:row>
                             <p:row>
                                 <p:column style="border: none">
-                                    <p:inputText id="nrSeguroPaciente" style="width: 185px" maxlength="30" value="#{pacienteBean.paciente.nrSeguroPaciente}"/>
+                                    <p:inputText id="nrSeguroPaciente" style="width: 185px" maxlength="45" value="#{pacienteBean.paciente.nrSeguroPaciente}"/>
                                 </p:column>
                                 <p:column style="border: none" colspan="2">
                                     <p:selectOneMenu id="codigoEmpresaPaciente" style="width: 100%" filter="true" filterMatchMode="startsWith" value="#{pacienteBean.paciente.codigoEmpresa}">
@@ -90,12 +90,27 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{pacienteBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{pacienteBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                
+                                <!--
+                                
+                                IMPORTAR / EXPORTAR
+                                
+                                &nbsp;
+                                <p:fileUpload value="{pacienteBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="{pacienteBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaPacientes" fileName="Pacientes"/>
+                                </p:commandButton>
+                                -->
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{pacienteBean.pacientes}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{paciente.idPaciente}" rows="5" paginator="true" widgetVar="tblPaciente" var="paciente">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaPacientes" value="#{pacienteBean.pacientes}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{paciente.idPaciente}" rows="30" paginator="true" widgetVar="tblPaciente" var="paciente">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{pacienteBean.deletar(paciente)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover o paciente?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -129,7 +144,7 @@
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{pacienteBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="45" value="#{pacienteBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{pacienteBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{pacienteBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -163,22 +178,22 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="nomeEmpresa" style="width: 185px" maxlength="30" value="#{empresaBean.empresa.nomeEmpresa}"/>
+                                    <p:inputText id="nomeEmpresa" style="width: 185px" maxlength="60" value="#{empresaBean.empresa.nomeEmpresa}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="nuitEmpresa" style="width: 185px" maxlength="30" value="#{empresaBean.empresa.nuitEmpresa}"/>
+                                    <p:inputText id="nuitEmpresa" style="width: 185px" maxlength="150" value="#{empresaBean.empresa.nuitEmpresa}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="contactoEmpresa" style="width: 185px" maxlength="30" value="#{empresaBean.empresa.contactoEmpresa}"/>
+                                    <p:inputText id="contactoEmpresa" style="width: 185px" maxlength="150" value="#{empresaBean.empresa.contactoEmpresa}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="emailEmpresa" style="width: 185px" maxlength="30" value="#{empresaBean.empresa.emailEmpresa}"/>
+                                    <p:inputText id="emailEmpresa" style="width: 185px" maxlength="60" value="#{empresaBean.empresa.emailEmpresa}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="enderecoEmpresa" style="width: 185px" maxlength="30" value="#{empresaBean.empresa.enderecoEmpresa}"/>
+                                    <p:inputText id="enderecoEmpresa" style="width: 185px" maxlength="60" value="#{empresaBean.empresa.enderecoEmpresa}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="codigoEmpresa" style="width: 185px" maxlength="30" value="#{empresaBean.empresa.codigoEmpresa}"/>
+                                    <p:inputText id="codigoEmpresa" style="width: 185px" maxlength="150" value="#{empresaBean.empresa.codigoEmpresa}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -187,12 +202,21 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{empresaBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{empresaBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                &nbsp;
+                                <p:fileUpload value="#{empresaBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="#{empresaBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaEmpresas" fileName="Empresas"/>
+                                </p:commandButton>
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{empresaBean.empresas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{empresa.idEmpresa}" rows="5" paginator="true" widgetVar="tblEmpresa" var="empresa">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaEmpresas" value="#{empresaBean.empresas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{empresa.idEmpresa}" rows="30" paginator="true" widgetVar="tblEmpresa" var="empresa">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{empresaBean.deletar(empresa)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover a empresa?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -215,6 +239,12 @@
                             <p:column headerText="Contacto" sortBy="#{empresa.contactoEmpresa}">
                                 <h:outputText value="#{empresa.contactoEmpresa}"></h:outputText>
                             </p:column>
+                            <p:column headerText="Email" sortBy="#{empresa.emailEmpresa}">
+                                <h:outputText value="#{empresa.emailEmpresa}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Endereço" sortBy="#{empresa.enderecoEmpresa}">
+                                <h:outputText value="#{empresa.enderecoEmpresa}"></h:outputText>
+                            </p:column>
                             <p:column headerText="Código" sortBy="#{empresa.codigoEmpresa}">
                                 <h:outputText value="#{empresa.codigoEmpresa}"></h:outputText>
                             </p:column>
@@ -224,7 +254,7 @@
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{empresaBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="60" value="#{empresaBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{empresaBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{empresaBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -258,22 +288,22 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="nomeMedico" style="width: 185px" maxlength="30" value="#{medicoBean.medico.nomeMedico}"/>
+                                    <p:inputText id="nomeMedico" style="width: 185px" maxlength="150" value="#{medicoBean.medico.nomeMedico}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="apelidoMedico" style="width: 185px" maxlength="30" value="#{medicoBean.medico.apelidoMedico}"/>
+                                    <p:inputText id="apelidoMedico" style="width: 185px" maxlength="150" value="#{medicoBean.medico.apelidoMedico}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="contactoMedico" style="width: 185px" maxlength="30" value="#{medicoBean.medico.contactoMedico}"/>
+                                    <p:inputText id="contactoMedico" style="width: 185px" maxlength="150" value="#{medicoBean.medico.contactoMedico}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="enderecoMedico" style="width: 185px" maxlength="30" value="#{medicoBean.medico.enderecoMedico}"/>
+                                    <p:inputText id="enderecoMedico" style="width: 185px" maxlength="150" value="#{medicoBean.medico.enderecoMedico}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="ormmMedico" style="width: 185px" maxlength="30" value="#{medicoBean.medico.ormmMedico}"/>
+                                    <p:inputText id="ormmMedico" style="width: 185px" maxlength="150" value="#{medicoBean.medico.ormmMedico}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="especialidadeMedico" style="width: 185px" maxlength="30" value="#{medicoBean.medico.especialidadeMedico}"/>
+                                    <p:inputText id="especialidadeMedico" style="width: 185px" maxlength="150" value="#{medicoBean.medico.especialidadeMedico}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -283,12 +313,26 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{medicoBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{medicoBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                
+                                <!--
+                                
+                                IMPORTAR / EXPORTAR
+                                
+                                &nbsp;
+                                <p:fileUpload value="{medicoBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="{medicoBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaMedicos" fileName="Medicos"/>
+                                </p:commandButton>
+                                -->
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{medicoBean.medicos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{medico.idMedico}" rows="5" paginator="true" widgetVar="tblMedico" var="medico">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaMedicos" value="#{medicoBean.medicos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{medico.idMedico}" rows="30" paginator="true" widgetVar="tblMedico" var="medico">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{medicoBean.deletar(medico)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover o médico?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -319,7 +363,7 @@
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{medicoBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="150" value="#{medicoBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{medicoBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{medicoBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -351,19 +395,19 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="codigoExame" style="width: 185px" maxlength="30" value="#{exameBean.exame.codigoExame}"/>
+                                    <p:inputText id="codigoExame" style="width: 185px" maxlength="150" value="#{exameBean.exame.codigoExame}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="categoriaExame" style="width: 185px" maxlength="30" value="#{exameBean.exame.categoriaExame}"/>
+                                    <p:inputText id="categoriaExame" style="width: 185px" maxlength="150" value="#{exameBean.exame.categoriaExame}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tituloExame" style="width: 185px" maxlength="30" value="#{exameBean.exame.tituloExame}"/>
+                                    <p:inputText id="tituloExame" style="width: 185px" maxlength="150" value="#{exameBean.exame.tituloExame}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="valorExame" style="width: 185px" maxlength="30" value="#{exameBean.exame.valorExame}"/>
+                                    <p:inputText id="valorExame" style="width: 185px" maxlength="150" value="#{exameBean.exame.valorExame}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="descricaoExame" style="width: 185px" maxlength="30" value="#{exameBean.exame.descricaoExame}"/>
+                                    <p:inputText id="descricaoExame" style="width: 185px" maxlength="150" value="#{exameBean.exame.descricaoExame}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -373,12 +417,21 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{exameBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{exameBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                &nbsp;
+                                <p:fileUpload value="#{exameBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="#{exameBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaExames" fileName="Exames"/>
+                                </p:commandButton>
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{exameBean.exames}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{exame.idExame}" rows="5" paginator="true" widgetVar="tblExame" var="exame">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaExames" value="#{exameBean.exames}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{exame.idExame}" rows="30" paginator="true" widgetVar="tblExame" var="exame">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{exameBean.deletar(exame)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover o exame?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -404,12 +457,15 @@
                             <p:column headerText="Valor (MT)" sortBy="#{exame.valorExame}">
                                 <h:outputText value="#{exame.valorExame}"></h:outputText>
                             </p:column>
+                            <p:column headerText="Descrição" sortBy="#{exame.descricaoExame}">
+                                <h:outputText value="#{exame.descricaoExame}"></h:outputText>
+                            </p:column>
 
                         </p:dataTable>
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{exameBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="150" value="#{exameBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{exameBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{exameBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -441,19 +497,19 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="codigoConsulta" style="width: 185px" maxlength="30" value="#{consultaBean.consulta.codigoConsulta}"/>
+                                    <p:inputText id="codigoConsulta" style="width: 185px" maxlength="150" value="#{consultaBean.consulta.codigoConsulta}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="categoriaConsulta" style="width: 185px" maxlength="30" value="#{consultaBean.consulta.categoriaConsulta}"/>
+                                    <p:inputText id="categoriaConsulta" style="width: 185px" maxlength="150" value="#{consultaBean.consulta.categoriaConsulta}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tituloConsulta" style="width: 185px" maxlength="30" value="#{consultaBean.consulta.tituloConsulta}"/>
+                                    <p:inputText id="tituloConsulta" style="width: 185px" maxlength="150" value="#{consultaBean.consulta.tituloConsulta}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="descricaoConsulta" style="width: 185px" maxlength="30" value="#{consultaBean.consulta.descricaoConsulta}"/>
+                                    <p:inputText id="descricaoConsulta" style="width: 185px" maxlength="150" value="#{consultaBean.consulta.descricaoConsulta}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="valorConsulta" style="width: 185px" maxlength="30" value="#{consultaBean.consulta.valorConsulta}"/>
+                                    <p:inputText id="valorConsulta" style="width: 185px" maxlength="150" value="#{consultaBean.consulta.valorConsulta}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -463,12 +519,21 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{consultaBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{consultaBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                &nbsp;
+                                <p:fileUpload value="#{consultaBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="#{consultaBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaConsultas" fileName="Consultas"/>
+                                </p:commandButton>
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{consultaBean.consultas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consulta.idConsulta}" rows="5" paginator="true" widgetVar="tblConsulta" var="consulta">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaConsultas" value="#{consultaBean.consultas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consulta.idConsulta}" rows="30" paginator="true" widgetVar="tblConsulta" var="consulta">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{consultaBean.deletar(consulta)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover a consulta?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -494,12 +559,15 @@
                             <p:column headerText="Valor (MT)" sortBy="#{consulta.valorConsulta}">
                                 <h:outputText value="#{consulta.valorConsulta}"></h:outputText>
                             </p:column>
+                            <p:column headerText="Descrição" sortBy="#{consulta.descricaoConsulta}">
+                                <h:outputText value="#{consulta.descricaoConsulta}"></h:outputText>
+                            </p:column>
 
                         </p:dataTable>
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{consultaBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="150" value="#{consultaBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{consultaBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{consultaBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -528,16 +596,16 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="codigoInternamento" style="width: 185px" maxlength="30" value="#{internamentoBean.internamento.codigoInternamento}"/>
+                                    <p:inputText id="codigoInternamento" style="width: 185px" maxlength="150" value="#{internamentoBean.internamento.codigoInternamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tipoInternamento" style="width: 185px" maxlength="30" value="#{internamentoBean.internamento.tipoInternamento}"/>
+                                    <p:inputText id="tipoInternamento" style="width: 185px" maxlength="150" value="#{internamentoBean.internamento.tipoInternamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tempoInternamento" style="width: 185px" maxlength="30" value="#{internamentoBean.internamento.tempoInternamento}"/>
+                                    <p:inputText id="tempoInternamento" style="width: 185px" maxlength="150" value="#{internamentoBean.internamento.tempoInternamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="valorInternamento" style="width: 185px" maxlength="30" value="#{internamentoBean.internamento.valorInternamento}"/>
+                                    <p:inputText id="valorInternamento" style="width: 185px" maxlength="150" value="#{internamentoBean.internamento.valorInternamento}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -547,12 +615,21 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{internamentoBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{internamentoBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                &nbsp;
+                                <p:fileUpload value="#{internamentoBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="#{internamentoBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaInternamentos" fileName="Internamentos"/>
+                                </p:commandButton>
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{internamentoBean.internamentos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{internamento.idInternamento}" rows="5" paginator="true" widgetVar="tblInternamento" var="internamento">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaInternamentos" value="#{internamentoBean.internamentos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{internamento.idInternamento}" rows="30" paginator="true" widgetVar="tblInternamento" var="internamento">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{internamentoBean.deletar(internamento)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover o internamento?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -583,7 +660,7 @@
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{internamentoBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="150" value="#{internamentoBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{internamentoBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{internamentoBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -612,16 +689,16 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="codigoVisita" style="width: 185px" maxlength="30" value="#{visitaBean.visita.codigoVisita}"/>
+                                    <p:inputText id="codigoVisita" style="width: 185px" maxlength="150" value="#{visitaBean.visita.codigoVisita}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tipoVisita" style="width: 185px" maxlength="30" value="#{visitaBean.visita.tipoVisita}"/>
+                                    <p:inputText id="tipoVisita" style="width: 185px" maxlength="150" value="#{visitaBean.visita.tipoVisita}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tempoVisita" style="width: 185px" maxlength="30" value="#{visitaBean.visita.tempoVisita}"/>
+                                    <p:inputText id="tempoVisita" style="width: 185px" maxlength="150" value="#{visitaBean.visita.tempoVisita}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="valorVisita" style="width: 185px" maxlength="30" value="#{visitaBean.visita.valorVisita}"/>
+                                    <p:inputText id="valorVisita" style="width: 185px" maxlength="150" value="#{visitaBean.visita.valorVisita}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -631,12 +708,21 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{visitaBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{visitaBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                &nbsp;
+                                <p:fileUpload value="#{visitaBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="#{visitaBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaVisitas" fileName="Visitas"/>
+                                </p:commandButton>
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{visitaBean.visitas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{visita.idVisita}" rows="5" paginator="true" widgetVar="tblVisita" var="visita">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaVisitas" value="#{visitaBean.visitas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{visita.idVisita}" rows="30" paginator="true" widgetVar="tblVisita" var="visita">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{visitaBean.deletar(visita)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover a visita?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -667,7 +753,7 @@
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{visitaBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="150" value="#{visitaBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{visitaBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{visitaBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -702,22 +788,22 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="codigoMedicamento" style="width: 185px" maxlength="30" value="#{medicamentoBean.medicamento.codigoMedicamento}"/>
+                                    <p:inputText id="codigoMedicamento" style="width: 185px" maxlength="150" value="#{medicamentoBean.medicamento.codigoMedicamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="categoriaMedicamento" style="width: 185px" maxlength="30" value="#{medicamentoBean.medicamento.categoriaMedicamento}"/>
+                                    <p:inputText id="categoriaMedicamento" style="width: 185px" maxlength="150" value="#{medicamentoBean.medicamento.categoriaMedicamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tituloMedicamento" style="width: 185px" maxlength="30" value="#{medicamentoBean.medicamento.tituloMedicamento}"/>
+                                    <p:inputText id="tituloMedicamento" style="width: 185px" maxlength="150" value="#{medicamentoBean.medicamento.tituloMedicamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="valorMedicamento" style="width: 185px" maxlength="30" value="#{medicamentoBean.medicamento.valorMedicamento}"/>
+                                    <p:inputText id="valorMedicamento" style="width: 185px" maxlength="150" value="#{medicamentoBean.medicamento.valorMedicamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="composicaoMedicamento" style="width: 185px" maxlength="30" value="#{medicamentoBean.medicamento.composicaoMedicamento}"/>
+                                    <p:inputText id="composicaoMedicamento" style="width: 185px" maxlength="150" value="#{medicamentoBean.medicamento.composicaoMedicamento}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="posologiaMedicamento" style="width: 185px" maxlength="30" value="#{medicamentoBean.medicamento.posologiaMedicamento}"/>
+                                    <p:inputText id="posologiaMedicamento" style="width: 185px" maxlength="150" value="#{medicamentoBean.medicamento.posologiaMedicamento}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -727,12 +813,21 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{medicamentoBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{medicamentoBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                &nbsp;
+                                <p:fileUpload value="#{medicamentoBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="#{medicamentoBean.carregar}" ajax="false"/>
+                                
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaMedicamentos" fileName="Medicamentos"/>
+                                </p:commandButton>
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{medicamentoBean.medicamentos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{medicamento.idMedicamento}" rows="5" paginator="true" widgetVar="tblMedicamento" var="medicamento">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaMedicamentos" value="#{medicamentoBean.medicamentos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{medicamento.idMedicamento}" rows="30" paginator="true" widgetVar="tblMedicamento" var="medicamento">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{medicamentoBean.deletar(medicamento)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover o medicamento?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -746,24 +841,30 @@
                                 </p:confirmDialog>
 
                             </p:column>
-                            <p:column headerText="Título" sortBy="#{medicamento.tituloMedicamento}">
-                                <h:outputText value="#{medicamento.tituloMedicamento}"></h:outputText>
-                            </p:column>
                             <p:column headerText="Código" sortBy="#{medicamento.codigoMedicamento}">
                                 <h:outputText value="#{medicamento.codigoMedicamento}"></h:outputText>
                             </p:column>
                             <p:column headerText="Categoria" sortBy="#{medicamento.categoriaMedicamento}">
                                 <h:outputText value="#{medicamento.categoriaMedicamento}"></h:outputText>
                             </p:column>
+                            <p:column headerText="Título" sortBy="#{medicamento.tituloMedicamento}">
+                                <h:outputText value="#{medicamento.tituloMedicamento}"></h:outputText>
+                            </p:column>
                             <p:column headerText="Valor (MT)" sortBy="#{medicamento.valorMedicamento}">
                                 <h:outputText value="#{medicamento.valorMedicamento}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Composição" sortBy="#{medicamento.composicaoMedicamento}">
+                                <h:outputText value="#{medicamento.composicaoMedicamento}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Posologia" sortBy="#{medicamento.posologiaMedicamento}">
+                                <h:outputText value="#{medicamento.posologiaMedicamento}"></h:outputText>
                             </p:column>
 
                         </p:dataTable>
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{medicamentoBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="150" value="#{medicamentoBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{medicamentoBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{medicamentoBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
@@ -798,22 +899,22 @@
                             </p:row>
                             <p:row class="panelLinha" style="background: #ddd">
                                 <p:column style="border: none">
-                                    <p:inputText id="codigoConsumivel" style="width: 185px" maxlength="30" value="#{consumivelBean.consumivel.codigoConsumivel}"/>
+                                    <p:inputText id="codigoConsumivel" style="width: 185px" maxlength="150" value="#{consumivelBean.consumivel.codigoConsumivel}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="categoriaConsumivel" style="width: 185px" maxlength="30" value="#{consumivelBean.consumivel.categoriaConsumivel}"/>
+                                    <p:inputText id="categoriaConsumivel" style="width: 185px" maxlength="150" value="#{consumivelBean.consumivel.categoriaConsumivel}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="tituloConsumivel" style="width: 185px" maxlength="30" value="#{consumivelBean.consumivel.tituloConsumivel}"/>
+                                    <p:inputText id="tituloConsumivel" style="width: 185px" maxlength="150" value="#{consumivelBean.consumivel.tituloConsumivel}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="valorConsumivel" style="width: 185px" maxlength="30" value="#{consumivelBean.consumivel.valorConsumivel}"/>
+                                    <p:inputText id="valorConsumivel" style="width: 185px" maxlength="150" value="#{consumivelBean.consumivel.valorConsumivel}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="composicaoConsumivel" style="width: 185px" maxlength="30" value="#{consumivelBean.consumivel.composicaoConsumivel}"/>
+                                    <p:inputText id="composicaoConsumivel" style="width: 185px" maxlength="150" value="#{consumivelBean.consumivel.composicaoConsumivel}"/>
                                 </p:column>
                                 <p:column style="border: none">
-                                    <p:inputText id="posologiaConsumivel" style="width: 185px" maxlength="30" value="#{consumivelBean.consumivel.posologiaConsumivel}"/>
+                                    <p:inputText id="posologiaConsumivel" style="width: 185px" maxlength="150" value="#{consumivelBean.consumivel.posologiaConsumivel}"/>
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
@@ -823,12 +924,21 @@
                             <p:toolbarGroup align="left">
                                 <p:commandButton icon="fa fa-save" value="&nbsp;Salvar" action="#{consumivelBean.adicionar()}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar" action="#{consumivelBean.cancelar()}" ajax="true" update="@form"></p:commandButton>
+                                &nbsp;
+                                <p:fileUpload value="#{consumivelBean.ficheiro}" mode="simple" skinSimple="false"/>
+                                &nbsp;
+                                <p:commandButton icon="fa fa-cloud-upload" value="&nbsp;&nbsp;Importar" action="#{consumivelBean.carregar}" ajax="false"/>
+
+                                <p:commandButton icon="fa fa-cloud-download" value="&nbsp;&nbsp;Exportar" ajax="false" >
+                                    <p:dataExporter type="xlsxstream" target="tabelaConsumiveis" fileName="Consumiveis"/>
+                                </p:commandButton>
+                                
                             </p:toolbarGroup>
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{consumivelBean.consumiveis}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consumivel.idConsumivel}" rows="5" paginator="true" widgetVar="tblConsumivel" var="consumivel">
-                            <p:column style="text-align: center" headerText="Operação" width="100">
+                        <p:dataTable id="tabelaConsumiveis" value="#{consumivelBean.consumiveis}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consumivel.idConsumivel}" rows="30" paginator="true" widgetVar="tblConsumivel" var="consumivel">
+                            <p:column exportable="false" style="text-align: center" headerText="Operação" width="100">
                                 <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{consumivelBean.deletar(consumivel)}" update="@form">
                                     <p:confirm header="Confirmação" message="Deseja mesmo remover o usuário?" icon="ui-icon-alert">
                                     </p:confirm>
@@ -842,29 +952,34 @@
                                 </p:confirmDialog>
 
                             </p:column>
-                            <p:column headerText="Título" sortBy="#{consumivel.tituloConsumivel}">
-                                <h:outputText value="#{consumivel.tituloConsumivel}"></h:outputText>
-                            </p:column>
                             <p:column headerText="Código" sortBy="#{consumivel.codigoConsumivel}">
                                 <h:outputText value="#{consumivel.codigoConsumivel}"></h:outputText>
                             </p:column>
                             <p:column headerText="Categoria" sortBy="#{consumivel.categoriaConsumivel}">
                                 <h:outputText value="#{consumivel.categoriaConsumivel}"></h:outputText>
                             </p:column>
+                            <p:column headerText="Título" sortBy="#{consumivel.tituloConsumivel}">
+                                <h:outputText value="#{consumivel.tituloConsumivel}"></h:outputText>
+                            </p:column>
                             <p:column headerText="Valor (MT)" sortBy="#{consumivel.valorConsumivel}">
                                 <h:outputText value="#{consumivel.valorConsumivel}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Composição" sortBy="#{consumivel.composicaoConsumivel}">
+                                <h:outputText value="#{consumivel.composicaoConsumivel}"></h:outputText>
+                            </p:column>
+                            <p:column headerText="Posologia" sortBy="#{consumivel.posologiaConsumivel}">
+                                <h:outputText value="#{consumivel.posologiaConsumivel}"></h:outputText>
                             </p:column>
 
                         </p:dataTable>
                         <br/>
                         <p:toolbar>
                             <p:toolbarGroup align="left">
-                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="30" value="#{consumivelBean.valor_pesquisa}"/>&nbsp;
+                                <p:inputText placeholder="Pesquisar..." style="width: 210px" maxlength="150" value="#{consumivelBean.valor_pesquisa}"/>&nbsp;
                                 <p:commandButton icon="fa fa-search" value="&nbsp;Pesquisar" action="#{consumivelBean.pesquisar('verdadeiro')}" ajax="true" update="@form"></p:commandButton>
                                 <p:commandButton icon="fa fa-close" value="&nbsp;Cancelar :: Mostrar tudo" action="#{consumivelBean.pesquisar('falso')}" ajax="true" update="@form"></p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
-
 
                     </p:tab>
 

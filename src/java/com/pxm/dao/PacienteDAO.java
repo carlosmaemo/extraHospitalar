@@ -9,13 +9,22 @@ import com.pxm.exception.ErroSistema;
 import com.pxm.model.Empresa;
 import com.pxm.model.Paciente;
 import com.pxm.util.Conecxao;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -248,6 +257,90 @@ public class PacienteDAO {
 
         }
 
+    }
+    
+    public boolean carregar(String caminho) throws ErroSistema, FileNotFoundException, IOException {
+
+        int batchSize = 20;
+
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps;
+
+            FileInputStream inputStream = new FileInputStream(caminho);
+
+            Workbook workbook = new XSSFWorkbook(inputStream);
+
+            Sheet primeiraLinha = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = primeiraLinha.iterator();
+
+            ps = conexao.prepareStatement("INSERT INTO `paciente`(`nomePaciente`, `apelidoPaciente`, `contactoPaciente`, `enderecoPaciente`, `nidPaciente`, `sexoPaciente`, `nrseguroPaciente`, `codigoEmpresa`, `nomeEmpresa`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            int count = 0;
+
+            rowIterator.next();
+
+            while (rowIterator.hasNext()) {
+                Row nextRow = rowIterator.next();
+                Iterator<Cell> cellIterator = nextRow.cellIterator();
+
+                while (cellIterator.hasNext()) {
+                    Cell nextCell = cellIterator.next();
+
+                    int columnIndex = nextCell.getColumnIndex();
+
+                    switch (columnIndex) {
+                        case 0:
+                            String nomePaciente = nextCell.getStringCellValue();
+                            ps.setString(1, nomePaciente);
+                            break;
+                        case 1:
+                            String apelidoPaciente = nextCell.getStringCellValue();
+                            ps.setString(2, apelidoPaciente);
+                        case 2:
+                            String contactoPaciente = nextCell.getStringCellValue();
+                            ps.setString(3, contactoPaciente);
+                        case 3:
+                            String enderecoPaciente = nextCell.getStringCellValue();
+                            ps.setString(4, enderecoPaciente);
+                        case 4:
+                            String nidPaciente = nextCell.getStringCellValue();
+                            ps.setString(5, nidPaciente);
+                        case 5:
+                            String sexoPaciente = nextCell.getStringCellValue();
+                            ps.setString(6, sexoPaciente);
+                        case 6:
+                            String nrseguroPaciente = nextCell.getStringCellValue();
+                            ps.setString(7, nrseguroPaciente);
+                        case 7:
+                            String codigoEmpresa = nextCell.getStringCellValue();
+                            ps.setString(8, codigoEmpresa);
+                        case 8:
+                            String nomeEmpresa = nextCell.getStringCellValue();
+                            ps.setString(9, nomeEmpresa);
+                    }
+
+                }
+
+                ps.addBatch();
+
+                if (count % batchSize == 0) {
+                    ps.executeBatch();
+                }
+
+            }
+
+            workbook.close();
+
+            ps.executeBatch();
+
+            Conecxao.fecharConexao();
+            
+            return true;
+            
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao carregar o arquivo!" + ex.getMessage(), ex);
+        }
     }
 
 }

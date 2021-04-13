@@ -51,7 +51,7 @@
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{facturaBean.facturasRegistosData}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturasData" var="factura">
+                        <p:dataTable value="#{facturaBean.facturasRegistosData}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="30" paginator="true" widgetVar="tblFacturasData" var="factura">
                             <p:column headerText="Data" sortBy="#{factura.data}">
                                 <h:outputText value="#{factura.data}"></h:outputText>
                             </p:column>
@@ -121,7 +121,7 @@
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{facturaBean.facturasRegistosMedicos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturas" var="factura">
+                        <p:dataTable value="#{facturaBean.facturasRegistosMedicos}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="30" paginator="true" widgetVar="tblFacturas" var="factura">
                             <p:column headerText="Data" sortBy="#{factura.data}">
                                 <h:outputText value="#{factura.data}"></h:outputText>
                             </p:column>
@@ -191,7 +191,7 @@
                         </p:toolbar>
                         <br/>
 
-                        <p:dataTable value="#{facturaBean.facturasRegistosEmpresas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturasEmpresas" var="factura">
+                        <p:dataTable value="#{facturaBean.facturasRegistosEmpresas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="30" paginator="true" widgetVar="tblFacturasEmpresas" var="factura">
                             <p:column headerText="Data" sortBy="#{factura.data}">
                                 <h:outputText value="#{factura.data}"></h:outputText>
                             </p:column>

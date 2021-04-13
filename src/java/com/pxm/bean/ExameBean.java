@@ -5,10 +5,8 @@
  */
 package com.pxm.bean;
 
-import com.pxm.dao.ConsumivelDAO;
 import com.pxm.dao.ExameDAO;
 import com.pxm.exception.ErroSistema;
-import com.pxm.model.Consumivel;
 import com.pxm.model.Exame;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,6 +21,20 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.primefaces.model.UploadedFile;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.regex.Pattern;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.PartialResponseWriter;
+import javax.servlet.http.Part;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 
 /**
  *
@@ -43,7 +55,10 @@ public class ExameBean {
     private final ExameDAO exameDao = new ExameDAO();
 
     private String valor_pesquisa;
-    
+
+    private UploadedFile ficheiro;
+    private String caminho = "E:\\temp";
+
     @PostConstruct
     public void init() {
         try {
@@ -143,6 +158,48 @@ public class ExameBean {
         }
     }
 
+    public void carregar() throws ClassNotFoundException, SQLException, IOException, ErroSistema {
+       
+        if(ficheiro != null) {
+            
+        try (InputStream input = ficheiro.getInputstream()) {
+            String nomeFicheiro = ficheiro.getFileName();
+
+                if (nomeFicheiro != null) {
+                    
+            String[] parte = nomeFicheiro.split(Pattern.quote("."));
+            String ficheiroNome = parte[0];
+            String ficheiroExtensao = parte[1];
+
+            Path caminhoFicheiroApagar = Paths.get("E:\\temp\\temp-exame." + ficheiroExtensao);
+
+            Files.deleteIfExists(caminhoFicheiroApagar);
+
+            Files.copy(input, new File(caminho, "temp-exame." + ficheiroExtensao).toPath());
+            String caminhoFicheiro = caminho + "\\temp-exame." + ficheiroExtensao;
+
+            if (exameDao.carregar(caminhoFicheiro) == true) {
+
+                addMensagem("Carregado!", "Ficheiro carregado com sucesso.", FacesMessage.SEVERITY_INFO);
+                
+                pesquisar("falso");
+
+            } else {
+
+                addMensagem("Falha!", "Ocorreu uma falha ao carregar o ficheiro.", FacesMessage.SEVERITY_INFO);
+
+            }
+            }
+                else {
+                    addMensagem("Ficheiro em falta!", "Ficheiro não especificado.", FacesMessage.SEVERITY_WARN);
+                }
+        }
+        } else {
+            addMensagem("Ficheiro em falta!", "Ficheiro não especificado.", FacesMessage.SEVERITY_WARN);
+        }
+
+    }
+
     public void listar() throws ClassNotFoundException, SQLException {
 
         editar = false;
@@ -223,7 +280,7 @@ public class ExameBean {
     public void setExames(List<Exame> exames) {
         this.exames = exames;
     }
-    
+
     public String getValor_pesquisa() {
         return valor_pesquisa;
     }
@@ -241,12 +298,11 @@ public class ExameBean {
                 } else {
                     exames = exameDao.buscarFiltro(valor_pesquisa, "positivo");
                 }
-            }
-            else {
+            } else {
                 valor_pesquisa = "";
                 listar();
             }
-                
+
             if (exames == null || exames.isEmpty()) {
                 addMensagem("Nenhum cadastro encontrado!", "Não foi encontrado nehnum registro de exame com este valor.", FacesMessage.SEVERITY_WARN);
             }
@@ -256,5 +312,12 @@ public class ExameBean {
         }
     }
 
-    
+    public UploadedFile getFicheiro() {
+        return ficheiro;
+    }
+
+    public void setFicheiro(UploadedFile ficheiro) {
+        this.ficheiro = ficheiro;
+    }
+
 }

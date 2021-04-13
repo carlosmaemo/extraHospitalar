@@ -48,19 +48,19 @@
                             </p:selectOneMenu>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="nomePaciente" style="width: 185px" maxlength="30" disabled="true" value="#{facturaBean.factura.nomePaciente}"/>
+                            <p:inputText id="nomePaciente" style="width: 185px" maxlength="150" disabled="true" value="#{facturaBean.factura.nomePaciente}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.apelidoPaciente}"/>
+                            <p:inputText id="apelidoPaciente" style="width: 185px" maxlength="150" disabled="true"  value="#{facturaBean.factura.apelidoPaciente}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="contactoPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.contactoPaciente}"/>
+                            <p:inputText id="contactoPaciente" style="width: 185px" maxlength="150" disabled="true"  value="#{facturaBean.factura.contactoPaciente}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="sexoPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.sexoPaciente}"/>
+                            <p:inputText id="sexoPaciente" style="width: 185px" maxlength="150" disabled="true"  value="#{facturaBean.factura.sexoPaciente}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText id="empresaPaciente" style="width: 185px" maxlength="30" disabled="true"  value="#{facturaBean.factura.nomeEmpresa}"/>
+                            <p:inputText id="empresaPaciente" style="width: 185px" maxlength="150" disabled="true"  value="#{facturaBean.factura.nomeEmpresa}"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
@@ -400,10 +400,10 @@
                     </p:row>
                     <p:row class="panelLinha" style="background: #ddd">
                         <p:column style="background: #eee; border: none">
-                            <p:inputText a:placeholder="NID do paciente" id="nidFiltro" style="width: 185px" maxlength="30" value="#{facturaBean.factura.nidFiltro}"/>
+                            <p:inputText a:placeholder="NID do paciente" id="nidFiltro" style="width: 185px" maxlength="150" value="#{facturaBean.factura.nidFiltro}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
-                            <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataInicial" style="width: 185px" maxlength="30" value="#{facturaBean.factura.dataInicial}"/>
+                            <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataInicial" style="width: 185px" maxlength="150" value="#{facturaBean.factura.dataInicial}"/>
                         </p:column>
                         <p:column style="background: #eee; border: none">
                             <p:inputText a:placeholder="#{facturaBean.factura.dataHoje}" id="dataFinal" style="width: 185px" maxlength="25" value="#{facturaBean.factura.dataFinal}"/>
@@ -419,7 +419,7 @@
                 </p:toolbar>
                 <br/>
 
-                <p:dataTable value="#{facturaBean.facturas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="5" paginator="true" widgetVar="tblFacturas" var="factura">
+                <p:dataTable value="#{facturaBean.facturas}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{factura.idFactura}" rows="30" paginator="true" widgetVar="tblFacturas" var="factura">
                     <p:column style="text-align: center" headerText="Operação" width="100">
                         <p:commandButton style="font-size: 17px" icon="fa fa-print" actionListener="#{facturaBean.print(factura, usuarioBean.usuario.confIdUsuario)}" ajax="false" onclick="this.form.target = '_blank'" update="@form"/>
                         <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.deletar(factura)}" ajax="true" update="@form">

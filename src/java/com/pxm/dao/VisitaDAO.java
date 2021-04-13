@@ -8,13 +8,22 @@ package com.pxm.dao;
 import com.pxm.exception.ErroSistema;
 import com.pxm.model.Visita;
 import com.pxm.util.Conecxao;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -187,4 +196,74 @@ public class VisitaDAO {
         }
     }
 
+    public boolean carregar(String caminho) throws ErroSistema, FileNotFoundException, IOException {
+
+        int batchSize = 20;
+
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps;
+
+            FileInputStream inputStream = new FileInputStream(caminho);
+
+            Workbook workbook = new XSSFWorkbook(inputStream);
+
+            Sheet primeiraLinha = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = primeiraLinha.iterator();
+
+            ps = conexao.prepareStatement("INSERT INTO `visita`(`codigoVisita`, `tipoVisita`, `tempoVisita`, `valorVisita`) VALUES (?, ?, ?, ?)");
+
+            int count = 0;
+
+            rowIterator.next();
+
+            while (rowIterator.hasNext()) {
+                Row nextRow = rowIterator.next();
+                Iterator<Cell> cellIterator = nextRow.cellIterator();
+
+                while (cellIterator.hasNext()) {
+                    Cell nextCell = cellIterator.next();
+
+                    int columnIndex = nextCell.getColumnIndex();
+
+                    switch (columnIndex) {
+                        case 0:
+                            String codigoVisita = nextCell.toString();
+                            ps.setString(1, codigoVisita);
+                            break;
+                        case 1:
+                            String tipoVisita = nextCell.toString();
+                            ps.setString(2, tipoVisita);
+                        case 2:
+                            String tempoVisita = nextCell.toString();
+                            ps.setString(3, tempoVisita);
+                        case 3:
+                            String valorVisita = nextCell.toString();
+                            ps.setString(4, valorVisita);
+                        
+                    }
+
+                }
+
+                ps.addBatch();
+
+                if (count % batchSize == 0) {
+                    ps.executeBatch();
+                }
+
+            }
+
+            workbook.close();
+
+            ps.executeBatch();
+
+            Conecxao.fecharConexao();
+            
+            return true;
+            
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao carregar o arquivo!" + ex.getMessage(), ex);
+        }
+    }
+    
 }

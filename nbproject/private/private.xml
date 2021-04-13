@@ -12,7 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/EmpresaBean.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/PacienteBean.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/MedicamentoBean.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/ConsultaBean.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/UsuarioBean.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/MedicoBean.java</file>
             <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/util/Conecxao.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/VisitaBean.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/ServicoBean.java</file>
+            <file>file:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/src/java/com/pxm/bean/ConsumivelBean.java</file>
         </group>
     </open-files>
 </project-private>

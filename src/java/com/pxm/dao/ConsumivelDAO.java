@@ -8,13 +8,22 @@ package com.pxm.dao;
 import com.pxm.exception.ErroSistema;
 import com.pxm.model.Consumivel;
 import com.pxm.util.Conecxao;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -192,6 +201,81 @@ public class ConsumivelDAO {
 
         } catch (SQLException ex) {
             throw new ErroSistema("Erro ao pesquisar o consumível!", ex);
+        }
+    }
+    
+    public boolean carregar(String caminho) throws ErroSistema, FileNotFoundException, IOException {
+
+        int batchSize = 20;
+
+        try {
+            Connection conexao = Conecxao.getConexao();
+            PreparedStatement ps;
+
+            FileInputStream inputStream = new FileInputStream(caminho);
+
+            Workbook workbook = new XSSFWorkbook(inputStream);
+
+            Sheet primeiraLinha = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = primeiraLinha.iterator();
+
+            ps = conexao.prepareStatement("INSERT INTO `consumivel`(`codigoConsumivel`, `categoriaConsumivel`, `tituloConsumivel`, `valorConsumivel`, `composicaoConsumivel`, `posologiaConsumivel`) VALUES (?, ?, ?, ?, ?, ?)");
+
+            int count = 0;
+
+            rowIterator.next();
+
+            while (rowIterator.hasNext()) {
+                Row nextRow = rowIterator.next();
+                Iterator<Cell> cellIterator = nextRow.cellIterator();
+
+                while (cellIterator.hasNext()) {
+                    Cell nextCell = cellIterator.next();
+
+                    int columnIndex = nextCell.getColumnIndex();
+
+                    switch (columnIndex) {
+                        case 0:
+                            String codigoConsumivel = nextCell.toString();
+                            ps.setString(1, codigoConsumivel);
+                            break;
+                        case 1:
+                            String categoriaConsumivel = nextCell.toString();
+                            ps.setString(2, categoriaConsumivel);
+                        case 2:
+                            String tituloConsumivel = nextCell.toString();
+                            ps.setString(3, tituloConsumivel);
+                        case 3:
+                            String valorConsumivel = nextCell.toString();
+                            ps.setString(4, valorConsumivel);
+                        case 4:
+                            String composicaoConsumivel = nextCell.toString();
+                            ps.setString(5, composicaoConsumivel);
+                        case 5:
+                            String posologiaConsumivel = nextCell.toString();
+                            ps.setString(6, posologiaConsumivel);
+                    }
+
+                }
+
+                ps.addBatch();
+
+                if (count % batchSize == 0) {
+                    ps.executeBatch();
+                }
+
+            }
+
+            workbook.close();
+
+            ps.executeBatch();
+
+            Conecxao.fecharConexao();
+            
+            return true;
+            
+        } catch (SQLException ex) {
+            throw new ErroSistema("Erro ao carregar o arquivo!" + ex.getMessage(), ex);
         }
     }
 
