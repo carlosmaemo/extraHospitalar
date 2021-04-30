@@ -16,21 +16,24 @@ public class ConsultaTemp {
     private Integer idConsulta, idFactura;
 
     private String consulta, consultaData, consultaHora, consultaMedico, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
-    private double consultaValor;
+    private double consultaValor, consultaValorTotal;
+    private int consultaQuantidade;
     private boolean canEdit;
 
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public ConsultaTemp(String consulta, String consultaData, String consultaHora, String consultaMedico, double consultaValor, String consultaCodigo, String consultaCategoria, String consultaTitulo, String consultaDescricao) {
+    public ConsultaTemp(String consulta, String consultaData, String consultaHora, String consultaMedico, double consultaValor, double consultaValorTotal, String consultaCodigo, String consultaCategoria, String consultaTitulo, String consultaDescricao, int consultaQuantidade) {
         this.consulta = consulta;
         this.consultaData = consultaData;
         this.consultaHora = consultaHora;
         this.consultaMedico = consultaMedico;
         this.consultaValor = consultaValor;
+        this.consultaValorTotal = consultaValorTotal;
         this.consultaCodigo = consultaCodigo;
         this.consultaCategoria = consultaCategoria;
         this.consultaTitulo = consultaTitulo;
         this.consultaDescricao = consultaDescricao;
+        this.consultaQuantidade = consultaQuantidade;
         canEdit = false;
     }
 
@@ -164,6 +167,26 @@ public class ConsultaTemp {
         this.consultaValor = consultaValor;
     }
 
+    public double getConsultaValorTotal() {
+        consultaValorTotal = consultaValor * consultaQuantidade;
+        return consultaValorTotal;
+    }
+
+    public void setConsultaValorTotal(double consultaValorTotal) {
+        consultaValorTotal = consultaValor * consultaQuantidade;
+        this.consultaValorTotal = consultaValorTotal;
+    }
+
+    
+    
+    public int getConsultaQuantidade() {
+        return consultaQuantidade;
+    }
+
+    public void setConsultaQuantidade(int consultaQuantidade) {
+        this.consultaQuantidade = consultaQuantidade;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

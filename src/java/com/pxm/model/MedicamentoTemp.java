@@ -16,21 +16,24 @@ public class MedicamentoTemp {
     private Integer idMedicamento, idFactura;
 
     private String medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia;
-    private double medicamentoValor;
+    private double medicamentoValor, medicamentoValorTotal;
+    private int medicamentoQuantidade;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public MedicamentoTemp(String medicamento, String medicamentoData, String medicamentoHora, String medicamentoCategoria, double medicamentoValor, String medicamentoCodigo, String medicamentoTitulo, String medicamentoComposicao, String medicamentoPosologia) {
+    public MedicamentoTemp(String medicamento, String medicamentoData, String medicamentoHora, String medicamentoCategoria, double medicamentoValor, double medicamentoValorTotal, String medicamentoCodigo, String medicamentoTitulo, String medicamentoComposicao, String medicamentoPosologia, int medicamentoQuantidade) {
         this.medicamento = medicamento;
         this.medicamentoData = medicamentoData;
         this.medicamentoHora = medicamentoHora;
         this.medicamentoCategoria = medicamentoCategoria;
         this.medicamentoValor = medicamentoValor;
+        this.medicamentoValorTotal = medicamentoValorTotal;
         this.medicamentoCodigo = medicamentoCodigo;
         this.medicamentoTitulo = medicamentoTitulo;
         this.medicamentoComposicao = medicamentoComposicao;
         this.medicamentoPosologia = medicamentoPosologia;
+        this.medicamentoQuantidade = medicamentoQuantidade;
         canEdit = false;
     }
 
@@ -158,6 +161,26 @@ public class MedicamentoTemp {
         this.medicamentoPosologia = medicamentoPosologia;
     }
 
+    public double getMedicamentoValorTotal() {
+        
+        medicamentoValorTotal = medicamentoValor * medicamentoQuantidade;
+        return medicamentoValorTotal;
+    }
+
+    public void setMedicamentoValorTotal(double medicamentoValorTotal) {
+        
+        medicamentoValorTotal = medicamentoValor * medicamentoQuantidade;
+        this.medicamentoValorTotal = medicamentoValorTotal;
+    }
+
+    public int getMedicamentoQuantidade() {
+        return medicamentoQuantidade;
+    }
+
+    public void setMedicamentoQuantidade(int medicamentoQuantidade) {
+        this.medicamentoQuantidade = medicamentoQuantidade;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

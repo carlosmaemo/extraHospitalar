@@ -90,6 +90,9 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="consultaMedico" value="Médico:"/>
                             </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consultaQuantidade" value="Quantidade:"/>
+                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
@@ -102,6 +105,10 @@
                                     <f:selectItems value="#{facturaBean.medicos}" />
                                 </p:selectOneMenu>
                             </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="consultaQuantidade" style="width: 185px" maxlength="3" value="#{facturaBean.consultaQuantidade}"/>
+                            </p:column>
+                            
                         </p:row>
                     </p:panelGrid>
                     <br/>
@@ -130,6 +137,12 @@
                         <p:column headerText="Valor (MT)">
                             <h:outputText value="#{consulta.consultaValor}"></h:outputText>
                         </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{consulta.consultaQuantidade}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Total (MT)">
+                            <h:outputText value="#{consulta.consultaValorTotal}"></h:outputText>
+                        </p:column>
                     </p:dataTable>
 
                 </p:tab>
@@ -142,12 +155,18 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="exameNome" value="Exame:"/>
                             </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="exameQuantidade" value="Quantidade:"/>
+                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="exameNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.exame}">
                                     <f:selectItems value="#{facturaBean.exames}" />
                                 </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="exameQuantidade" style="width: 185px" maxlength="3" value="#{facturaBean.exameQuantidade}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -177,6 +196,12 @@
                         <p:column headerText="Valor (MT)">
                             <h:outputText value="#{exame.exameValor}"></h:outputText>
                         </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{exame.exameQuantidade}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Total (MT)">
+                            <h:outputText value="#{exame.exameValorTotal}"></h:outputText>
+                        </p:column>
                     </p:dataTable>
 
                 </p:tab>
@@ -189,12 +214,18 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="internamentoNome" value="Internamento:"/>
                             </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="internamentoQuantidade" value="Quantidade:"/>
+                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="internamentoNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.internamento}">
                                     <f:selectItems value="#{facturaBean.internamentos}" />
                                 </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="internamentoQuantidade" style="width: 185px" maxlength="3" value="#{facturaBean.internamentoQuantidade}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -224,6 +255,12 @@
                         <p:column headerText="Valor (MT)">
                             <h:outputText value="#{internamento.internamentoValor}"></h:outputText>
                         </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{internamento.internamentoQuantidade}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Total (MT)">
+                            <h:outputText value="#{internamento.internamentoValorTotal}"></h:outputText>
+                        </p:column>
                     </p:dataTable>
 
                 </p:tab>
@@ -236,12 +273,18 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="visitaNome" value="Visita"/>
                             </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="visitaQuantidade" value="Quantidade:"/>
+                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="visitaNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.visita}">
                                     <f:selectItems value="#{facturaBean.visitas}" />
                                 </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="visitaQuantidade" style="width: 185px" maxlength="3" value="#{facturaBean.visitaQuantidade}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -271,6 +314,12 @@
                         <p:column headerText="Valor (MT)">
                             <h:outputText value="#{visita.visitaValor}"></h:outputText>
                         </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{visita.visitaQuantidade}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Total (MT)">
+                            <h:outputText value="#{visita.visitaValorTotal}"></h:outputText>
+                        </p:column>
                     </p:dataTable>
 
                 </p:tab>
@@ -283,12 +332,18 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="medicamentoNome" value="Medicamento:"/>
                             </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="medicamentoQuantidade" value="Quantidade:"/>
+                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="medicamentoNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.medicamento}">
                                     <f:selectItems value="#{facturaBean.medicamentos}" />
                                 </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="medicamentoQuantidade" style="width: 185px" maxlength="3" value="#{facturaBean.medicamentoQuantidade}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -318,6 +373,12 @@
                         <p:column headerText="Valor (MT)">
                             <h:outputText value="#{medicamento.medicamentoValor}"></h:outputText>
                         </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{medicamento.medicamentoQuantidade}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Total (MT)">
+                            <h:outputText value="#{medicamento.medicamentoValorTotal}"></h:outputText>
+                        </p:column>
                     </p:dataTable>
 
                 </p:tab>
@@ -330,12 +391,18 @@
                             <p:column style="border: none">
                                 <h:outputLabel for="consumivelNome" value="Consumivel"/>
                             </p:column>
+                            <p:column style="border: none">
+                                <h:outputLabel for="consumivelQuantidade" value="Quantidade:"/>
+                            </p:column>
                         </p:row>
                         <p:row class="panelLinha" style="background: #ddd">
                             <p:column style="border: none">
                                 <p:selectOneMenu id="consumivelNome" filter="true" style="width: 185px" filterMatchMode="startsWith" value="#{facturaBean.consumivel}">
                                     <f:selectItems value="#{facturaBean.consumiveis}" />
                                 </p:selectOneMenu>
+                            </p:column>
+                            <p:column style="border: none">
+                                <p:inputText id="consumivelQuantidade" style="width: 185px" maxlength="3" value="#{facturaBean.consumivelQuantidade}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -364,6 +431,12 @@
                         </p:column>
                         <p:column headerText="Valor (MT)">
                             <h:outputText value="#{consumivel.consumivelValor}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Quantidade">
+                            <h:outputText value="#{consumivel.consumivelQuantidade}"></h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Total (MT)">
+                            <h:outputText value="#{consumivel.consumivelValorTotal}"></h:outputText>
                         </p:column>
                     </p:dataTable>
 

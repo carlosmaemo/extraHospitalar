@@ -55,7 +55,13 @@ public class FacturaBean {
     private ArrayList<MedicamentoTemp> medicamentosTemp = new ArrayList<MedicamentoTemp>();
     private ArrayList<VisitaTemp> visitasTemp = new ArrayList<VisitaTemp>();
 
-    private double consultaValor, exameValor, consumivelValor, internamentoValor, medicamentoValor, visitaValor;
+    private double consultaValor, consultaValorTotal, exameValor, exameValorTotal, consumivelValor, consumivelValorTotal, internamentoValor, internamentoValorTotal, medicamentoValor, medicamentoValorTotal, visitaValor, visitaValorTotal;
+    private int consultaQuantidade = 1;
+    private int exameQuantidade = 1;
+    private int consumivelQuantidade = 1;
+    private int internamentoQuantidade = 1;
+    private int medicamentoQuantidade = 1;
+    private int visitaQuantidade = 1;
     private String consultaData, exameData, consumivelData, internamentoData, medicamentoData, visitaData;
     private String consultaHora, exameHora, consumivelHora, internamentoHora, medicamentoHora, visitaHora;
     private String consulta, consultaMedico, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao;
@@ -93,92 +99,100 @@ public class FacturaBean {
     }
 
     public String adicionarConsulta() {
-        
+
         consultaData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         consultaHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        
+
         if (consulta.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Consulta/Procedimento' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else if (consultaMedico.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Médico' é obrigatório.", FacesMessage.SEVERITY_WARN);
+        } else if (consultaQuantidade == 0) {
+            addMensagem("Campo vazio!", "O campo 'Quantidade' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
-            ConsultaTemp consultaTemp = new ConsultaTemp(this.consulta, consultaData, consultaHora, consultaMedico, consultaValor, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao);
+            ConsultaTemp consultaTemp = new ConsultaTemp(this.consulta, consultaData, consultaHora, consultaMedico, consultaValor, consultaValorTotal, consultaCodigo, consultaCategoria, consultaTitulo, consultaDescricao, consultaQuantidade);
             consultasTemp.add(consultaTemp);
         }
         return null;
     }
 
     public String adicionarConsumivel() {
-        
+
         consumivelData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         consumivelHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        
+
         if (consumivel.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Consumível' é obrigatório.", FacesMessage.SEVERITY_WARN);
+        } else if (consumivelQuantidade == 0) {
+            addMensagem("Campo vazio!", "O campo 'Quantidade' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
-            ConsumivelTemp consumivelTemp = new ConsumivelTemp(this.consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelValor, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia);
+            ConsumivelTemp consumivelTemp = new ConsumivelTemp(this.consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelValor, consumivelValorTotal, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia, consumivelQuantidade);
             consumiveisTemp.add(consumivelTemp);
         }
         return null;
     }
 
     public String adicionarInternamento() {
-        
+
         internamentoData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         internamentoHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        
+
         if (internamento.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Internamento' é obrigatório.", FacesMessage.SEVERITY_WARN);
+        } else if (internamentoQuantidade == 0) {
+            addMensagem("Campo vazio!", "O campo 'Quantidade' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
-            InternamentoTemp internamentoTemp = new InternamentoTemp(this.internamento, internamentoData, internamentoHora, internamentoTempo, internamentoValor, internamentoCodigo, internamentoTipo);
+            InternamentoTemp internamentoTemp = new InternamentoTemp(this.internamento, internamentoData, internamentoHora, internamentoTempo, internamentoValor, internamentoValorTotal, internamentoCodigo, internamentoTipo, internamentoQuantidade);
             internamentosTemp.add(internamentoTemp);
         }
         return null;
     }
 
     public String adicionarMedicamento() {
-        
+
         medicamentoData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         medicamentoHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        
+
         if (medicamento.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Medicamento' é obrigatório.", FacesMessage.SEVERITY_WARN);
+        } else if (medicamentoQuantidade == 0) {
+            addMensagem("Campo vazio!", "O campo 'Quantidade' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
-            MedicamentoTemp medicamentoTemp = new MedicamentoTemp(this.medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoValor, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia);
+            MedicamentoTemp medicamentoTemp = new MedicamentoTemp(this.medicamento, medicamentoData, medicamentoHora, medicamentoCategoria, medicamentoValor, medicamentoValorTotal, medicamentoCodigo, medicamentoTitulo, medicamentoComposicao, medicamentoPosologia, medicamentoQuantidade);
             medicamentosTemp.add(medicamentoTemp);
         }
         return null;
     }
 
     public String adicionarVisita() {
-        
+
         visitaData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         visitaHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        
+
         if (visita.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Visita' é obrigatório.", FacesMessage.SEVERITY_WARN);
+        } else if (visitaQuantidade == 0) {
+            addMensagem("Campo vazio!", "O campo 'Quantidade' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
-            VisitaTemp visitaTemp = new VisitaTemp(this.visita, visitaData, visitaHora, visitaTempo, visitaValor, visitaCodigo, visitaTipo);
+            VisitaTemp visitaTemp = new VisitaTemp(this.visita, visitaData, visitaHora, visitaTempo, visitaValor, visitaValorTotal, visitaCodigo, visitaTipo, visitaQuantidade);
             visitasTemp.add(visitaTemp);
         }
         return null;
     }
 
     public String adicionarExame() {
-        
+
         exameData = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         exameHora = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        
+
         if (exame.isEmpty()) {
             addMensagem("Campo vazio!", "O campo 'Exame' é obrigatório.", FacesMessage.SEVERITY_WARN);
+        } else if (exameQuantidade == 0) {
+            addMensagem("Campo vazio!", "O campo 'Quantidade' é obrigatório.", FacesMessage.SEVERITY_WARN);
         } else {
-
-            ExameTemp exameTemp = new ExameTemp(this.exame, exameData, exameHora, exameCategoria, exameValor, exameCodigo, exameTitulo, exameDescricao);
-
+            ExameTemp exameTemp = new ExameTemp(this.exame, exameData, exameHora, exameCategoria, exameValor, exameValorTotal, exameCodigo, exameTitulo, exameDescricao, exameQuantidade);
             examesTemp.add(exameTemp);
-
         }
-
         return null;
     }
 
@@ -243,6 +257,14 @@ public class FacturaBean {
 
     public void setConsultaMedico(String consultaMedico) {
         this.consultaMedico = consultaMedico;
+    }
+
+    public int getConsultaQuantidade() {
+        return consultaQuantidade;
+    }
+
+    public void setConsultaQuantidade(int consultaQuantidade) {
+        this.consultaQuantidade = consultaQuantidade;
     }
 
     public List<String> getConsultas() {
@@ -379,6 +401,16 @@ public class FacturaBean {
 
     public void setConsultaValor(double consultaValor) {
         this.consultaValor = consultaValor;
+    }
+
+    public double getConsultaValorTotal() {
+        consultaValorTotal = consultaValor * consultaQuantidade;
+        return consultaValorTotal;
+    }
+
+    public void setConsultaValorTotal(double consultaValorTotal) {
+        consultaValorTotal = consultaValor * consultaQuantidade;
+        this.consultaValorTotal = consultaValorTotal;
     }
 
     public String getConsultaCodigo() {
@@ -605,6 +637,206 @@ public class FacturaBean {
         this.visitaValor = visitaValor;
     }
 
+    public double getExameValorTotal() {
+        return exameValorTotal;
+    }
+
+    public void setExameValorTotal(double exameValorTotal) {
+        this.exameValorTotal = exameValorTotal;
+    }
+
+    public double getConsumivelValorTotal() {
+        return consumivelValorTotal;
+    }
+
+    public void setConsumivelValorTotal(double consumivelValorTotal) {
+        this.consumivelValorTotal = consumivelValorTotal;
+    }
+
+    public double getInternamentoValorTotal() {
+        return internamentoValorTotal;
+    }
+
+    public void setInternamentoValorTotal(double internamentoValorTotal) {
+        this.internamentoValorTotal = internamentoValorTotal;
+    }
+
+    public double getMedicamentoValorTotal() {
+        return medicamentoValorTotal;
+    }
+
+    public void setMedicamentoValorTotal(double medicamentoValorTotal) {
+        this.medicamentoValorTotal = medicamentoValorTotal;
+    }
+
+    public double getVisitaValorTotal() {
+        return visitaValorTotal;
+    }
+
+    public void setVisitaValorTotal(double visitaValorTotal) {
+        this.visitaValorTotal = visitaValorTotal;
+    }
+
+    public int getExameQuantidade() {
+        return exameQuantidade;
+    }
+
+    public void setExameQuantidade(int exameQuantidade) {
+        this.exameQuantidade = exameQuantidade;
+    }
+
+    public int getConsumivelQuantidade() {
+        return consumivelQuantidade;
+    }
+
+    public void setConsumivelQuantidade(int consumivelQuantidade) {
+        this.consumivelQuantidade = consumivelQuantidade;
+    }
+
+    public int getInternamentoQuantidade() {
+        return internamentoQuantidade;
+    }
+
+    public void setInternamentoQuantidade(int internamentoQuantidade) {
+        this.internamentoQuantidade = internamentoQuantidade;
+    }
+
+    public int getMedicamentoQuantidade() {
+        return medicamentoQuantidade;
+    }
+
+    public void setMedicamentoQuantidade(int medicamentoQuantidade) {
+        this.medicamentoQuantidade = medicamentoQuantidade;
+    }
+
+    public int getVisitaQuantidade() {
+        return visitaQuantidade;
+    }
+
+    public void setVisitaQuantidade(int visitaQuantidade) {
+        this.visitaQuantidade = visitaQuantidade;
+    }
+
+    public String getExameCodigo() {
+        return exameCodigo;
+    }
+
+    public void setExameCodigo(String exameCodigo) {
+        this.exameCodigo = exameCodigo;
+    }
+
+    public String getExameTitulo() {
+        return exameTitulo;
+    }
+
+    public void setExameTitulo(String exameTitulo) {
+        this.exameTitulo = exameTitulo;
+    }
+
+    public String getExameDescricao() {
+        return exameDescricao;
+    }
+
+    public void setExameDescricao(String exameDescricao) {
+        this.exameDescricao = exameDescricao;
+    }
+
+    public String getConsumivelCodigo() {
+        return consumivelCodigo;
+    }
+
+    public void setConsumivelCodigo(String consumivelCodigo) {
+        this.consumivelCodigo = consumivelCodigo;
+    }
+
+    public String getConsumivelTitulo() {
+        return consumivelTitulo;
+    }
+
+    public void setConsumivelTitulo(String consumivelTitulo) {
+        this.consumivelTitulo = consumivelTitulo;
+    }
+
+    public String getConsumivelComposicao() {
+        return consumivelComposicao;
+    }
+
+    public void setConsumivelComposicao(String consumivelComposicao) {
+        this.consumivelComposicao = consumivelComposicao;
+    }
+
+    public String getConsumivelPosologia() {
+        return consumivelPosologia;
+    }
+
+    public void setConsumivelPosologia(String consumivelPosologia) {
+        this.consumivelPosologia = consumivelPosologia;
+    }
+
+    public String getInternamentoCodigo() {
+        return internamentoCodigo;
+    }
+
+    public void setInternamentoCodigo(String internamentoCodigo) {
+        this.internamentoCodigo = internamentoCodigo;
+    }
+
+    public String getInternamentoTipo() {
+        return internamentoTipo;
+    }
+
+    public void setInternamentoTipo(String internamentoTipo) {
+        this.internamentoTipo = internamentoTipo;
+    }
+
+    public String getMedicamentoCodigo() {
+        return medicamentoCodigo;
+    }
+
+    public void setMedicamentoCodigo(String medicamentoCodigo) {
+        this.medicamentoCodigo = medicamentoCodigo;
+    }
+
+    public String getMedicamentoTitulo() {
+        return medicamentoTitulo;
+    }
+
+    public void setMedicamentoTitulo(String medicamentoTitulo) {
+        this.medicamentoTitulo = medicamentoTitulo;
+    }
+
+    public String getMedicamentoComposicao() {
+        return medicamentoComposicao;
+    }
+
+    public void setMedicamentoComposicao(String medicamentoComposicao) {
+        this.medicamentoComposicao = medicamentoComposicao;
+    }
+
+    public String getMedicamentoPosologia() {
+        return medicamentoPosologia;
+    }
+
+    public void setMedicamentoPosologia(String medicamentoPosologia) {
+        this.medicamentoPosologia = medicamentoPosologia;
+    }
+
+    public String getVisitaCodigo() {
+        return visitaCodigo;
+    }
+
+    public void setVisitaCodigo(String visitaCodigo) {
+        this.visitaCodigo = visitaCodigo;
+    }
+
+    public String getVisitaTipo() {
+        return visitaTipo;
+    }
+
+    public void setVisitaTipo(String visitaTipo) {
+        this.visitaTipo = visitaTipo;
+    }
+
     public ArrayList<ExameTemp> getExamesTemp() {
         return examesTemp;
     }
@@ -776,26 +1008,32 @@ public class FacturaBean {
             consultaData = "";
             consultaHora = "";
             consultaMedico = "";
+            consultaQuantidade = 1;
 
             exame = "";
             exameData = "";
             exameHora = "";
+            exameQuantidade = 1;
 
             internamento = "";
             internamentoData = "";
             internamentoHora = "";
+            internamentoQuantidade = 1;
 
             visita = "";
             visitaData = "";
             visitaHora = "";
+            visitaQuantidade = 1;
 
             medicamento = "";
             medicamentoData = "";
             medicamentoHora = "";
+            medicamentoQuantidade = 1;
 
             consumivel = "";
             consumivelData = "";
             consumivelHora = "";
+            consumivelQuantidade = 1;
 
             pesquisarNids();
             pesquisarConsultas();
@@ -845,26 +1083,32 @@ public class FacturaBean {
         consultaData = "";
         consultaHora = "";
         consultaMedico = "";
+        consultaQuantidade = 1;
 
         exame = "";
         exameData = "";
         exameHora = "";
+        exameQuantidade = 1;
 
         internamento = "";
         internamentoData = "";
         internamentoHora = "";
+        internamentoQuantidade = 1;
 
         visita = "";
         visitaData = "";
         visitaHora = "";
+        visitaQuantidade = 1;
 
         medicamento = "";
         medicamentoData = "";
         medicamentoHora = "";
+        medicamentoQuantidade = 1;
 
         consumivel = "";
         consumivelData = "";
         consumivelHora = "";
+        consumivelQuantidade = 1;
 
         pesquisarNids();
         pesquisarConsultas();

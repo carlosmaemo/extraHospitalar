@@ -547,37 +547,37 @@ public class FacturaDAO {
                     + " `apelidoPaciente`, `contactoPaciente`, `enderecoPaciente`, `nidPaciente`, `sexoPaciente`, `codigoEmpresa`, `nomeEmpresa`,"
                     + " `valorTotal`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            PreparedStatement ps1 = conexao.prepareStatement("INSERT INTO `factura_consulta`(`idFactura`, `codigoConsulta`, `categoriaConsulta`, `tituloConsulta`, `descricaoConsulta`, `valorConsulta`) VALUES (?, ?, ?, ?, ?, ?)");
-            PreparedStatement ps2 = conexao.prepareStatement("INSERT INTO `factura_consumivel`(`idFactura`, `codigoConsumivel`, `categoriaConsumivel`, `tituloConsumivel`, `valorConsumivel`, `composicaoConsumivel`, `posologiaConsumivel`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement ps3 = conexao.prepareStatement("INSERT INTO `factura_exame`(`idFactura`, `codigoExame`, `categoriaExame`, `tituloExame`, `valorExame`, `descricaoExame`) VALUES (?, ?, ?, ?, ?, ?)");
-            PreparedStatement ps4 = conexao.prepareStatement("INSERT INTO `factura_internamento`(`idFactura`, `codigoInternamento`, `tipoInternamento`, `tempoInternamento`, `valorInternamento`) VALUES (?, ?, ?, ?, ?)");
-            PreparedStatement ps5 = conexao.prepareStatement("INSERT INTO `factura_medicamento`(`idFactura`, `codigoMedicamento`, `categoriaMedicamento`, `tituloMedicamento`, `valorMedicamento`, `composicaoMedicamento`, `posologiaMedicamento`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement ps6 = conexao.prepareStatement("INSERT INTO `factura_visita`(`idFactura`, `codigoVisita`, `tipoVisita`, `tempoVisita`, `valorVisita`) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement ps1 = conexao.prepareStatement("INSERT INTO `factura_consulta`(`idFactura`, `codigoConsulta`, `categoriaConsulta`, `tituloConsulta`, `descricaoConsulta`, `valorConsulta`, `quantidadeConsulta`, `totalValorConsulta`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps2 = conexao.prepareStatement("INSERT INTO `factura_consumivel`(`idFactura`, `codigoConsumivel`, `categoriaConsumivel`, `tituloConsumivel`, `valorConsumivel`, `composicaoConsumivel`, `posologiaConsumivel`, `quantidadeConsumivel`, `totalValorConsumivel`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps3 = conexao.prepareStatement("INSERT INTO `factura_exame`(`idFactura`, `codigoExame`, `categoriaExame`, `tituloExame`, `valorExame`, `descricaoExame`, `quantidadeExame`, `totalValorExame`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps4 = conexao.prepareStatement("INSERT INTO `factura_internamento`(`idFactura`, `codigoInternamento`, `tipoInternamento`, `tempoInternamento`, `valorInternamento`, `quantidadeInternamento`, `totalValorInternamento`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps5 = conexao.prepareStatement("INSERT INTO `factura_medicamento`(`idFactura`, `codigoMedicamento`, `categoriaMedicamento`, `tituloMedicamento`, `valorMedicamento`, `composicaoMedicamento`, `posologiaMedicamento`, `quantidadeMedicamento`, `totalValorMedicamento`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps6 = conexao.prepareStatement("INSERT INTO `factura_visita`(`idFactura`, `codigoVisita`, `tipoVisita`, `tempoVisita`, `valorVisita`, `quantidadeVisita`, `totalValorVisita`) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
             double valorTotal = 0;
 
             for (ConsultaTemp m : consultas) {
-                valorTotal = valorTotal + m.getConsultaValor();
+                valorTotal = valorTotal + m.getConsultaValorTotal();
             }
 
             for (ConsumivelTemp m : consumiveis) {
-                valorTotal = valorTotal + m.getConsumivelValor();
+                valorTotal = valorTotal + m.getConsumivelValorTotal();
             }
 
             for (ExameTemp m : exames) {
-                valorTotal = valorTotal + m.getExameValor();
+                valorTotal = valorTotal + m.getExameValorTotal();
             }
 
             for (InternamentoTemp m : internamentos) {
-                valorTotal = valorTotal + m.getInternamentoValor();
+                valorTotal = valorTotal + m.getInternamentoValorTotal();
             }
 
             for (MedicamentoTemp m : medicamentos) {
-                valorTotal = valorTotal + m.getMedicamentoValor();
+                valorTotal = valorTotal + m.getMedicamentoValorTotal();
             }
 
             for (VisitaTemp m : visitas) {
-                valorTotal = valorTotal + m.getVisitaValor();
+                valorTotal = valorTotal + m.getVisitaValorTotal();
             }
 
             ps.setString(1, factura.getDataRegistro());
@@ -607,6 +607,8 @@ public class FacturaDAO {
                 ps1.setString(4, m.getConsultaTitulo());
                 ps1.setString(5, m.getConsultaDescricao());
                 ps1.setDouble(6, m.getConsultaValor());
+                ps1.setInt(7, m.getConsultaQuantidade());
+                ps1.setDouble(8, m.getConsultaValorTotal());
                 ps1.execute();
             }
 
@@ -618,6 +620,8 @@ public class FacturaDAO {
                 ps2.setDouble(5, m.getConsumivelValor());
                 ps2.setString(6, m.getConsumivelComposicao());
                 ps2.setString(7, m.getConsumivelPosologia());
+                ps2.setInt(8, m.getConsumivelQuantidade());
+                ps2.setDouble(9, m.getConsumivelValorTotal());
                 ps2.execute();
             }
 
@@ -628,6 +632,8 @@ public class FacturaDAO {
                 ps3.setString(4, m.getExameTitulo());
                 ps3.setDouble(5, m.getExameValor());
                 ps3.setString(6, m.getExameDescricao());
+                ps3.setInt(7, m.getExameQuantidade());
+                ps3.setDouble(8, m.getExameValorTotal());
                 ps3.execute();
             }
 
@@ -637,6 +643,8 @@ public class FacturaDAO {
                 ps4.setString(3, m.getInternamentoTipo());
                 ps4.setString(4, m.getInternamentoTempo());
                 ps4.setDouble(5, m.getInternamentoValor());
+                ps4.setInt(6, m.getInternamentoQuantidade());
+                ps4.setDouble(7, m.getInternamentoValorTotal());
                 ps4.execute();
             }
 
@@ -648,6 +656,8 @@ public class FacturaDAO {
                 ps5.setDouble(5, m.getMedicamentoValor());
                 ps5.setString(6, m.getMedicamentoComposicao());
                 ps5.setString(7, m.getMedicamentoPosologia());
+                ps5.setInt(8, m.getMedicamentoQuantidade());
+                ps5.setDouble(9, m.getMedicamentoValorTotal());
                 ps5.execute();
             }
 
@@ -657,6 +667,8 @@ public class FacturaDAO {
                 ps6.setString(3, m.getVisitaTipo());
                 ps6.setString(4, m.getVisitaTempo());
                 ps6.setDouble(5, m.getVisitaValor());
+                ps6.setInt(6, m.getVisitaQuantidade());
+                ps6.setDouble(7, m.getVisitaValorTotal());
                 ps6.execute();
             }
 

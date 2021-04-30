@@ -16,20 +16,23 @@ public class ExameTemp {
     private Integer idExame, idFactura;
 
     private String exame, exameData, exameHora, exameCategoria, exameCodigo, exameTitulo, exameDescricao;
-    private double exameValor;
+    private double exameValor, exameValorTotal;
+    private int exameQuantidade;
     private boolean canEdit;
 
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public ExameTemp(String exame, String exameData, String exameHora, String exameCategoria, double exameValor, String exameCodigo, String exameTitulo, String exameDescricao) {
+    public ExameTemp(String exame, String exameData, String exameHora, String exameCategoria, double exameValor, double exameValorTotal, String exameCodigo, String exameTitulo, String exameDescricao, int exameQuantidade) {
         this.exame = exame;
         this.exameData = exameData;
         this.exameHora = exameHora;
         this.exameCategoria = exameCategoria;
         this.exameValor = exameValor;
+        this.exameValorTotal = exameValorTotal;
         this.exameCodigo = exameCodigo;
         this.exameTitulo = exameTitulo;
         this.exameDescricao = exameDescricao;
+        this.exameQuantidade = exameQuantidade;
         canEdit = false;
     }
 
@@ -145,6 +148,26 @@ public class ExameTemp {
     public void setExameValor(double exameValor) {
 
         this.exameValor = exameValor;
+    }
+
+    public double getExameValorTotal() {
+        
+        exameValorTotal = exameValor * exameQuantidade;
+        return exameValorTotal;
+    }
+
+    public void setExameValorTotal(double exameValorTotal) {
+        
+        exameValorTotal = exameValor * exameQuantidade;
+        this.exameValorTotal = exameValorTotal;
+    }
+
+    public int getExameQuantidade() {
+        return exameQuantidade;
+    }
+
+    public void setExameQuantidade(int exameQuantidade) {
+        this.exameQuantidade = exameQuantidade;
     }
 
     @Override

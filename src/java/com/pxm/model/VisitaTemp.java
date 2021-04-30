@@ -16,19 +16,22 @@ public class VisitaTemp {
     private Integer idVisita, idFactura;
 
     private String visita, visitaData, visitaHora, visitaTempo, visitaCodigo, visitaTipo;
-    private double visitaValor;
+    private double visitaValor, visitaValorTotal;
+    private int visitaQuantidade;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public VisitaTemp(String visita, String visitaData, String visitaHora, String visitaTempo, double visitaValor, String visitaCodigo, String visitaTipo) {
+    public VisitaTemp(String visita, String visitaData, String visitaHora, String visitaTempo, double visitaValor, double visitaValorTotal, String visitaCodigo, String visitaTipo, int visitaQuantidade) {
         this.visita = visita;
         this.visitaData = visitaData;
         this.visitaHora = visitaHora;
         this.visitaTempo = visitaTempo;
         this.visitaValor = visitaValor;
+        this.visitaValorTotal = visitaValorTotal;
         this.visitaCodigo = visitaCodigo;
         this.visitaTipo = visitaTipo;
+        this.visitaQuantidade = visitaQuantidade;
         canEdit = false;
     }
 
@@ -133,6 +136,26 @@ public class VisitaTemp {
 
     public void setVisitaValor(double visitaValor) {
         this.visitaValor = visitaValor;
+    }
+
+    public double getVisitaValorTotal() {
+        
+        visitaValorTotal = visitaValor * visitaQuantidade;
+        return visitaValorTotal;
+    }
+
+    public void setVisitaValorTotal(double visitaValorTotal) {
+        
+        visitaValorTotal = visitaValor * visitaQuantidade;
+        this.visitaValorTotal = visitaValorTotal;
+    }
+
+    public int getVisitaQuantidade() {
+        return visitaQuantidade;
+    }
+
+    public void setVisitaQuantidade(int visitaQuantidade) {
+        this.visitaQuantidade = visitaQuantidade;
     }
 
     @Override

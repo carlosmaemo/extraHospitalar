@@ -16,19 +16,22 @@ public class InternamentoTemp {
     private Integer idInternamento, idFactura;
 
     private String internamento, internamentoData, internamentoHora, internamentoTempo, internamentoCodigo, internamentoTipo;
-    private double internamentoValor;
+    private double internamentoValor, internamentoValorTotal;
+    private int internamentoQuantidade;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public InternamentoTemp(String internamento, String internamentoData, String internamentoHora, String internamentoTempo, double internamentoValor, String internamentoCodigo, String internamentoTipo) {
+    public InternamentoTemp(String internamento, String internamentoData, String internamentoHora, String internamentoTempo, double internamentoValor, double internamentoValorTotal, String internamentoCodigo, String internamentoTipo, int internamentoQuantidade) {
         this.internamento = internamento;
         this.internamentoData = internamentoData;
         this.internamentoHora = internamentoHora;
         this.internamentoTempo = internamentoTempo;
         this.internamentoValor = internamentoValor;
+        this.internamentoValorTotal = internamentoValorTotal;
         this.internamentoCodigo = internamentoCodigo;
         this.internamentoTipo = internamentoTipo;
+        this.internamentoQuantidade = internamentoQuantidade;
         canEdit = false;
     }
 
@@ -136,6 +139,26 @@ public class InternamentoTemp {
     public void setInternamentoValor(double internamentoValor) {
         
         this.internamentoValor = internamentoValor;
+    }
+
+    public double getInternamentoValorTotal() {
+        
+        internamentoValorTotal = internamentoValor * internamentoQuantidade;
+        return internamentoValorTotal;
+    }
+
+    public void setInternamentoValorTotal(double internamentoValorTotal) {
+        
+        internamentoValorTotal = internamentoValor * internamentoQuantidade;
+        this.internamentoValorTotal = internamentoValorTotal;
+    }
+
+    public int getInternamentoQuantidade() {
+        return internamentoQuantidade;
+    }
+
+    public void setInternamentoQuantidade(int internamentoQuantidade) {
+        this.internamentoQuantidade = internamentoQuantidade;
     }
 
     @Override

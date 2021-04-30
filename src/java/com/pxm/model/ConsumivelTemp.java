@@ -16,21 +16,24 @@ public class ConsumivelTemp {
     private Integer idConsumivel, idFactura;
 
     private String consumivel, consumivelData, consumivelHora, consumivelCategoria, consumivelCodigo, consumivelTitulo, consumivelComposicao, consumivelPosologia;
-    private double consumivelValor;
+    private double consumivelValor, consumivelValorTotal;
+    private int consumivelQuantidade;
     private boolean canEdit;
     
     private FacturaDAO facturaDao = new FacturaDAO();
 
-    public ConsumivelTemp(String consumivel, String consumivelData, String consumivelHora, String consumivelCategoria, double consumivelValor, String consumivelCodigo, String consumivelTitulo, String consumivelComposicao, String consumivelPosologia) {
+    public ConsumivelTemp(String consumivel, String consumivelData, String consumivelHora, String consumivelCategoria, double consumivelValor, double consumivelValorTotal, String consumivelCodigo, String consumivelTitulo, String consumivelComposicao, String consumivelPosologia, int consumivelQuantidade) {
         this.consumivel = consumivel;
         this.consumivelData = consumivelData;
         this.consumivelHora = consumivelHora;
         this.consumivelCategoria = consumivelCategoria;
         this.consumivelValor = consumivelValor;
+        this.consumivelValorTotal = consumivelValorTotal;
         this.consumivelCodigo = consumivelCodigo;
         this.consumivelTitulo = consumivelTitulo;
         this.consumivelComposicao = consumivelComposicao;
         this.consumivelPosologia = consumivelPosologia;
+        this.consumivelQuantidade = consumivelQuantidade;
         canEdit = false;
     }
 
@@ -166,6 +169,24 @@ public class ConsumivelTemp {
         this.consumivelValor = consumivelValor;
     }
 
+    public double getConsumivelValorTotal() {
+        consumivelValorTotal = consumivelValor * consumivelQuantidade;
+        return consumivelValorTotal;
+    }
+
+    public void setConsumivelValorTotal(double consumivelValorTotal) {
+        consumivelValorTotal = consumivelValor * consumivelQuantidade;
+        this.consumivelValorTotal = consumivelValorTotal;
+    }
+
+    public int getConsumivelQuantidade() {
+        return consumivelQuantidade;
+    }
+
+    public void setConsumivelQuantidade(int consumivelQuantidade) {
+        this.consumivelQuantidade = consumivelQuantidade;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

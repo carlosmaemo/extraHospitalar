@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e3d8600c-2dd3-4dfc-b2ed-e1b6cbae9ed4">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="extraHospitalar"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="15"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -34,22 +34,28 @@
 	</style>
 	<subDataset name="Dts Factura" uuid="43bd6ce9-3415-4b53-a195-f3f62d608090">
 		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="extraHospitalar"/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 		<parameter name="idFactura" class="java.lang.Integer"/>
+		<parameter name="nidPaciente" class="java.lang.String"/>
 		<queryString language="SQL">
-			<![CDATA[select codigoConsulta as [Código], tituloConsulta as [Artigo], valorConsulta as [Valor] from factura_consulta where idFactura = $P{idFactura} 
+			<![CDATA[select idFacturaConsulta as [ID], codigoConsulta as [Código], tituloConsulta as [Artigo], valorConsulta as [Valor], quantidadeConsulta as [Quantidade], totalValorConsulta as [Total] from factura_consulta where idFactura = $P{idFactura} 
 union
-select codigoConsumivel as [Código], tituloConsumivel as [Artigo], valorConsumivel as [Valor] from factura_consumivel where idFactura = $P{idFactura} 
+select idFacturaConsumivel as [ID],codigoConsumivel as [Código], tituloConsumivel as [Artigo], valorConsumivel as [Valor], quantidadeConsumivel as [Quantidade], totalValorConsumivel as [Total] from factura_consumivel where idFactura = $P{idFactura} 
 union
-select codigoExame as [Código], tituloExame as [Artigo], valorExame as [Valor] from factura_exame where idFactura = $P{idFactura} 
+select idFacturaExame as [ID],codigoExame as [Código], tituloExame as [Artigo], valorExame as [Valor], quantidadeExame as [Quantidade], totalValorExame as [Total] from factura_exame where idFactura = $P{idFactura} 
 union
-select codigoInternamento as [Código], tipoInternamento as [Artigo], valorInternamento as [Valor] from factura_internamento where idFactura = $P{idFactura} 
+select idFacturaInternamento as [ID],codigoInternamento as [Código], tipoInternamento as [Artigo], valorInternamento as [Valor], quantidadeInternamento as [Quantidade], totalValorInternamento as [Total] from factura_internamento where idFactura = $P{idFactura} 
 union
-select codigoMedicamento as [Código], tituloMedicamento as [Artigo], valorMedicamento as [Valor] from factura_medicamento where idFactura = $P{idFactura} 
+select idFacturaMedicamento as [ID],codigoMedicamento as [Código], tituloMedicamento as [Artigo], valorMedicamento as [Valor], quantidadeMedicamento as [Quantidade], totalValorMedicamento as [Total] from factura_medicamento where idFactura = $P{idFactura} 
 union
-select codigoVisita as [Código], tipoVisita as [Artigo], valorVisita as [Valor] from factura_visita where idFactura = $P{idFactura} 
+select idFacturaVisita as [ID],codigoVisita as [Código], tipoVisita as [Artigo], valorVisita as [Valor], quantidadeVisita as [Quantidade], totalValorVisita as [Total]  from factura_visita where idFactura = $P{idFactura} 
 order by Artigo]]>
 		</queryString>
+		<field name="ID" class="java.lang.Object">
+			<property name="com.jaspersoft.studio.field.name" value="ID"/>
+			<property name="com.jaspersoft.studio.field.label" value="ID"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="factura_consulta"/>
+		</field>
 		<field name="Código" class="java.lang.Object">
 			<property name="com.jaspersoft.studio.field.name" value="Código"/>
 			<property name="com.jaspersoft.studio.field.label" value="Código"/>
@@ -65,11 +71,21 @@ order by Artigo]]>
 			<property name="com.jaspersoft.studio.field.label" value="Valor"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="factura_consulta"/>
 		</field>
+		<field name="Quantidade" class="java.lang.Object">
+			<property name="com.jaspersoft.studio.field.name" value="Quantidade"/>
+			<property name="com.jaspersoft.studio.field.label" value="Quantidade"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="factura_consulta"/>
+		</field>
+		<field name="Total" class="java.lang.Object">
+			<property name="com.jaspersoft.studio.field.name" value="Total"/>
+			<property name="com.jaspersoft.studio.field.label" value="Total"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="factura_consulta"/>
+		</field>
 		<variable name="Valor1" class="java.lang.Integer" calculation="DistinctCount">
 			<variableExpression><![CDATA[$F{Valor}]]></variableExpression>
 		</variable>
 		<variable name="TotalValor" class="java.lang.Double" calculation="Sum">
-			<variableExpression><![CDATA[$F{Valor}]]></variableExpression>
+			<variableExpression><![CDATA[$F{Total}]]></variableExpression>
 			<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
 		</variable>
 	</subDataset>
@@ -103,47 +119,107 @@ order by Artigo]]>
 		<property name="com.jaspersoft.studio.field.label" value="idUsuario"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
-	<field name="COLUMN_6" class="java.lang.Object">
-		<property name="com.jaspersoft.studio.field.name" value="idPaciente"/>
-		<property name="com.jaspersoft.studio.field.label" value="idPaciente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
-	</field>
 	<field name="nomePaciente" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="nomePaciente"/>
 		<property name="com.jaspersoft.studio.field.label" value="nomePaciente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="apelidoPaciente" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="apelidoPaciente"/>
 		<property name="com.jaspersoft.studio.field.label" value="apelidoPaciente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="contactoPaciente" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="contactoPaciente"/>
 		<property name="com.jaspersoft.studio.field.label" value="contactoPaciente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="enderecoPaciente" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="enderecoPaciente"/>
 		<property name="com.jaspersoft.studio.field.label" value="enderecoPaciente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="nidPaciente" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="nidPaciente"/>
 		<property name="com.jaspersoft.studio.field.label" value="nidPaciente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="sexoPaciente" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="sexoPaciente"/>
 		<property name="com.jaspersoft.studio.field.label" value="sexoPaciente"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="codigoEmpresa" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="codigoEmpresa"/>
 		<property name="com.jaspersoft.studio.field.label" value="codigoEmpresa"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="nomeEmpresa" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nomeEmpresa"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomeEmpresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="valorTotal" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="valorTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="valorTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="nomeMedico" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nomeMedico"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomeMedico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="ormmMedico" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="ormmMedico"/>
+		<property name="com.jaspersoft.studio.field.label" value="ormmMedico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="COLUMN_17" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="idPaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="idPaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_18" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nomePaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomePaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_19" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="apelidoPaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="apelidoPaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_20" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="contactoPaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="contactoPaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_21" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="enderecoPaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="enderecoPaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_22" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nidPaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="nidPaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_23" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="sexoPaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="sexoPaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="nrseguroPaciente" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nrseguroPaciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="nrseguroPaciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_25" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="codigoEmpresa"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoEmpresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="COLUMN_26" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.name" value="nomeEmpresa"/>
 		<property name="com.jaspersoft.studio.field.label" value="nomeEmpresa"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
@@ -151,10 +227,10 @@ order by Artigo]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="137" splitType="Stretch">
+	<title>
+		<band height="241">
 			<staticText>
-				<reportElement x="80" y="113" width="400" height="20" uuid="1f4e6ccd-d797-49bd-b19d-12a858d3e6a7">
+				<reportElement x="80" y="119" width="400" height="20" uuid="1f4e6ccd-d797-49bd-b19d-12a858d3e6a7">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -163,7 +239,7 @@ order by Artigo]]>
 				<text><![CDATA[DESCRIÇÃO DAS CONSULTAS E EXAMES FEITOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="80" y="77" width="400" height="33" uuid="7805db99-977a-4403-9c55-21ae54956f80">
+				<reportElement x="80" y="72" width="400" height="33" uuid="7805db99-977a-4403-9c55-21ae54956f80">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -172,12 +248,8 @@ order by Artigo]]>
 				<text><![CDATA[HOSPITAL PROVINCIAL DE TETE
 SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 			</staticText>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="95" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="180" height="20" uuid="39578e7b-5e42-485d-9009-a98c22448cec">
+				<reportElement x="0" y="146" width="180" height="20" uuid="39578e7b-5e42-485d-9009-a98c22448cec">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -186,10 +258,10 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[IDENTIFICAÇÃO DO PACIENTE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="20" width="555" height="1" uuid="037ac01a-0b4e-43d0-b58b-c664aa4ec779"/>
+				<reportElement x="0" y="166" width="555" height="1" uuid="037ac01a-0b4e-43d0-b58b-c664aa4ec779"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="25" width="108" height="15" uuid="33beb56a-ac62-4b9b-86fd-886992a3edb2">
+				<reportElement x="0" y="171" width="108" height="15" uuid="33beb56a-ac62-4b9b-86fd-886992a3edb2">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -200,7 +272,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[Nome do Paciente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="40" width="108" height="15" uuid="a995fd85-9734-4057-aa6f-ad35a0933dee">
+				<reportElement x="0" y="186" width="108" height="15" uuid="a995fd85-9734-4057-aa6f-ad35a0933dee">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -210,7 +282,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[Sexo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="55" width="108" height="15" uuid="dbd1d8d4-a096-495a-b963-8973758d1a56">
+				<reportElement x="0" y="201" width="108" height="15" uuid="dbd1d8d4-a096-495a-b963-8973758d1a56">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -220,7 +292,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[Contacto:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="70" width="108" height="15" uuid="338307e0-892a-4653-90b0-b6b282c07953">
+				<reportElement x="0" y="216" width="108" height="15" uuid="338307e0-892a-4653-90b0-b6b282c07953">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -230,7 +302,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[NID:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="55" width="106" height="15" uuid="098aed39-cb00-4314-881e-8729375b3ff3">
+				<reportElement x="286" y="201" width="106" height="15" uuid="098aed39-cb00-4314-881e-8729375b3ff3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -240,7 +312,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[NUIT da Empresa:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="25" width="106" height="15" uuid="1276fe36-296c-4ad3-81a0-6516aa9e1a41">
+				<reportElement x="286" y="171" width="106" height="15" uuid="1276fe36-296c-4ad3-81a0-6516aa9e1a41">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -251,7 +323,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[Nome da Empresa:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="40" width="106" height="15" uuid="b275fa5e-9fc8-465a-b2c2-9ce381047925">
+				<reportElement x="286" y="186" width="106" height="15" uuid="b275fa5e-9fc8-465a-b2c2-9ce381047925">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -261,10 +333,10 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[Nº de Seguradora:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="90" width="555" height="1" uuid="87b85d84-f176-4681-ab24-68e2106bcfd6"/>
+				<reportElement x="0" y="236" width="555" height="1" uuid="87b85d84-f176-4681-ab24-68e2106bcfd6"/>
 			</line>
 			<textField>
-				<reportElement x="108" y="25" width="178" height="15" uuid="e7ed8578-396a-4b2b-a8b4-dc24525cc4d0"/>
+				<reportElement x="108" y="171" width="178" height="15" uuid="e7ed8578-396a-4b2b-a8b4-dc24525cc4d0"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
@@ -272,7 +344,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<textFieldExpression><![CDATA[$F{nomePaciente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="108" y="40" width="178" height="15" uuid="2ac6ed13-7418-4e64-acfb-929f8f36c9ef"/>
+				<reportElement x="108" y="186" width="178" height="15" uuid="2ac6ed13-7418-4e64-acfb-929f8f36c9ef"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
@@ -280,7 +352,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<textFieldExpression><![CDATA[$F{sexoPaciente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="108" y="55" width="178" height="15" uuid="2e46eff5-5506-4f3e-8cee-5c1320e5ca40"/>
+				<reportElement x="108" y="201" width="178" height="15" uuid="2e46eff5-5506-4f3e-8cee-5c1320e5ca40"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
@@ -288,7 +360,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<textFieldExpression><![CDATA[$F{contactoPaciente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="108" y="70" width="178" height="15" uuid="f67b87d1-0ba2-4319-bbb1-5b5a01c1a63a"/>
+				<reportElement x="108" y="216" width="178" height="15" uuid="f67b87d1-0ba2-4319-bbb1-5b5a01c1a63a"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
@@ -296,7 +368,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<textFieldExpression><![CDATA[$F{nidPaciente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="392" y="25" width="163" height="15" uuid="65411fc6-f5a3-4721-9dfa-ef922645b66e"/>
+				<reportElement x="392" y="171" width="163" height="15" uuid="65411fc6-f5a3-4721-9dfa-ef922645b66e"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11"/>
@@ -304,11 +376,11 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<textFieldExpression><![CDATA[$F{nomeEmpresa}]]></textFieldExpression>
 			</textField>
 		</band>
-	</columnHeader>
+	</title>
 	<detail>
-		<band height="413" splitType="Stretch">
+		<band height="200">
 			<componentElement>
-				<reportElement x="0" y="0" width="555" height="413" uuid="7f07ea2d-5881-4584-8bb6-e55ad05b6a3a">
+				<reportElement x="0" y="0" width="555" height="189" uuid="7f07ea2d-5881-4584-8bb6-e55ad05b6a3a">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -350,7 +422,7 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 									<text><![CDATA[Código]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="Table_TD" height="30">
+							<jr:detailCell style="Table_TD" height="30" rowSpan="1">
 								<textField>
 									<reportElement x="0" y="0" width="100" height="30" uuid="09ef61a1-1b4a-4752-8f4f-d3a9e471ed88">
 										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -368,17 +440,33 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 							<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="310" height="30" uuid="5efbefaa-641c-4516-9152-416085b84fe9"/>
+									<reportElement x="0" y="0" width="176" height="30" uuid="5efbefaa-641c-4516-9152-416085b84fe9"/>
 									<box leftPadding="10"/>
 									<textElement verticalAlignment="Middle">
 										<font size="11" isBold="true"/>
 									</textElement>
 									<text><![CDATA[Artigo]]></text>
 								</staticText>
+								<staticText>
+									<reportElement x="176" y="0" width="52" height="30" uuid="59977004-d53b-4394-b1c4-a38b7fb666b0"/>
+									<box leftPadding="10"/>
+									<textElement textAlignment="Justified" verticalAlignment="Middle">
+										<font size="11" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Quant.]]></text>
+								</staticText>
+								<staticText>
+									<reportElement x="228" y="0" width="82" height="30" uuid="29daed16-d82a-4f94-9a6b-fd459a2bb3c2"/>
+									<box leftPadding="10"/>
+									<textElement textAlignment="Justified" verticalAlignment="Middle">
+										<font size="11" isBold="true"/>
+									</textElement>
+									<text><![CDATA[Valor]]></text>
+								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="Table_TD" height="30">
+							<jr:detailCell style="Table_TD" height="30" rowSpan="1">
 								<textField>
-									<reportElement x="0" y="0" width="310" height="30" uuid="0a0dfaa8-b0b2-44bd-a694-1039c40c0084">
+									<reportElement x="0" y="0" width="176" height="30" uuid="0a0dfaa8-b0b2-44bd-a694-1039c40c0084">
 										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 									</reportElement>
@@ -387,6 +475,28 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 										<paragraph leftIndent="10" rightIndent="10"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{Artigo}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="176" y="0" width="52" height="30" uuid="a7121999-1edd-444f-a827-82ae9d26ab95">
+										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+									</reportElement>
+									<textElement verticalAlignment="Middle">
+										<font size="11"/>
+										<paragraph leftIndent="10" rightIndent="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{Quantidade}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="228" y="0" width="82" height="30" uuid="5b51f7de-4dd3-4d11-ae90-856db0e5a3fa">
+										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+									</reportElement>
+									<textElement verticalAlignment="Middle">
+										<font size="11"/>
+										<paragraph leftIndent="10" rightIndent="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{Valor} + " MT"]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -419,10 +529,10 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 								<textElement verticalAlignment="Middle">
 									<font size="11" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Valor]]></text>
+								<text><![CDATA[Valor Total]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
+						<jr:detailCell style="Table_TD" height="30" rowSpan="1">
 							<textField>
 								<reportElement x="0" y="0" width="145" height="30" uuid="cb47130e-0df2-48af-bf47-f5de3cce6bb4">
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -432,7 +542,26 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 									<font size="11"/>
 									<paragraph leftIndent="10" rightIndent="10"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{Valor} + " MT"]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{Total} + " MT"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="35" uuid="288a2b04-4aa9-466b-b9da-a4e2a511e142">
+						<jr:tableHeader height="0" rowSpan="1"/>
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader height="30" rowSpan="1"/>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="35" height="30" forecolor="#FFFFFF" uuid="4a230b42-d03e-48dc-884b-653333a06366">
+									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph leftIndent="10" rightIndent="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -440,72 +569,10 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 			</componentElement>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="118" splitType="Stretch">
+	<summary>
+		<band height="145">
 			<staticText>
-				<reportElement x="203" y="10" width="65" height="15" uuid="dd5a21fe-0c2c-4b4a-981e-fd7e1e92fcf6">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="11" isBold="false"/>
-					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
-				</textElement>
-				<text><![CDATA[Tete, aos]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="272" y="10" width="100" height="15" uuid="76d98c5b-ec74-4ee7-955c-0b3a75efeb45"/>
-				<textElement verticalAlignment="Middle">
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="16" y="39" width="150" height="15" uuid="3891635d-bc08-46a1-a22c-52d1b67981a2">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="false"/>
-					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
-				</textElement>
-				<text><![CDATA[Assinatura do Doente]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="203" y="93" width="149" height="15" uuid="8f8a23a5-4a39-462d-ae55-51f4834fca97">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="false"/>
-					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
-				</textElement>
-				<text><![CDATA[______ / ______ / 20 ______]]></text>
-			</staticText>
-			<line>
-				<reportElement x="393" y="78" width="150" height="1" uuid="2c17522f-a506-4e86-b592-f5828e037a22">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-			</line>
-			<staticText>
-				<reportElement x="16" y="93" width="150" height="15" uuid="90a22266-0f9f-430a-903b-cf2443dda127">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="false"/>
-					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
-				</textElement>
-				<text><![CDATA[______ / ______ / 20 ______]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="202" y="39" width="150" height="15" uuid="be132afa-6fa9-460a-9222-8367d54d8603">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="false"/>
-					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
-				</textElement>
-				<text><![CDATA[O Clínico]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="393" y="39" width="150" height="15" uuid="e78964e7-afed-4244-aba4-79f4ec11b8e5">
+				<reportElement x="391" y="42" width="150" height="15" uuid="7ee969e9-38d8-4a46-b7a5-194bb47f1c45">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -515,7 +582,27 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[O Administrativo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="393" y="93" width="150" height="15" uuid="6f8bc822-375c-46dc-8cbf-21474b75a267">
+				<reportElement x="100" y="130" width="350" height="15" uuid="ca372f2f-e750-4eab-b88b-2e5aec1ded2f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="10" isBold="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[NUIT: 500011823]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="42" width="150" height="15" uuid="95cf8653-8882-4cbd-8dd0-e8f523afa27b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[O Clínico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="96" width="149" height="15" uuid="adb74110-d96d-4763-a763-fce0b212c193">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -525,25 +612,33 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				<text><![CDATA[______ / ______ / 20 ______]]></text>
 			</staticText>
 			<line>
-				<reportElement x="203" y="78" width="150" height="1" uuid="982ea5c5-ee5d-4afa-b59b-ea755a479261">
+				<reportElement x="201" y="81" width="150" height="1" uuid="0d8ff668-bf0f-41a6-beea-ca46d2ac9919">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 			</line>
-			<line>
-				<reportElement x="16" y="78" width="150" height="1" uuid="6af5fe97-02ae-4361-b2e4-fad7537d0bf4">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-			</line>
-		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="24" splitType="Stretch">
-			<line>
-				<reportElement x="0" y="1" width="555" height="1" uuid="ca919f64-8786-4877-a7a5-b522f2571a90"/>
-			</line>
 			<staticText>
-				<reportElement x="0" y="5" width="102" height="15" uuid="16fb0f86-be59-41cf-8079-854c0044cf0f">
+				<reportElement x="201" y="9" width="65" height="15" uuid="3c6f2933-9530-4ebf-a12e-007ae41d3285">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[Tete, aos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="42" width="150" height="15" uuid="9ecac935-81f1-42eb-bf80-2c9802299e8a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[Assinatura do Doente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="130" width="102" height="15" uuid="aa9c8722-da41-47d4-adaf-ee7267e4375e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
@@ -552,8 +647,26 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				</textElement>
 				<text><![CDATA[Av. Kwame Krumah]]></text>
 			</staticText>
+			<line>
+				<reportElement x="391" y="81" width="150" height="1" uuid="c50487cc-7902-46c0-ad5c-20b625531b96">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="-2" y="126" width="555" height="1" uuid="28cc7c6e-2c12-4e04-9fb6-2f4542fbafd0"/>
+			</line>
 			<staticText>
-				<reportElement x="453" y="5" width="102" height="15" uuid="9ff34b5d-1085-4856-bc40-9736883fc8a4">
+				<reportElement x="391" y="96" width="150" height="15" uuid="c8206400-cdf2-4d9b-93bb-a2bf668fb7f8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[______ / ______ / 20 ______]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="130" width="102" height="15" uuid="296711be-4843-44af-8b8d-1c72bfc61ffc">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Top">
@@ -562,16 +675,28 @@ SERVIÇO DE ATENDIMENTO PERSONALIZADO]]></text>
 				</textElement>
 				<text><![CDATA[Telef.: 84 603 366]]></text>
 			</staticText>
+			<line>
+				<reportElement x="14" y="81" width="150" height="1" uuid="189751c7-cc02-4db1-becb-e55c00cb5e9a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="270" y="9" width="100" height="15" uuid="544d26f4-c369-41bd-b744-278fc4fdcecd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="102" y="5" width="350" height="15" uuid="c3a33a7f-9184-4f54-8051-8ce775bcd9d8">
+				<reportElement x="14" y="96" width="150" height="15" uuid="d0ea6faa-c156-49c5-8c4c-a9414908fd20">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="10" isBold="false"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
 					<paragraph lineSpacing="Single" lineSpacingSize="1.0"/>
 				</textElement>
-				<text><![CDATA[NUIT: 500011823]]></text>
+				<text><![CDATA[______ / ______ / 20 ______]]></text>
 			</staticText>
 		</band>
-	</pageFooter>
+	</summary>
 </jasperReport>
