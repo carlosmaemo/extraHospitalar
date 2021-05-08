@@ -200,7 +200,7 @@ public class FacturaBean {
         consultasTemp.remove(consulta);
         return null;
     }
-
+    
     public String removerConsumivel(ConsumivelTemp consumivel) {
         consumiveisTemp.remove(consumivel);
         return null;

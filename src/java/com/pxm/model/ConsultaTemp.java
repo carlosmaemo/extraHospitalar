@@ -20,7 +20,7 @@ public class ConsultaTemp {
     private int consultaQuantidade;
     private boolean canEdit;
 
-    private FacturaDAO facturaDao = new FacturaDAO();
+    private final FacturaDAO facturaDao = new FacturaDAO();
 
     public ConsultaTemp(String consulta, String consultaData, String consultaHora, String consultaMedico, double consultaValor, double consultaValorTotal, String consultaCodigo, String consultaCategoria, String consultaTitulo, String consultaDescricao, int consultaQuantidade) {
         this.consulta = consulta;

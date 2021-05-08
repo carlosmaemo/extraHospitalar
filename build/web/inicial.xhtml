@@ -123,7 +123,8 @@
 
                     <p:dataTable value="#{facturaBean.consultasTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consulta.ordem}"  rows="5" paginator="true" widgetVar="tblConsultas" var="consulta">
                         <p:column style="text-align: center" headerText="Operação" width="100">
-                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" actionListener="#{facturaBean.removerConsulta(consulta)}" update="@form"/>
+                            <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" action="#{facturaBean.removerConsulta(consulta)}" update="@form"/>
+                            
                         </p:column>
                         <p:column headerText="Consulta/Procedimento">
                             <h:outputText value="#{consulta.consulta}"></h:outputText>
