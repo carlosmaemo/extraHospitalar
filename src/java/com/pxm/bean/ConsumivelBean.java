@@ -52,7 +52,7 @@ public class ConsumivelBean {
     private String valor_pesquisa;
     
     private UploadedFile ficheiro;
-    private String caminho = "E:\\temp";
+    private String caminho = "D:\\temp";
     
     @PostConstruct
     public void init() {
@@ -131,7 +131,7 @@ public class ConsumivelBean {
             String ficheiroNome = parte[0];
             String ficheiroExtensao = parte[1];
 
-            Path caminhoFicheiroApagar = Paths.get("E:\\temp\\temp-consumivel." + ficheiroExtensao);
+            Path caminhoFicheiroApagar = Paths.get("D:\\temp\\temp-consumivel." + ficheiroExtensao);
 
             Files.deleteIfExists(caminhoFicheiroApagar);
 

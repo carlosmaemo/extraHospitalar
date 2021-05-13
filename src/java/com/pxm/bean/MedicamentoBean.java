@@ -50,7 +50,7 @@ public class MedicamentoBean {
     private String valor_pesquisa;
 
     private UploadedFile ficheiro;
-    private String caminho = "E:\\temp";
+    private String caminho = "D:\\temp";
 
     @PostConstruct
     public void init() {
@@ -74,7 +74,7 @@ public class MedicamentoBean {
                     String ficheiroNome = parte[0];
                     String ficheiroExtensao = parte[1];
 
-                    Path caminhoFicheiroApagar = Paths.get("E:\\temp\\temp-medicamento." + ficheiroExtensao);
+                    Path caminhoFicheiroApagar = Paths.get("D:\\temp\\temp-medicamento." + ficheiroExtensao);
 
                     Files.deleteIfExists(caminhoFicheiroApagar);
 

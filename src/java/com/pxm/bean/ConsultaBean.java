@@ -48,7 +48,7 @@ public class ConsultaBean {
     private String valor_pesquisa;
 
     private UploadedFile ficheiro;
-    private String caminho = "E:\\temp";
+    private String caminho = "D:\\temp";
 
     @PostConstruct
     public void init() {
@@ -72,7 +72,7 @@ public class ConsultaBean {
                     String ficheiroNome = parte[0];
                     String ficheiroExtensao = parte[1];
 
-                    Path caminhoFicheiroApagar = Paths.get("E:\\temp\\temp-consulta." + ficheiroExtensao);
+                    Path caminhoFicheiroApagar = Paths.get("D:\\temp\\temp-consulta." + ficheiroExtensao);
 
                     Files.deleteIfExists(caminhoFicheiroApagar);
 
