@@ -121,7 +121,7 @@
 
                     <br/>
 
-                    <p:dataTable value="#{facturaBean.consultasTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consulta.ordem}"  rows="5" paginator="true" widgetVar="tblConsultas" var="consulta">
+                    <p:dataTable value="#{facturaBean.consultasTemp}" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selectionMode="single" rowKey="#{consulta.consultaCodigo}" rows="5" paginator="true" widgetVar="tblConsultas" var="consulta">
                         <p:column style="text-align: center" headerText="Operação" width="100">
                             <p:commandButton style="font-size: 17px" icon="fa fa-trash-o" action="#{facturaBean.removerConsulta(consulta)}" update="@form"/>
                             

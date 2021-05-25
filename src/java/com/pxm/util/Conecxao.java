@@ -12,7 +12,7 @@ public class Conecxao {
     // MAC: /Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/db
     // WIN: E:\\db_extra_hospitalar.db
     
-    private static String URL_CONEXAO = "jdbc:sqlite:D:\\db_extra_hospitalar.db";
+    private static String URL_CONEXAO = "jdbc:sqlite:/Users/cmaemo/Desktop/Proxmeru/Repositórios/extraHospitalar/db/db_extra_hospitalar.db";
     private static final String USUARIO = "root";
     private static final String SENHA = "";
     public String db = URL_CONEXAO;

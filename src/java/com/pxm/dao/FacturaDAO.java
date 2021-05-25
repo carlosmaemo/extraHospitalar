@@ -488,7 +488,7 @@ public class FacturaDAO {
         }
     }
 
-    public void salvar(Factura factura, ArrayList<ConsultaTemp> consultas, ArrayList<ConsumivelTemp> consumiveis, ArrayList<ExameTemp> exames, ArrayList<InternamentoTemp> internamentos, ArrayList<MedicamentoTemp> medicamentos, ArrayList<VisitaTemp> visitas) throws ErroSistema {
+    public void salvar(Factura factura, List<ConsultaTemp> consultas, ArrayList<ConsumivelTemp> consumiveis, ArrayList<ExameTemp> exames, ArrayList<InternamentoTemp> internamentos, ArrayList<MedicamentoTemp> medicamentos, ArrayList<VisitaTemp> visitas) throws ErroSistema {
 
         try {
             Connection conexao = Conecxao.getConexao();

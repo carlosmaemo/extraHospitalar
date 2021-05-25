@@ -30,7 +30,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class FacturaBean {
-
+    
     private Factura factura = new Factura();
     private final FacturaDAO facturaDao = new FacturaDAO();
     private List<String> nids = new ArrayList<>();
@@ -966,7 +966,7 @@ public class FacturaBean {
     public void setFacturasRegistosData(List<Factura> facturasRegistosData) {
         this.facturasRegistosData = facturasRegistosData;
     }
-
+    
     // REGISTRO DE FACTURA
     public void salvar(Factura factura, int idUsuario) throws ErroSistema {
 

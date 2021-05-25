@@ -177,8 +177,6 @@ public class ConsultaTemp {
         this.consultaValorTotal = consultaValorTotal;
     }
 
-    
-    
     public int getConsultaQuantidade() {
         return consultaQuantidade;
     }
@@ -186,7 +184,7 @@ public class ConsultaTemp {
     public void setConsultaQuantidade(int consultaQuantidade) {
         this.consultaQuantidade = consultaQuantidade;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
