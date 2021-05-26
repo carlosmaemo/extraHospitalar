@@ -30,7 +30,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class FacturaBean {
-    
+
     private Factura factura = new Factura();
     private final FacturaDAO facturaDao = new FacturaDAO();
     private List<String> nids = new ArrayList<>();
@@ -196,33 +196,63 @@ public class FacturaBean {
         return null;
     }
 
-    public String removerConsulta(ConsultaTemp consulta) {
-        consultasTemp.remove(consulta);
-        return null;
-    }
-    
-    public String removerConsumivel(ConsumivelTemp consumivel) {
-        consumiveisTemp.remove(consumivel);
-        return null;
-    }
-
-    public String removerInternamento(InternamentoTemp internamento) {
-        internamentosTemp.remove(internamento);
+    public String removerConsulta(ConsultaTemp consulta) throws ErroSistema {
+        
+        for (int i = 0; i < consultasTemp.size(); i++) {
+            if (consultasTemp.get(i).getConsultaCodigo().equals(consulta.getConsultaCodigo())) {
+                consultasTemp.remove(i);
+            }
+        }
         return null;
     }
 
-    public String removerMedicamento(MedicamentoTemp medicamento) {
-        medicamentosTemp.remove(medicamento);
+    public String removerConsumivel(ConsumivelTemp consumivel) throws ErroSistema {
+        
+        for (int i = 0; i < consumiveisTemp.size(); i++) {
+            if (consumiveisTemp.get(i).getConsumivelCodigo().equals(consumivel.getConsumivelCodigo())) {
+                consumiveisTemp.remove(i);
+            }
+        }
         return null;
     }
 
-    public String removerVisita(VisitaTemp visita) {
-        visitasTemp.remove(visita);
+    public String removerInternamento(InternamentoTemp internamento) throws ErroSistema {
+        
+        for (int i = 0; i < internamentosTemp.size(); i++) {
+            if (internamentosTemp.get(i).getInternamentoCodigo().equals(internamento.getInternamentoCodigo())) {
+                internamentosTemp.remove(i);
+            }
+        }
         return null;
     }
 
-    public String removerExame(ExameTemp exame) {
-        examesTemp.remove(exame);
+    public String removerMedicamento(MedicamentoTemp medicamento) throws ErroSistema {
+        
+        for (int i = 0; i < medicamentosTemp.size(); i++) {
+            if (medicamentosTemp.get(i).getMedicamentoCodigo().equals(medicamento.getMedicamentoCodigo())) {
+                medicamentosTemp.remove(i);
+            }
+        }
+        return null;
+    }
+
+    public String removerVisita(VisitaTemp visita) throws ErroSistema {
+        
+        for (int i = 0; i < visitasTemp.size(); i++) {
+            if (visitasTemp.get(i).getVisitaCodigo().equals(visita.getVisitaCodigo())) {
+                visitasTemp.remove(i);
+            }
+        }
+        return null;
+    }
+
+    public String removerExame(ExameTemp exame) throws ErroSistema {
+        
+        for (int i = 0; i < examesTemp.size(); i++) {
+            if (examesTemp.get(i).getExameCodigo().equals(exame.getExameCodigo())) {
+                examesTemp.remove(i);
+            }
+        }
         return null;
     }
 
@@ -966,7 +996,7 @@ public class FacturaBean {
     public void setFacturasRegistosData(List<Factura> facturasRegistosData) {
         this.facturasRegistosData = facturasRegistosData;
     }
-    
+
     // REGISTRO DE FACTURA
     public void salvar(Factura factura, int idUsuario) throws ErroSistema {
 
